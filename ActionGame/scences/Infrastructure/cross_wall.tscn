@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvud6v7tqmseg"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_fo85s"]
+
+[node name="CrossWall" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 11
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+scale = Vector2(512, 128)
+mesh = SubResource("BoxMesh_fo85s")
+
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="."]
+rotation = 1.5708
+scale = Vector2(512, 128)
+mesh = SubResource("BoxMesh_fo85s")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-254.4, 1.60001)
+polygon = PackedVector2Array(-1.60001, -65.6, 190.4, -65.6, 190.4, -257.6, 318.4, -257.6, 318.4, -65.6, 510.4, -65.6, 510.4, 62.4, 318.4, 62.4, 318.4, 254.4, 190.4, 254.4, 190.4, 62.4, -1.60001, 62.4)

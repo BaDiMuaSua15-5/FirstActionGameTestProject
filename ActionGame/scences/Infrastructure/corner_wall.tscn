@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://h3s1746k6kp4"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ieyuy"]
+
+[node name="CornerWall" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 11
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+position = Vector2(-192, 0)
+scale = Vector2(512, 128)
+mesh = SubResource("BoxMesh_ieyuy")
+
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="."]
+position = Vector2(0, 192)
+rotation = 1.5708
+scale = Vector2(512, 128)
+mesh = SubResource("BoxMesh_ieyuy")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-296, 24)
+polygon = PackedVector2Array(360, -88, 360, 424, 232, 424, 232, 40, -152, 40, -152, -88)

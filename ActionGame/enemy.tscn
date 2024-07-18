@@ -1,0 +1,165 @@
+[gd_scene load_steps=17 format=3 uid="uid://cgr1iow7o12r6"]
+
+[ext_resource type="Script" path="res://HealthComponent.gd" id="1_81ksd"]
+[ext_resource type="Script" path="res://enemy.gd" id="1_tcifc"]
+[ext_resource type="Script" path="res://HitBoxComponent.gd" id="2_anltf"]
+[ext_resource type="Script" path="res://WeaponComponent.gd" id="4_wtulb"]
+[ext_resource type="Script" path="res://FSM.gd" id="5_endji"]
+[ext_resource type="PackedScene" uid="uid://br5mbsfsh1wpa" path="res://scences/long_sword.tscn" id="5_ossfq"]
+[ext_resource type="Script" path="res://States/Ide.gd" id="6_l475n"]
+[ext_resource type="Script" path="res://Resources/weapon_resource.gd" id="6_wcala"]
+[ext_resource type="Script" path="res://States/Pursuit.gd" id="7_3147a"]
+[ext_resource type="Script" path="res://States/Combat.gd" id="8_do1ep"]
+[ext_resource type="Script" path="res://States/Stun.gd" id="11_kqxmo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hfwor"]
+radius = 1423.14
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_504ff"]
+radius = 464.069
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7mmex"]
+radius = 139.714
+
+[sub_resource type="PrismMesh" id="PrismMesh_yqss2"]
+size = Vector3(200, -200, 1)
+
+[sub_resource type="Resource" id="Resource_gwfb6"]
+resource_local_to_scene = true
+script = ExtResource("6_wcala")
+Weapon_Name = "LongSword"
+Active_Anim = "LS active"
+Attack_Anim = "LS attack"
+Deactive_Anim = "LS deactive"
+Damage = 6
+Stamina_Cost = 30
+knockback = 135
+stun_time = 0.4
+Auto_Fire = false
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 13
+platform_floor_layers = 2
+script = ExtResource("1_tcifc")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-100, 100, 100, 100, 0, -100)
+
+[node name="NoticeArea2D" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 16
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NoticeArea2D"]
+shape = SubResource("CircleShape2D_hfwor")
+
+[node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_504ff")
+
+[node name="CloseArea" type="Area2D" parent="."]
+position = Vector2(0, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CloseArea"]
+shape = SubResource("CircleShape2D_7mmex")
+
+[node name="enemy display" type="MeshInstance2D" parent="."]
+unique_name_in_owner = true
+mesh = SubResource("PrismMesh_yqss2")
+
+[node name="Components" type="Node2D" parent="."]
+
+[node name="HealthComponent" type="Node" parent="Components"]
+unique_name_in_owner = true
+script = ExtResource("1_81ksd")
+
+[node name="HitTimer" type="Timer" parent="Components/HealthComponent"]
+wait_time = 0.2
+
+[node name="HitBoxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("health_component", "owner_hypo")]
+unique_name_in_owner = true
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("2_anltf")
+health_component = NodePath("../HealthComponent")
+owner_hypo = NodePath("../..")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Components/HitBoxComponent"]
+polygon = PackedVector2Array(100, 103, -100, 103, 0, -97)
+
+[node name="WeaponComponent" type="Node2D" parent="Components"]
+unique_name_in_owner = true
+script = ExtResource("4_wtulb")
+
+[node name="LongSword" parent="Components/WeaponComponent" instance=ExtResource("5_ossfq")]
+rotation = -2.33517
+weapon_resource = SubResource("Resource_gwfb6")
+
+[node name="Marker2D" type="Marker2D" parent="Components/WeaponComponent"]
+position = Vector2(0, -532)
+
+[node name="FiniteStateMachine" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_endji")
+
+[node name="Ide" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("6_l475n")
+
+[node name="Pursuit" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("7_3147a")
+
+[node name="Combat" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("8_do1ep")
+
+[node name="Attack Timer" type="Timer" parent="FiniteStateMachine/Combat"]
+unique_name_in_owner = true
+wait_time = 3.0
+one_shot = true
+
+[node name="Stun" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("11_kqxmo")
+
+[node name="StunTimer" type="Timer" parent="FiniteStateMachine/Stun"]
+unique_name_in_owner = true
+process_callback = 0
+one_shot = true
+
+[node name="debug" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = -59.0
+offset_top = 5.99998
+offset_right = -10.0
+offset_bottom = 32.0
+scale = Vector2(2.78772, 2.86332)
+text = "debug
+"
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_max_distance = 150.0
+avoidance_enabled = true
+
+[node name="WallDetectRay" type="RayCast2D" parent="."]
+target_position = Vector2(0, -384)
+collision_mask = 4
+
+[node name="Line2D" type="Line2D" parent="WallDetectRay"]
+
+[node name="FacingNode" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -128)
+
+[connection signal="body_entered" from="NoticeArea2D" to="FiniteStateMachine/Ide" method="_on_notice_area_2d_body_entered"]
+[connection signal="body_exited" from="NoticeArea2D" to="FiniteStateMachine/Pursuit" method="_on_notice_area_2d_body_exited"]
+[connection signal="body_entered" from="AttackArea" to="FiniteStateMachine/Pursuit" method="_on_attack_area_body_entered"]
+[connection signal="body_exited" from="AttackArea" to="FiniteStateMachine/Pursuit" method="_on_attack_area_body_exited"]
+[connection signal="body_exited" from="AttackArea" to="FiniteStateMachine/Combat" method="_on_attack_area_body_exited"]
+[connection signal="body_entered" from="CloseArea" to="." method="_on_close_area_body_entered"]
+[connection signal="body_exited" from="CloseArea" to="." method="_on_close_area_body_exited"]
+[connection signal="timeout" from="FiniteStateMachine/Combat/Attack Timer" to="FiniteStateMachine/Combat" method="_on_attack_timer_timeout"]
+[connection signal="stunned" from="FiniteStateMachine/Stun" to="FiniteStateMachine/Combat" method="_on_stun_stunned"]
+[connection signal="timeout" from="FiniteStateMachine/Stun/StunTimer" to="." method="_on_stun_timer_timeout"]
+[connection signal="timeout" from="FiniteStateMachine/Stun/StunTimer" to="FiniteStateMachine/Stun" method="_on_stun_timer_timeout"]

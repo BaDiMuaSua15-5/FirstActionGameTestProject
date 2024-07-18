@@ -1,0 +1,35 @@
+[gd_scene load_steps=8 format=3 uid="uid://dqhfkg5ldoc2p"]
+
+[ext_resource type="Script" path="res://scences/Weapons_Manager.gd" id="1_wv3vq"]
+[ext_resource type="Resource" uid="uid://c2otcldx6dj8v" path="res://weapon resources/Long_Sword.tres" id="2_ygufy"]
+[ext_resource type="Resource" uid="uid://4xi28410gcns" path="res://weapon resources/Rapier.tres" id="3_gqr6o"]
+[ext_resource type="PackedScene" uid="uid://br5mbsfsh1wpa" path="res://scences/long_sword.tscn" id="5_xprj6"]
+[ext_resource type="PackedScene" uid="uid://cms4qukafcm8u" path="res://rapier.tscn" id="6_3indy"]
+[ext_resource type="Script" path="res://Resources/weapon_resource.gd" id="6_y3yd5"]
+
+[sub_resource type="Resource" id="Resource_nkcu7"]
+resource_local_to_scene = true
+script = ExtResource("6_y3yd5")
+Weapon_Name = "LongSword"
+Active_Anim = "LS active"
+Attack_Anim = "LS attack"
+Deactive_Anim = "LS deactive"
+Damage = 6
+Stamina_Cost = 30
+knockback = 135
+stun_time = 0.4
+Auto_Fire = false
+
+[node name="Weapons_Manager" type="Node2D"]
+script = ExtResource("1_wv3vq")
+_weapon_resources = Array[ExtResource("6_y3yd5")]([ExtResource("2_ygufy"), ExtResource("3_gqr6o")])
+Start_Weapon = Array[String](["LongSword", "Rapier"])
+
+[node name="Weapons" type="Node2D" parent="."]
+
+[node name="Rapier" parent="Weapons" instance=ExtResource("6_3indy")]
+
+[node name="LongSword" parent="Weapons" instance=ExtResource("5_xprj6")]
+weapon_resource = SubResource("Resource_nkcu7")
+
+[node name="Camera2D" type="Camera2D" parent="."]

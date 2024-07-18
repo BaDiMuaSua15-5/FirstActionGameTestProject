@@ -1,0 +1,248 @@
+[gd_scene load_steps=11 format=3 uid="uid://cu1dis8wa2rgh"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_jm0u4"]
+size = Vector3(5, 100, 1)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_f3013"]
+height = 375.073
+
+[sub_resource type="Animation" id="Animation_0s3mc"]
+resource_name = "LS active"
+length = 1.5
+
+[sub_resource type="Animation" id="Animation_q28er"]
+resource_name = "LS attack"
+length = 0.91
+step = 0.05
+
+[sub_resource type="Animation" id="Animation_u2rqu"]
+resource_name = "LS deactive"
+length = 0.5
+
+[sub_resource type="Animation" id="Animation_1qsre"]
+resource_name = "RESET"
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_nwn05"]
+resource_name = "RP ready"
+length = 0.51
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Weapons_Manager/Weapons/Rapier:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 146), Vector2(0, 146), Vector2(101, 148), Vector2(132, 103)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Weapons_Manager/Weapons/Rapier:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-3.14159, -3.14159, -0.785397]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Weapons_Manager/Weapons/Rapier:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Weapons_Manager/Weapons/Rapier:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(2.21914, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_x0pxa"]
+resource_name = "RP attack"
+length = 0.96
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Weapons_Manager/Weapons/Rapier:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.25, 0.45, 0.5, 0.7, 0.75, 0.85, 0.95),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 9.18958, 1, 1),
+"update": 0,
+"values": [Vector2(132, 103), Vector2(136, -19), Vector2(57, -72), Vector2(20, -246), Vector2(-57, -72), Vector2(-20, -246), Vector2(57, -72), Vector2(20, -246), Vector2(136, -19), Vector2(132, 103)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Weapons_Manager/Weapons/Rapier:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.25, 0.45, 0.5, 0.7, 0.75, 0.85, 0.95),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-0.785397, -1.83259, -1.86833, -1.66124, -1.27933, -1.4664, -1.86833, -1.66124, -1.83259, -0.785397]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Weapons_Manager/Weapons/Rapier:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Weapons_Manager/Weapons/Rapier:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Weapons_Manager/Weapons/Rapier/RP_hitbox/RP_hitbox:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.25, 0.45, 0.5, 0.7, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Weapons_Manager/Weapons/Rapier:isAttacking")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.45, 0.5, 0.7, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false]
+}
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Weapons_Manager/Weapons/Rapier")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.45, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [0],
+"method": &"emit_chain_attack"
+}, {
+"args": [0],
+"method": &"emit_chain_attack"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_prtpa"]
+resource_name = "RP deactive"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Weapons_Manager/Weapons/Rapier:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(132, 103)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Weapons_Manager/Weapons/Rapier:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.785397]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Weapons_Manager/Weapons/Rapier:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x2os5"]
+_data = {
+"LS active": SubResource("Animation_0s3mc"),
+"LS attack": SubResource("Animation_q28er"),
+"LS deactive": SubResource("Animation_u2rqu"),
+"RESET": SubResource("Animation_1qsre"),
+"RP active": SubResource("Animation_nwn05"),
+"RP attack": SubResource("Animation_x0pxa"),
+"RP deactive": SubResource("Animation_prtpa")
+}
+
+[node name="Rapier" type="Node2D"]
+position = Vector2(132, 103)
+rotation = -0.785397
+
+[node name="RP_Mesh" type="MeshInstance2D" parent="."]
+modulate = Color(0.756863, 0.756863, 0, 1)
+rotation = -1.57079
+scale = Vector2(2.32, 3.96)
+mesh = SubResource("PrismMesh_jm0u4")
+
+[node name="RP_hitbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 6
+
+[node name="RP_hitbox" type="CollisionShape2D" parent="RP_hitbox"]
+rotation = -1.56225
+shape = SubResource("CapsuleShape2D_f3013")
+disabled = true
+debug_color = Color(0.968627, 0.141176, 0.0117647, 0.611765)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../../../..")
+libraries = {
+"": SubResource("AnimationLibrary_x2os5")
+}

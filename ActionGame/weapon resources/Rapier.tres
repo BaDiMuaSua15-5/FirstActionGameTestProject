@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Weapon_Resource" load_steps=2 format=3 uid="uid://4xi28410gcns"]
+
+[ext_resource type="Script" path="res://Resources/weapon_resource.gd" id="1_yek5n"]
+
+[resource]
+script = ExtResource("1_yek5n")
+Weapon_Name = "Rapier"
+Active_Anim = "RP active"
+Attack_Anim = "RP attack"
+Deactive_Anim = "RP deactive"
+Damage = 4
+Stamina_Cost = 15
+knockback = 75
+stun_time = 0.4
+Auto_Fire = true

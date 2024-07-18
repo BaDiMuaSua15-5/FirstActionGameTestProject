@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3 uid="uid://br2x766jxvwyi"]
+
+[ext_resource type="PackedScene" uid="uid://bao061uq5658n" path="res://scences/controlled_char.tscn" id="2_vijwu"]
+[ext_resource type="Texture2D" uid="uid://bslrdqdla2t36" path="res://PNG/Dark/texture_01.png" id="3_x655n"]
+[ext_resource type="PackedScene" uid="uid://cvud6v7tqmseg" path="res://scences/Infrastructure/cross_wall.tscn" id="3_xkf8s"]
+[ext_resource type="PackedScene" uid="uid://cgr1iow7o12r6" path="res://enemy.tscn" id="4_6vc6w"]
+[ext_resource type="PackedScene" uid="uid://h3s1746k6kp4" path="res://scences/Infrastructure/corner_wall.tscn" id="4_w5iyt"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_ctnno"]
+radius = 30.0
+height = 60.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tyf6l"]
+radius = 33.0151
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_ebhl6"]
+vertices = PackedVector2Array(1656, 1336, 2283, 1325, 651, 1401, 1288, 1336, 727, 865, 904, 952, 2128, -228, 1848, -200, 1848, -568, 2128, -245, 2154, -931, 1656, 584, 1656, -568, 1656, -760, 802, -884, 1288, -760, 1288, -568, 1096, -568, 825, 6, 1096, -200, 904, 136, 1288, -200, 1288, 136, 736, 719, 904, 504, 1656, 504, 1656, -200, 904, 584, 728, 855, 1288, 952)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(3, 0, 2), PackedInt32Array(3, 2, 4, 5), PackedInt32Array(6, 7, 8, 9), PackedInt32Array(10, 9, 8), PackedInt32Array(6, 1, 0, 11, 7), PackedInt32Array(8, 12, 13, 10), PackedInt32Array(14, 10, 13, 15), PackedInt32Array(15, 16, 17, 14), PackedInt32Array(18, 14, 17, 19, 20), PackedInt32Array(19, 21, 22, 20), PackedInt32Array(23, 18, 20, 24), PackedInt32Array(25, 26, 7), PackedInt32Array(25, 7, 11), PackedInt32Array(24, 25, 11, 27), PackedInt32Array(23, 24, 27), PackedInt32Array(23, 27, 5, 28), PackedInt32Array(4, 28, 5), PackedInt32Array(3, 5, 29)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(680, -1000, 2280, -1056, 2248, -240, 2416, 1440, 512, 1528, 608, 848, 616, 704, 1024, 704, 1024, 832, 1408, 832, 1408, 1216, 1536, 1216, 1536, 704, 1024, 704, 616, 704, 704, 0, 1408, 0, 1408, 256, 1024, 256, 1024, 384, 1536, 384, 1536, -320, 1728, -320, 1728, -448, 1536, -448.421, 1536, -640, 1408, -640, 1408, -448, 1216, -448, 1216, -320, 1408, -320, 1408, 0, 704, 0)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 120.48
+
+[node name="Level" type="Node2D"]
+
+[node name="Texture01" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(72.5001, 21.5)
+scale = Vector2(2.74001, 1.50613)
+texture = ExtResource("3_x655n")
+region_enabled = true
+region_rect = Rect2(-315.855, -473.456, 1777.23, 2039.25)
+
+[node name="target" type="CharacterBody2D" parent="."]
+position = Vector2(600, -816)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="target"]
+mesh = SubResource("SphereMesh_ctnno")
+
+[node name="Area2D" type="Area2D" parent="target"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="target/Area2D"]
+shape = SubResource("CircleShape2D_tyf6l")
+
+[node name="Infrastructure" type="Node2D" parent="."]
+
+[node name="CornerWall" parent="Infrastructure" instance=ExtResource("4_w5iyt")]
+position = Vector2(1472, 768)
+
+[node name="CornerWall2" parent="Infrastructure" instance=ExtResource("4_w5iyt")]
+position = Vector2(1472, 320)
+rotation = 1.57079
+
+[node name="CrossWall" parent="Infrastructure" instance=ExtResource("3_xkf8s")]
+position = Vector2(1472, -384)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="Infrastructure"]
+navigation_polygon = SubResource("NavigationPolygon_ebhl6")
+
+[node name="ControlledChar" parent="." groups=["plr"] instance=ExtResource("2_vijwu")]
+position = Vector2(648, 408)
+speed_mult = 2.0
+
+[node name="Enemy" parent="." instance=ExtResource("4_6vc6w")]
+position = Vector2(-32, -88)
