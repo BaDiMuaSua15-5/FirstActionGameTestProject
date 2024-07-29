@@ -22,7 +22,7 @@ func _ready():
 		weapon.connect("animation_finished", _on_animation_player_animation_finished)
 		weapon.chain_atk.connect(chain_attack) #Signal for checking chain attack
 		#weapon.connect("finish_atk", _on_weapon_finish_attack)
-		weapon.connect("push_atk", _on_weapon_push_attack)
+		weapon.push_atk.connect(_on_weapon_push_attack)
 
 func _input(event):
 	if event.is_action_pressed("switch weapon up"):
@@ -76,10 +76,12 @@ func _on_animation_player_animation_finished(anim_name):
 	# Change weapon when deactive animation is finished
 	if anim_name == Current_Weapon.Deactive_Anim:
 		changeWeapon(Next_Weapon)
+		
 	if anim_name == Current_Weapon.Attack_Anim:
-		attack_finished.emit()
-	print('lol '+ AnimPlayer.current_animation)
+		AnimPlayer.play("LS recover")
 
+	if anim_name == "LS recover":
+		attack_finished.emit()
 
 # ATTACKING ----------
 @export var isAttacking: bool = false
@@ -88,6 +90,7 @@ signal attack_signal
 signal attack_push
 signal attack_finished
 
+# Function for taking player's attack input
 func attack():
 	#check for timed chainAttack
 	if (AnimPlayer.is_playing() and AnimPlayer.get_current_animation().match(Current_Weapon.Attack_Anim)):
@@ -107,12 +110,13 @@ func _on_weapon_push_attack():
 func chain_attack(_attack_index: int):
 	if (attackChain):
 		attackChain = false
+		AnimPlayer.play()
 		attack_signal.emit()
 	elif Current_Weapon.Auto_Fire and Input.is_action_pressed("attack"):
+		AnimPlayer.play()
 		attack_signal.emit()
 	else:
-		AnimPlayer.stop()
-		attack_finished.emit()
+		AnimPlayer.play(Current_Weapon.Recover_Anim)
 
 func _on_controlled_char_pressed_attack():
 	attack()

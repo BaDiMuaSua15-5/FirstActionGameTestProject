@@ -12,8 +12,8 @@ class_name PlayerHealthComponent
 			max_health = value
 
 var vulnerable: bool = true
-signal health_change
 
+signal health_change
 @export var health: float = 10.0:
 	set(value):
 		if (value > health):

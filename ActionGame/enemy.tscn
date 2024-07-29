@@ -31,6 +31,8 @@ Weapon_Name = "LongSword"
 Active_Anim = "LS active"
 Attack_Anim = "LS attack"
 Deactive_Anim = "LS deactive"
+Recover_Anim = ""
+Recover_Time = 0.0
 Damage = 6
 Stamina_Cost = 30
 knockback = 135
@@ -96,7 +98,6 @@ unique_name_in_owner = true
 script = ExtResource("4_wtulb")
 
 [node name="LongSword" parent="Components/WeaponComponent" instance=ExtResource("5_ossfq")]
-rotation = -2.33517
 weapon_resource = SubResource("Resource_gwfb6")
 
 [node name="Marker2D" type="Marker2D" parent="Components/WeaponComponent"]

@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://dirh8gdqr37k6"]
+
+[ext_resource type="Texture2D" uid="uid://bslrdqdla2t36" path="res://PNG/Dark/texture_01.png" id="1_5q8c2"]
+[ext_resource type="PackedScene" uid="uid://bh3v0q07ukyu4" path="res://ui.tscn" id="1_y3sod"]
+[ext_resource type="PackedScene" uid="uid://bao061uq5658n" path="res://scences/controlled_char.tscn" id="2_semr5"]
+[ext_resource type="Script" path="res://Area2D_test.gd" id="4_ngr3q"]
+[ext_resource type="PackedScene" uid="uid://c0lpbgmdo6qki" path="res://scences/Infrastructure/long_wall.tscn" id="5_vopnd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e1gkp"]
+size = Vector2(720, 20)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Texture01" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(72.5001, 21.5)
+scale = Vector2(2.74001, 1.50613)
+texture = ExtResource("1_5q8c2")
+region_enabled = true
+region_rect = Rect2(-315.855, -473.456, 1777.23, 2039.25)
+
+[node name="CanvasLayer" parent="." node_paths=PackedStringArray("Player") instance=ExtResource("1_y3sod")]
+Player = NodePath("../ControlledChar")
+
+[node name="ControlledChar" parent="." instance=ExtResource("2_semr5")]
+speed_mult = 1.5
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(576, 216)
+collision_mask = 9
+script = ExtResource("4_ngr3q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_e1gkp")
+
+[node name="LongWall" parent="." instance=ExtResource("5_vopnd")]
+position = Vector2(760, -168)
+
+[node name="LongWall2" parent="." instance=ExtResource("5_vopnd")]
+position = Vector2(1888, 40)
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+position = Vector2(1216, -168)
+node_a = NodePath("../LongWall")
+node_b = NodePath("../LongWall2")
+
+[connection signal="area_entered" from="Area2D" to="Area2D" method="_on_area_entered"]
+[connection signal="area_exited" from="Area2D" to="Area2D" method="_on_area_exited"]

@@ -6,13 +6,14 @@ class_name PlayerObj
 @onready var StaminaComp:StaminaComponent = %StaminaComponent
 @onready var Camera: Camera2D = $Camera2D
 
-var rotationSpeed = 7
+var rotationSpeed = DEFAULT_RTA_SPD
 var speed
 var accel = 10
 const MAX_SPEED = 700
 @export var speed_mult: float = 1
 @export var stamnia_regen: float = 7
 const DEFAULT_STM_GEN = 50
+const DEFAULT_RTA_SPD = 7
 var can_attack = true
 var is_dead: bool
 var is_rolling: bool = false
@@ -43,9 +44,23 @@ func _ready():
 	
 	WeaponManager.connect("attack_push", _on_weapons_manager_push_signal)
 
+const MAX_ROLL_FRAME: int = 30
+var roll_frame: int = MAX_ROLL_FRAME
 func _process(delta):
 	if StaminaComp.stamina < StaminaComp.max_stamina:
 		StaminaComp.stamina += stamnia_regen * delta
+		
+	if is_rolling:
+		if (roll_frame == 0):
+			roll_frame = MAX_ROLL_FRAME
+			is_rolling = false
+			speed_mult = 1
+			HitBoxComp.get_child(0).disabled = false
+			modulate = Color(1, 1, 1)
+			%StaminaGenTimer.wait_time = 0.5
+			%StaminaGenTimer.start()
+			return
+		roll_frame -= 1
 
 var roll_dir: Vector2
 func _physics_process(delta):
@@ -53,11 +68,13 @@ func _physics_process(delta):
 	var target = get_global_mouse_position()
 	if target != null:
 		rotate_to(target, delta)
+		
 	if is_rolling:
 		velocity = roll_dir * 900
 		move_and_slide()
 		Camera.position = Camera.position.lerp(position, 1 * delta)
 		return
+		
 	Camera.position = Camera.position.lerp(position, 3 * delta)
 	var direction = Input.get_vector("left", "right", "up", "down")
 	velocity = velocity.lerp(direction * speed * speed_mult, accel * delta)
@@ -93,18 +110,18 @@ func roll_input():
 	modulate = Color(0, 0.81176471710205, 0)
 	await get_tree().create_timer(0.45).timeout
 	
-	is_rolling = false
-	speed_mult = 1
-	HitBoxComp.get_child(0).disabled = false
-	modulate = Color(1, 1, 1)
-	%StaminaGenTimer.wait_time = 0.5
-	%StaminaGenTimer.start()
+	#is_rolling = false
+	#speed_mult = 1
+	#HitBoxComp.get_child(0).disabled = false
+	#modulate = Color(1, 1, 1)
+	#%StaminaGenTimer.wait_time = 0.5
+	#%StaminaGenTimer.start()
 
 func _on_weapons_manager_attack_signal():
 	is_rolling = false
 	%StaminaGenTimer.stop()
 	speed_mult = 0
-	rotationSpeed = 0
+	rotationSpeed = 1.5
 	StaminaComp.stamina -= 4
 	stamnia_regen = 0
 	if (StaminaComp.stamina == 0):
@@ -114,7 +131,6 @@ func _on_weapons_manager_attack_signal():
 	return
 
 func _on_weapons_manager_push_signal():
-	
 	#var attack_push= (get_global_mouse_position() - global_position).normalized() # Attack direction on mouse
 	var attack_push= (-transform.y).normalized()
 	var tween = get_tree().create_tween()
@@ -124,7 +140,7 @@ func _on_weapons_manager_push_signal():
 
 func _on_weapons_manager_attack_finished():
 	speed_mult = 1
-	rotationSpeed = 100
+	rotationSpeed = DEFAULT_RTA_SPD
 	%StaminaGenTimer.start()
 
 func _on_stamina_gen_timer_timeout():

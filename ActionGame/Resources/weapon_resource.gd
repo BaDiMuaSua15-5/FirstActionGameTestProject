@@ -6,6 +6,8 @@ class_name Weapon_Resource
 @export var Active_Anim: String
 @export var Attack_Anim: String 
 @export var Deactive_Anim: String
+@export var Recover_Anim: String
+@export var Recover_Time: float
 
 @export var Damage: int
 @export var Stamina_Cost: int

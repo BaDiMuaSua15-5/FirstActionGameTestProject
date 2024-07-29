@@ -13,6 +13,7 @@ config_version=5
 config/name="first creation"
 run/main_scene="res://level.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
+run/frame_delay_msec=14
 config/icon="res://icon.svg"
 
 [dotnet]

@@ -27,12 +27,13 @@ signal animation_finished
 func emit_chain_attack(index: int):
 	chain_atk.emit(index)
 
-#Add function for sending signal after an attack part
+#<Add function for sending signal after an attack part>
 func emit_finish_attack():
 	finish_atk.emit()
 	
 func emit_push_attack():
 	push_atk.emit()
+	print('pushedd')
 #==================================================
 
 func _on_animation_player_animation_finished(anim_name):
