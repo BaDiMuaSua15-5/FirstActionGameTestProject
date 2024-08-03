@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://Resources/weapon_resource.gd" id="1_rmq4m"]
 
 [resource]
-resource_local_to_scene = true
 script = ExtResource("1_rmq4m")
 Weapon_Name = "LongSword"
 Active_Anim = "LS active"

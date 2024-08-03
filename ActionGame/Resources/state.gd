@@ -17,6 +17,7 @@ func exit():
 	set_physics_process(false)
 
 func transition():
+	print("State: transition() not implemented")
 	pass
 
 func _physics_process(_delta):

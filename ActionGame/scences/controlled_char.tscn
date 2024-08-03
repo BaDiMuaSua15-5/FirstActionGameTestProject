@@ -14,10 +14,11 @@ size = Vector3(200, 200, 1)
 radius = 10.0
 height = 20.0
 
-[node name="ControlledChar" type="CharacterBody2D"]
+[node name="ControlledChar" type="CharacterBody2D" node_paths=PackedStringArray("HealthComponent")]
 collision_mask = 14
 platform_floor_layers = 1
 script = ExtResource("1_cao7d")
+HealthComponent = NodePath("Components/HealthComponent")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 top_level = true
@@ -40,6 +41,7 @@ modulate = Color(1, 0, 0, 1)
 mesh = SubResource("SphereMesh_71txj")
 
 [node name="Components" type="Node2D" parent="."]
+position = Vector2(3, 0)
 
 [node name="HealthComponent" type="Node" parent="Components"]
 unique_name_in_owner = true

@@ -1,13 +1,12 @@
 extends State
 
-var player_near: bool = true
+var player_near: bool
 var in_attack: bool = false
 @onready var locked_on: bool = false
 
 func enter():
 	super.enter()
 	player_near = true
-	#owner.set_physics_process(true)
 	if !locked_on:
 		%WeaponComponent.weapon_ready()
 		locked_on = true

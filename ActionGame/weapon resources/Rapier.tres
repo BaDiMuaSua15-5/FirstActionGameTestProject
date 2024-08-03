@@ -13,5 +13,5 @@ Recover_Time = 0.0
 Damage = 4
 Stamina_Cost = 15
 knockback = 75
-stun_time = 0.4
+stun_time = 0.1
 Auto_Fire = true

@@ -7,6 +7,6 @@ class_name HitBoxComponent
 signal hitted
 
 func hit(attack: AttackObj):
+	print('hitted hitbox')
 	health_component.health -= attack.damage
-	print(health_component.health)
-	hitted.emit(attack as AttackObj)
+	owner_hypo.damage(attack)

@@ -1,4 +1,5 @@
 extends Node2D
+class_name WeaponsManager
 
 var AnimPlayer: AnimationPlayer
 
@@ -72,16 +73,18 @@ func changeWeapon(weapon_name: String):
 	enter()
 
 func _on_animation_player_animation_finished(anim_name):
-	print('anim finished: '+str(Next_Weapon))
 	# Change weapon when deactive animation is finished
 	if anim_name == Current_Weapon.Deactive_Anim:
 		changeWeapon(Next_Weapon)
 		
 	if anim_name == Current_Weapon.Attack_Anim:
-		AnimPlayer.play("LS recover")
+		AnimPlayer.queue(Current_Weapon.Recover_Anim)
+		isAttacking = false
 
-	if anim_name == "LS recover":
+	if anim_name == Current_Weapon.Recover_Anim:
 		attack_finished.emit()
+		
+	
 
 # ATTACKING ----------
 @export var isAttacking: bool = false
@@ -95,9 +98,11 @@ func attack():
 	#check for timed chainAttack
 	if (AnimPlayer.is_playing() and AnimPlayer.get_current_animation().match(Current_Weapon.Attack_Anim)):
 		if !($Weapons.get_node(Current_Weapon.Weapon_Name).isAttacking):
+			print("Chain attack")
 			attackChain = true
 	else:
 		AnimPlayer.queue(Current_Weapon.Attack_Anim)
+		isAttacking = true
 		attack_signal.emit()
 		
 func _on_weapon_finish_attack():
@@ -110,12 +115,13 @@ func _on_weapon_push_attack():
 func chain_attack(_attack_index: int):
 	if (attackChain):
 		attackChain = false
-		AnimPlayer.play()
+		#AnimPlayer.play()
 		attack_signal.emit()
 	elif Current_Weapon.Auto_Fire and Input.is_action_pressed("attack"):
-		AnimPlayer.play()
+		#AnimPlayer.play()
 		attack_signal.emit()
 	else:
+		isAttacking = false
 		AnimPlayer.play(Current_Weapon.Recover_Anim)
 
 func _on_controlled_char_pressed_attack():

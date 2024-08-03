@@ -18,6 +18,7 @@ func attack():
 
 func _weapon_anim_player_finished(anim_name: String):
 	if (anim_name.match(currentWeapon.Attack_Anim)):
+		weaponAnimPlayer.play(currentWeapon.Recover_Anim)
 		attack_finished.emit()
 
 func chain_attack(attack_index: int):
@@ -27,7 +28,7 @@ func chain_attack(attack_index: int):
 	else:
 		choice = randf_range(2, 9)
 	if (choice<5):
-		weaponAnimPlayer.stop()
+		weaponAnimPlayer.play(currentWeapon.Recover_Anim)
 		attack_finished.emit()
 		return
 	attack_started.emit()

@@ -1,9 +1,9 @@
 extends Node
 class_name HealthComponent
 
-@onready var HitTimer = $HitTimer
+@export var HitTimer: Timer
 
-@export var max_health = 10
+@export var max_health = 1000
 
 var vulnerable: bool = true
 
@@ -15,13 +15,12 @@ var vulnerable: bool = true
 			if vulnerable:
 				health = max(value, 0)
 				vulnerable = false
-				hit_timer(0.2)
+				HitTimer.start()
 			if health == 0:
 				owner.is_dead = true
 				owner.set_physics_process(false)
 				owner.modulate = "ff0000"
 				owner.queue_free()
 
-func hit_timer(sec: float):
-	await get_tree().create_timer(sec).timeout
+func _on_hit_timer_timeout():
 	vulnerable = true

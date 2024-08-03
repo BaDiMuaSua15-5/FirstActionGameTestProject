@@ -1,7 +1,6 @@
 extends State
 
 var in_attack: bool = true
-var stunned: bool = false
 var can_attack: bool = true
 signal attack
 
@@ -11,25 +10,17 @@ func enter():
 
 func exit():
 	super.exit()
-#	if (stunned): 
-#		stunned = false
-#		%WeaponComponent.stop_attack()
 
 func transition():
 	if !in_attack:
 		get_parent().change_state("Pursuit")
-	if in_attack:
-		if can_attack and $"../../WallDetectRay".get_collider() == null:
-			%"Attack Timer".start()
-			can_attack = false
-			%WeaponComponent.attack()
-			attack.emit()
-
-
-
-func _on_stun_stunned():
-	stunned = true
 	
+	if can_attack && !(owner as EnemyObj).wallRay.is_colliding():
+		%"Attack Timer".start()
+		can_attack = false
+		%WeaponComponent.attack()
+		attack.emit()
+
 func _on_attack_area_body_exited(body):
 	if body is PlayerObj:
 		in_attack = false

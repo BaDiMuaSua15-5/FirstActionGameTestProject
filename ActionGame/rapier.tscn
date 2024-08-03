@@ -394,7 +394,6 @@ rotation = -0.785397
 script = ExtResource("1_whxn6")
 weapon_resource = ExtResource("2_5obyc")
 animation_player = NodePath("AnimationPlayer")
-isAttacking = true
 
 [node name="RP_Mesh" type="MeshInstance2D" parent="."]
 modulate = Color(0.756863, 0.756863, 0, 1)

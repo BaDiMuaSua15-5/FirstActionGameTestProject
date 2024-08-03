@@ -24,6 +24,7 @@ signal health_change
 				vulnerable = false
 				hit_timer(0.2)
 			if health == 0:
+				print('out health')
 				owner.is_dead = true
 				owner.set_physics_process(false)
 				owner.modulate = "ff0000"

@@ -15,15 +15,8 @@ grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Status"]
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.25
-anchor_bottom = 0.217
-offset_left = 0.0639648
-offset_top = 0.279968
-offset_right = 0.0639648
-offset_bottom = -0.200012
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 347.0
+offset_bottom = 140.0
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 20
 
