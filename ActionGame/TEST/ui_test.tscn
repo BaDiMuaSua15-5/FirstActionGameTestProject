@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://b80er7gsmpjfo"]
+
+[ext_resource type="PackedScene" uid="uid://cpc2tjh2pqcmo" path="res://scences/UI/drag_object.tscn" id="1_m1xfh"]
+[ext_resource type="PackedScene" uid="uid://c5s3d5ial7jtj" path="res://scences/UI/drop_body.tscn" id="2_u01do"]
+
+[node name="UI_TEST" type="Node2D"]
+
+[node name="DragObject" parent="." instance=ExtResource("1_m1xfh")]
+position = Vector2(280, 280)
+
+[node name="DropBody" parent="." instance=ExtResource("2_u01do")]
+position = Vector2(560, 344)

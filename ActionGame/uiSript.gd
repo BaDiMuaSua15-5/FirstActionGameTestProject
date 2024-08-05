@@ -9,15 +9,17 @@ var HealthCmp: PlayerHealthComponent
 var StaminaCmp: StaminaComponent
 
 func _ready():
-	HealthCmp = Player.find_child("HealthComponent")
-	StaminaCmp = Player.find_child("StaminaComponent")
-	timer = Player.find_child("StaminaComponent").get_child(0)
-	HealthCmp.connect("health_change", update_health_bar)
-	StaminaCmp.connect("stamina_change", update_stamina_bar)
-	update_health_bar(HealthCmp.health, HealthCmp.max_health)
+	if Player:
+		HealthCmp = Player.find_child("HealthComponent")
+		StaminaCmp = Player.find_child("StaminaComponent")
+		timer = Player.find_child("StaminaComponent").get_child(0)
+	#HealthCmp.connect("health_change", update_health_bar)
+	#StaminaCmp.connect("stamina_change", update_stamina_bar)
+	#update_health_bar(HealthCmp.health, HealthCmp.max_health)
 
 func _process(delta):
-	timer_label.text = "Timer: "+str(timer.time_left)
+	#timer_label.text = "Timer: "+str(timer.time_left)
+	pass
 
 func update_health_bar(health_value, max_value):
 	health_bar.value = health_value

@@ -85,6 +85,7 @@ unique_name_in_owner = true
 script = ExtResource("4_wtulb")
 
 [node name="LongSword" parent="Components/WeaponComponent" instance=ExtResource("5_ossfq")]
+modulate = Color(1, 1, 1, 0)
 rotation = 10.2312
 
 [node name="Marker2D" type="Marker2D" parent="Components/WeaponComponent"]

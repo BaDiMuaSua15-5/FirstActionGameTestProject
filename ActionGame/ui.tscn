@@ -7,9 +7,10 @@ script = ExtResource("1_su5vw")
 
 [node name="Status" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_right = 0.339
+anchor_bottom = 0.194
+offset_right = 0.471985
+offset_bottom = 0.287994
 grow_horizontal = 2
 grow_vertical = 2
 
