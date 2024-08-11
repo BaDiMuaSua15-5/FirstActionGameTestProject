@@ -19,9 +19,12 @@ collision_mask = 14
 platform_floor_layers = 1
 script = ExtResource("1_cao7d")
 HealthComponent = NodePath("Components/HealthComponent")
+max_health = 2465
+health = 2465
 
 [node name="Camera2D" type="Camera2D" parent="."]
 top_level = true
+zoom = Vector2(0.46, 0.46)
 position_smoothing_speed = 10.0
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
@@ -32,8 +35,9 @@ position = Vector2(0, 3)
 rotation = -3.14159
 mesh = SubResource("PrismMesh_tb1as")
 
-[node name="Weapons_Manager" parent="." instance=ExtResource("2_etlth")]
+[node name="Weapons_Manager" parent="." node_paths=PackedStringArray("ControlledChar") instance=ExtResource("2_etlth")]
 unique_name_in_owner = true
+ControlledChar = NodePath("..")
 
 [node name="MeshInstance2D2" type="MeshInstance2D" parent="."]
 modulate = Color(1, 0, 0, 1)
@@ -42,11 +46,11 @@ mesh = SubResource("SphereMesh_71txj")
 [node name="Components" type="Node2D" parent="."]
 position = Vector2(3, 0)
 
-[node name="HealthComponent" type="Node" parent="Components"]
+[node name="HealthComponent" type="Node" parent="Components" node_paths=PackedStringArray("OwnerEntity")]
 unique_name_in_owner = true
 script = ExtResource("3_hvvsn")
+OwnerEntity = NodePath("../..")
 max_health = 30
-health = 13.0
 
 [node name="HitTimer" type="Timer" parent="Components/HealthComponent"]
 
@@ -59,13 +63,12 @@ unique_name_in_owner = true
 wait_time = 0.5
 one_shot = true
 
-[node name="HitBoxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("health_component", "owner_hypo")]
+[node name="HitBoxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("HealthComponent")]
 unique_name_in_owner = true
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("4_1esed")
-health_component = NodePath("../HealthComponent")
-owner_hypo = NodePath("../..")
+HealthComponent = NodePath("../HealthComponent")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Components/HitBoxComponent"]
 polygon = PackedVector2Array(100, 103, -100, 103, 0, -97)
@@ -74,6 +77,5 @@ polygon = PackedVector2Array(100, 103, -100, 103, 0, -97)
 unique_name_in_owner = true
 one_shot = true
 
-[connection signal="pressed_attack" from="." to="Weapons_Manager" method="_on_controlled_char_pressed_attack"]
 [connection signal="timeout" from="Components/StaminaComponent/StaminaGenTimer" to="." method="_on_stamina_gen_timer_timeout"]
 [connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]

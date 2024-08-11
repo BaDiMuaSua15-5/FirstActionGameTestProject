@@ -4,33 +4,58 @@ var player_near: bool
 var in_attack: bool = false
 @onready var locked_on: bool = false
 
-func enter():
+@export var Entity: EnemyObj
+@export var WeaponComponent: WeaponComponent
+
+@onready var WallDetectRay: RayCast2D = $WallDetectRay
+
+func enter() -> void:
 	super.enter()
 	player_near = true
 	if !locked_on:
-		%WeaponComponent.weapon_ready()
+		WeaponComponent.weapon_ready()
 		locked_on = true
 
-func exit():
+func exit() -> void:
 	super.exit()
 	#owner.set_physics_process(false)
 
-func transition():
+func transition(delta: float) -> void:
 	if player_near == false:
 		locked_on = false
-		owner.player = null
-		get_parent().change_state("Ide")
+		Entity.player = null
+		StateMachine.change_state("Ide")
 	if in_attack:
-		get_parent().change_state("Combat")
+		StateMachine.change_state("Combat")
+	
+	
+	## Temporally discard movement controlled by state
+	#if Entity.player != null:
+		#WallDetectRay.target_position = (Entity.player.position - Entity.position)
+		## check if there are any obstructions between enemy
+		## and target
+		#var direction: Vector2
+		##direction = (player.global_position - global_position).normalized()
+		#if WallDetectRay.get_collider() == null: # direct tracking
+			#direction = (Entity.player.position - Entity.position).normalized()
+		#elif Entity.navAgent.get_next_path_position() != Vector2.ZERO: # navigation based tracking
+			#var next_position := Entity.navAgent.get_next_path_position()
+			#direction = (next_position - Entity.position).normalized()
+		#Entity.velocity = Entity.velocity.lerp(direction * Entity.speed, Entity.accel * delta)
+		#Entity.move_and_slide()
+		#Entity.rotate_to(Entity.player.position, delta)
+		
 
-func _on_notice_area_2d_body_exited(body):
+func _on_notice_area_2d_body_exited(body: PhysicsBody2D) -> void:
 	if body is PlayerObj:
 		player_near = false
 
-func _on_attack_area_body_exited(body):
+func _on_attack_area_body_entered(body: PhysicsBody2D) -> void:
+	if body is PlayerObj:
+		in_attack = true
+
+func _on_attack_area_body_exited(body: PhysicsBody2D) -> void:
 	if body is PlayerObj:
 		in_attack = false
 
-func _on_attack_area_body_entered(body):
-	if body is PlayerObj:
-		in_attack = true
+

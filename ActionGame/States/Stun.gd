@@ -1,24 +1,27 @@
 extends State
 
 var stun: bool = true
-signal stunned
+@export var Entity: EnemyObj
+@export var WeaponComponent: WeaponComponent
 
-func enter():
+func enter() -> void:
 	super.enter()
 	stun = true
-	%WeaponComponent.stop_attack()
+	WeaponComponent.stop_attack()
 	%StunTimer.start()
 	#change colour when stunned
-	owner.modulate = "ff0000"
+	Entity.modulate = "ff0000"
 
-func exit():
+func exit() -> void:
 	super.exit()
 	#change colour back
-	owner.modulate = "ffffff"
+	Entity.modulate = "ffffff"
 
-func transition():
+func transition(delta: float) -> void:
 	if stun == false:
-		get_parent().change_state("Pursuit")
+		StateMachine.change_state("Pursuit")
 
-func _on_stun_timer_timeout():
+func _on_stun_timer_timeout() -> void:
 	stun = false
+	WeaponComponent.weapon_ready()
+	

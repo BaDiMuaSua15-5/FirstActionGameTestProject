@@ -11,6 +11,9 @@
 [ext_resource type="Script" path="res://States/Combat.gd" id="8_do1ep"]
 [ext_resource type="Script" path="res://States/Stun.gd" id="11_kqxmo"]
 
+[sub_resource type="PrismMesh" id="PrismMesh_yqss2"]
+size = Vector3(200, -200, 1)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_hfwor"]
 radius = 1423.14
 
@@ -20,17 +23,33 @@ radius = 464.069
 [sub_resource type="CircleShape2D" id="CircleShape2D_7mmex"]
 radius = 139.714
 
-[sub_resource type="PrismMesh" id="PrismMesh_yqss2"]
-size = Vector3(200, -200, 1)
-
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 13
 platform_floor_layers = 2
 script = ExtResource("1_tcifc")
+health = 740
+MAX_HEALTH = 735
+
+[node name="FacingNode" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -128)
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_max_distance = 150.0
+path_postprocessing = 1
+avoidance_enabled = true
+
+[node name="NavTimer" type="Timer" parent="."]
+wait_time = 2.5
+autostart = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-100, 100, 100, 100, 0, -100)
+
+[node name="enemy display" type="MeshInstance2D" parent="."]
+unique_name_in_owner = true
+mesh = SubResource("PrismMesh_yqss2")
 
 [node name="NoticeArea2D" type="Area2D" parent="."]
 unique_name_in_owner = true
@@ -53,29 +72,23 @@ position = Vector2(0, 24)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CloseArea"]
 shape = SubResource("CircleShape2D_7mmex")
 
-[node name="enemy display" type="MeshInstance2D" parent="."]
-unique_name_in_owner = true
-mesh = SubResource("PrismMesh_yqss2")
-
 [node name="Components" type="Node2D" parent="."]
 
-[node name="HealthComponent" type="Node" parent="Components"]
+[node name="HealthComponent" type="Node" parent="Components" node_paths=PackedStringArray("OwnerEntity")]
 unique_name_in_owner = true
 script = ExtResource("2_p5gl7")
-max_health = 1000
-health = 1000.0
+OwnerEntity = NodePath("../..")
 
 [node name="HitTimer" type="Timer" parent="Components/HealthComponent"]
 wait_time = 0.2
 one_shot = true
 
-[node name="HitBoxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("health_component", "owner_hypo")]
+[node name="HitBoxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("HealthComponent")]
 unique_name_in_owner = true
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("2_anltf")
-health_component = NodePath("../HealthComponent")
-owner_hypo = NodePath("../..")
+HealthComponent = NodePath("../HealthComponent")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Components/HitBoxComponent"]
 polygon = PackedVector2Array(100, 103, -100, 103, 0, -97)
@@ -86,7 +99,6 @@ script = ExtResource("4_wtulb")
 
 [node name="LongSword" parent="Components/WeaponComponent" instance=ExtResource("5_ossfq")]
 modulate = Color(1, 1, 1, 0)
-rotation = 10.2312
 
 [node name="Marker2D" type="Marker2D" parent="Components/WeaponComponent"]
 position = Vector2(0, -532)
@@ -95,22 +107,40 @@ position = Vector2(0, -532)
 unique_name_in_owner = true
 script = ExtResource("5_endji")
 
-[node name="Ide" type="Node2D" parent="FiniteStateMachine"]
+[node name="Ide" type="Node2D" parent="FiniteStateMachine" node_paths=PackedStringArray("Entity", "WeaponComponent")]
 script = ExtResource("6_l475n")
+Entity = NodePath("../..")
+WeaponComponent = NodePath("../../Components/WeaponComponent")
 
-[node name="Pursuit" type="Node2D" parent="FiniteStateMachine"]
+[node name="RayCastDetection" type="RayCast2D" parent="FiniteStateMachine/Ide"]
+collision_mask = 5
+
+[node name="Pursuit" type="Node2D" parent="FiniteStateMachine" node_paths=PackedStringArray("Entity", "WeaponComponent")]
 script = ExtResource("7_3147a")
+Entity = NodePath("../..")
+WeaponComponent = NodePath("../../Components/WeaponComponent")
 
-[node name="Combat" type="Node2D" parent="FiniteStateMachine"]
+[node name="WallDetectRay" type="RayCast2D" parent="FiniteStateMachine/Pursuit"]
+unique_name_in_owner = true
+target_position = Vector2(0, -384)
+collision_mask = 4
+
+[node name="Line2D" type="Line2D" parent="FiniteStateMachine/Pursuit/WallDetectRay"]
+
+[node name="Combat" type="Node2D" parent="FiniteStateMachine" node_paths=PackedStringArray("Entity", "WeaponComponent")]
 script = ExtResource("8_do1ep")
+Entity = NodePath("../..")
+WeaponComponent = NodePath("../../Components/WeaponComponent")
 
 [node name="Attack Timer" type="Timer" parent="FiniteStateMachine/Combat"]
 unique_name_in_owner = true
 wait_time = 3.0
 one_shot = true
 
-[node name="Stun" type="Node2D" parent="FiniteStateMachine"]
+[node name="Stun" type="Node2D" parent="FiniteStateMachine" node_paths=PackedStringArray("Entity", "WeaponComponent")]
 script = ExtResource("11_kqxmo")
+Entity = NodePath("../..")
+WeaponComponent = NodePath("../../Components/WeaponComponent")
 
 [node name="StunTimer" type="Timer" parent="FiniteStateMachine/Stun"]
 unique_name_in_owner = true
@@ -127,34 +157,15 @@ scale = Vector2(2.78772, 2.86332)
 text = "debug
 "
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_max_distance = 150.0
-path_postprocessing = 1
-avoidance_enabled = true
-
-[node name="WallDetectRay" type="RayCast2D" parent="."]
-target_position = Vector2(0, -384)
-collision_mask = 4
-
-[node name="Line2D" type="Line2D" parent="WallDetectRay"]
-
-[node name="FacingNode" type="Node2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(0, -128)
-
-[node name="NavTimer" type="Timer" parent="."]
-wait_time = 2.5
-autostart = true
-
+[connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout"]
 [connection signal="body_entered" from="NoticeArea2D" to="FiniteStateMachine/Ide" method="_on_notice_area_2d_body_entered"]
 [connection signal="body_exited" from="NoticeArea2D" to="FiniteStateMachine/Pursuit" method="_on_notice_area_2d_body_exited"]
 [connection signal="body_entered" from="AttackArea" to="FiniteStateMachine/Pursuit" method="_on_attack_area_body_entered"]
 [connection signal="body_exited" from="AttackArea" to="FiniteStateMachine/Pursuit" method="_on_attack_area_body_exited"]
 [connection signal="body_exited" from="AttackArea" to="FiniteStateMachine/Combat" method="_on_attack_area_body_exited"]
-[connection signal="body_entered" from="CloseArea" to="." method="_on_close_area_body_entered"]
-[connection signal="body_exited" from="CloseArea" to="." method="_on_close_area_body_exited"]
+[connection signal="body_entered" from="CloseArea" to="FiniteStateMachine/Combat" method="_on_close_area_body_entered"]
+[connection signal="body_exited" from="CloseArea" to="FiniteStateMachine/Combat" method="_on_close_area_body_exited"]
 [connection signal="timeout" from="Components/HealthComponent/HitTimer" to="Components/HealthComponent" method="_on_hit_timer_timeout"]
 [connection signal="timeout" from="FiniteStateMachine/Combat/Attack Timer" to="FiniteStateMachine/Combat" method="_on_attack_timer_timeout"]
 [connection signal="timeout" from="FiniteStateMachine/Stun/StunTimer" to="." method="_on_stun_timer_timeout"]
 [connection signal="timeout" from="FiniteStateMachine/Stun/StunTimer" to="FiniteStateMachine/Stun" method="_on_stun_timer_timeout"]
-[connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout"]

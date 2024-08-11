@@ -3,7 +3,8 @@ class_name HealthComponent
 
 @export var HitTimer: Timer
 
-@export var max_health = 1000
+@export var max_health: int = 1000
+@export var OwnerEntity: CollisionObject2D
 
 var vulnerable: bool = true
 
@@ -22,5 +23,7 @@ var vulnerable: bool = true
 				owner.modulate = "ff0000"
 				owner.queue_free()
 
-func _on_hit_timer_timeout():
+
+
+func _on_hit_timer_timeout() -> void:
 	vulnerable = true

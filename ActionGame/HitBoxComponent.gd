@@ -1,12 +1,8 @@
 extends Area2D
 class_name HitBoxComponent
 
-@export var health_component: Node
-@export var owner_hypo: PhysicsBody2D
+@export var HealthComponent: PlayerHealthComponent
 
-signal hitted
-
-func hit(attack: AttackObj):
+func hit(attack: AttackObj) -> void:
 	print('hitted hitbox')
-	health_component.health -= attack.damage
-	owner_hypo.damage(attack)
+	HealthComponent.damage(attack)

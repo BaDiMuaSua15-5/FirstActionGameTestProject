@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://br2x766jxvwyi"]
+[gd_scene load_steps=10 format=3 uid="uid://br2x766jxvwyi"]
 
 [ext_resource type="PackedScene" uid="uid://bao061uq5658n" path="res://scences/controlled_char.tscn" id="2_vijwu"]
 [ext_resource type="Texture2D" uid="uid://bslrdqdla2t36" path="res://PNG/Dark/texture_01.png" id="3_x655n"]
 [ext_resource type="PackedScene" uid="uid://cvud6v7tqmseg" path="res://scences/Infrastructure/cross_wall.tscn" id="3_xkf8s"]
 [ext_resource type="PackedScene" uid="uid://cgr1iow7o12r6" path="res://enemy.tscn" id="4_6vc6w"]
 [ext_resource type="PackedScene" uid="uid://h3s1746k6kp4" path="res://scences/Infrastructure/corner_wall.tscn" id="4_w5iyt"]
+[ext_resource type="PackedScene" uid="uid://bo3tdr745vksn" path="res://scences/throwable_object.tscn" id="6_khhy5"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_ctnno"]
 radius = 30.0
@@ -57,9 +58,11 @@ position = Vector2(1472, -384)
 navigation_polygon = SubResource("NavigationPolygon_ebhl6")
 
 [node name="ControlledChar" parent="." groups=["plr"] instance=ExtResource("2_vijwu")]
-position = Vector2(648, 408)
+position = Vector2(864, 136)
 motion_mode = 1
 speed = 0
 
 [node name="Enemy" parent="." instance=ExtResource("4_6vc6w")]
-position = Vector2(-1128, -560)
+position = Vector2(-32, -328)
+
+[node name="ThrowableObject" parent="." instance=ExtResource("6_khhy5")]

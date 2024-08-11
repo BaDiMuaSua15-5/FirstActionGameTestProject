@@ -414,6 +414,7 @@ _data = {
 }
 
 [node name="LongSword" type="Node2D" node_paths=PackedStringArray("animation_player")]
+modulate = Color(1, 1, 1, 0)
 rotation = 10.2312
 script = ExtResource("1_p0ah2")
 weapon_resource = ExtResource("2_mqpft")
@@ -421,8 +422,8 @@ animation_player = NodePath("AnimationPlayer")
 
 [node name="LS_Mesh" type="MeshInstance2D" parent="."]
 self_modulate = Color(0, 1, 1, 1)
-position = Vector2(-306.332, 124.023)
-rotation = -0.384835
+position = Vector2(-135.001, 115.999)
+rotation = -1.94538
 scale = Vector2(3.88847, 1)
 mesh = SubResource("BoxMesh_j1oua")
 
@@ -432,6 +433,7 @@ collision_mask = 12
 
 [node name="LS_hitbox" type="CollisionShape2D" parent="LS_Mesh/LS_hitbox"]
 shape = SubResource("RectangleShape2D_bt8cn")
+disabled = true
 debug_color = Color(0.952941, 0.2, 0.231373, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -443,7 +445,6 @@ blend_times = [&"LS attack", &"LS recover", 0.1]
 
 [node name="WallCheckRay" type="RayCast2D" parent="."]
 modulate = Color(1, 0, 0, 1)
-visibility_layer = 4
 target_position = Vector2(564, 27.0029)
 collision_mask = 4
 

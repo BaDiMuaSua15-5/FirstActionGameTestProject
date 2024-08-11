@@ -1,30 +1,29 @@
-extends Node2D
+extends Weapon
 
-@export var weapon_resource: Weapon_Resource
-@export var animation_player: AnimationPlayer
-@onready var WallRay: RayCast2D = $WallCheckRay
-var Character: CharacterBody2D
+#@export var weapon_resource: Weapon_Resource
+#@export var animation_player: AnimationPlayer
+#@onready var WallRay: RayCast2D = $WallCheckRay
+#var Character: CharacterBody2D
 
-func _ready():
+func _ready() -> void:
+	WallRay = $WallCheckRay
+	
 	animation_player.play("RESET")
-	print(weapon_resource.Auto_Fire)
-	var owner_test = owner
-	print('ownertest: ',owner_test)
-	print(get_tree().get_node_count())
+	var owner_test := owner
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	WallRay.global_rotation = 0
 
-func _on_ls_hitbox_area_entered(area):
+func _on_ls_hitbox_area_entered(area: Area2D) -> void:
 	if area is HitBoxComponent and area.owner != owner.owner:
-		#(Character.WallChecker as RayCast2D).target_position = area.global_position - owner.global_position
-		WallRay.target_position = area.global_position - owner.global_position
-		#await (Character.WallChecker as RayCast2D).draw
+		area = area as HitBoxComponent
+		print("Hitted", area.owner)
+		var target: Vector2 = (area.global_position - global_position).rotated(-global_rotation)
+		WallRay.target_position = area.global_position - global_position
 		await (WallRay as RayCast2D).draw
-		print("Area owner position: ", area.global_position)
 		
 		if WallRay.is_colliding():
-			print("Wall collide")
+			print("Collide ", WallRay.get_collider())
 			return
 		else:
 			var attack: AttackObj = AttackObj.new()
@@ -42,23 +41,21 @@ signal finish_atk #Still waiting adding
 signal animation_finished
 @export var isAttacking: bool = false
 
-func emit_chain_attack(index: int):
+func emit_chain_attack(index: int) -> void:
 	chain_atk.emit(index)
 
 #<Add function for sending signal after an attack part>
-func emit_finish_attack():
+func emit_finish_attack() -> void:
 	finish_atk.emit()
 	
-func emit_push_attack():
+func emit_push_attack() -> void:
 	push_atk.emit()
 	print('pushedd')
 #==================================================
 
-func _on_animation_player_animation_finished(anim_name):
+func _on_animation_player_animation_finished(anim_name: String) -> void:
 	animation_finished.emit(anim_name)
 
 
-func _on_ls_hitbox_body_entered(_body):
-	#animation_player.play(weapon_resource.Active_Anim)
-	#animation_finished.emit(weapon_resource.Attack_Anim)
+func _on_ls_hitbox_body_entered(_body: PhysicsBody2D) -> void:
 	pass

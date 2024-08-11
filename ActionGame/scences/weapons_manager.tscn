@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cms4qukafcm8u" path="res://rapier.tscn" id="6_3indy"]
 [ext_resource type="Script" path="res://Resources/weapon_resource.gd" id="6_y3yd5"]
 
-[sub_resource type="Resource" id="Resource_e5ch6"]
+[sub_resource type="Resource" id="Resource_ijd04"]
 resource_local_to_scene = true
 script = ExtResource("6_y3yd5")
 Weapon_Name = "LongSword"
@@ -33,7 +33,6 @@ Start_Weapon = Array[String](["LongSword", "Rapier"])
 
 [node name="LongSword" parent="Weapons" instance=ExtResource("5_xprj6")]
 modulate = Color(1, 1, 1, 0)
-rotation = 10.2312
-weapon_resource = SubResource("Resource_e5ch6")
+weapon_resource = SubResource("Resource_ijd04")
 
 [node name="Camera2D" type="Camera2D" parent="."]
