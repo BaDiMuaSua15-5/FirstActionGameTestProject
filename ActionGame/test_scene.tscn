@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dirh8gdqr37k6"]
+[gd_scene load_steps=9 format=3 uid="uid://dirh8gdqr37k6"]
 
 [ext_resource type="Texture2D" uid="uid://bslrdqdla2t36" path="res://PNG/Dark/texture_01.png" id="1_5q8c2"]
 [ext_resource type="PackedScene" uid="uid://bh3v0q07ukyu4" path="res://ui.tscn" id="1_y3sod"]
 [ext_resource type="Script" path="res://Area2D_test.gd" id="4_ngr3q"]
 [ext_resource type="PackedScene" uid="uid://c0lpbgmdo6qki" path="res://scences/Infrastructure/long_wall.tscn" id="5_vopnd"]
+[ext_resource type="PackedScene" uid="uid://cgr1iow7o12r6" path="res://enemy.tscn" id="7_5lkpd"]
 [ext_resource type="PackedScene" uid="uid://bo3tdr745vksn" path="res://scences/throwable_object.tscn" id="7_l5rbq"]
 [ext_resource type="PackedScene" uid="uid://bao061uq5658n" path="res://scences/controlled_char.tscn" id="8_32eqs"]
 
@@ -19,9 +20,6 @@ scale = Vector2(2.74001, 1.50613)
 texture = ExtResource("1_5q8c2")
 region_enabled = true
 region_rect = Rect2(-315.855, -473.456, 1777.23, 2039.25)
-
-[node name="CanvasLayer" parent="." node_paths=PackedStringArray("Player") instance=ExtResource("1_y3sod")]
-Player = NodePath("../ControlledChar")
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(576, 216)
@@ -44,13 +42,22 @@ position = Vector2(1216, -168)
 node_a = NodePath("../LongWall")
 node_b = NodePath("../LongWall2")
 
+[node name="ControlledChar" parent="." instance=ExtResource("8_32eqs")]
+
 [node name="ThrowableObject" parent="." instance=ExtResource("7_l5rbq")]
-position = Vector2(416, 376)
+position = Vector2(520, 360)
 
 [node name="ThrowableObject2" parent="." instance=ExtResource("7_l5rbq")]
-position = Vector2(224, 512)
+position = Vector2(264, 376)
 
-[node name="ControlledChar" parent="." instance=ExtResource("8_32eqs")]
+[node name="ThrowableObject3" parent="." instance=ExtResource("7_l5rbq")]
+position = Vector2(400, 200)
+
+[node name="Enemy" parent="." instance=ExtResource("7_5lkpd")]
+position = Vector2(1624, 512)
+
+[node name="CanvasLayer" parent="." node_paths=PackedStringArray("Player") instance=ExtResource("1_y3sod")]
+Player = NodePath("../ControlledChar")
 
 [connection signal="area_entered" from="Area2D" to="Area2D" method="_on_area_entered"]
 [connection signal="area_exited" from="Area2D" to="Area2D" method="_on_area_exited"]

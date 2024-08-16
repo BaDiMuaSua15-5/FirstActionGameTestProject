@@ -59,6 +59,7 @@ func _physics_process(delta: float) -> void:
 	if (in_atk_push):
 		print(atk_push_dir)
 		velocity = atk_push_dir * 1150.0
+		atk_push_dir = atk_push_dir.lerp(Vector2.ZERO, delta * 5)
 		move_and_slide()
 		return
 	
@@ -74,11 +75,11 @@ func _physics_process(delta: float) -> void:
 		elif navAgent.get_next_path_position() != Vector2.ZERO: # navigation based tracking
 			direction = (navAgent.get_next_path_position() - global_position).normalized()
 		#velocity = velocity.lerp(direction * speed * speed_mult, accel * delta)
-		accelerate(450 * 3 * delta, direction * speed)
+		accelerate(450 * 3 * delta, direction * speed * speed_mult)
 		rotate_to(player.global_position, delta)
 	else:
 		apply_friction(450 * 5 * delta)
-	#print(velocity)
+	
 	move_and_slide()
 #END _physics_process
 
@@ -91,7 +92,7 @@ func apply_friction(amount: float) -> void:
 		velocity -= velocity.normalized() * amount
 	else:
 		velocity = Vector2.ZERO
-
+   
 func rotate_to(target: Vector2, delta: float) -> void:
 	var direction := (target - global_position).normalized()
 	var angleTo: float = (-transform.y).angle_to(direction)
@@ -113,6 +114,9 @@ func knockback(attack: AttackObj) -> void:
 	
 	StunTimer.wait_time = attack.stun_time
 	FSM.change_state("Stun")
+
+func high_velocity_collide() -> void:
+	print(self, ": collided high velocity")
 
 func _on_weapons_component_attack_signal() -> void:
 	print('start')

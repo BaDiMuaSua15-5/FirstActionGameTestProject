@@ -3,6 +3,7 @@ extends CanvasLayer
 @onready var health_bar: ProgressBar = %HealthBar
 @onready var stamina_bar: ProgressBar = %StaminaBar
 @onready var timer_label: Label = $Status/MarginContainer/VBoxContainer/Label
+@onready var health_label: Label = $Status/MarginContainer/VBoxContainer/HealthBar/Label
 @export var Player: PlayerObj
 var StaminaRegenTimer: Timer
 var HealthCmp: PlayerHealthComponent
@@ -22,8 +23,11 @@ func _process(delta: float) -> void:
 	pass
 
 func update_health_bar(health_value: int, max_value: int) -> void:
-	health_bar.value = health_value
-	health_bar.max_value = max_value
+	health_bar.min_value = 0.0
+	health_bar.max_value = max_value + 0.0
+	health_bar.value = health_value + 0.0
+	
+	health_label.text = str(health_value) + "/" + str(max_value)
   
 func update_stamina_bar(stamina_value: float, max_value: float) -> void:
 	stamina_bar.value = stamina_value

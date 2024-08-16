@@ -71,6 +71,7 @@ func _process(delta: float) -> void:
 				
 			roll_time = MAX_ROLL_TIME
 			is_rolling = false
+			roll_dir = Vector2.ZERO
 			HitBoxComp.get_child(0).disabled = false
 			modulate = Color(1, 1, 1)
 			return
@@ -95,9 +96,10 @@ func _physics_process(delta: float) -> void:
 	if is_rolling: # Rolling(dodge, atk_push) movement
 		velocity = roll_dir * 1150
 		move_and_slide()
+		roll_dir = roll_dir.lerp(Vector2.ZERO, delta * 0.5)
+		
 		var camera_curve := delta * delta * (3.0 - 2.0 * delta)
 		Camera.position = Camera.position.lerp(position, 50 * camera_curve)
-		#velocity = Vector2.ZERO
 		return
 	
 	# Normal movement & Camera
@@ -105,12 +107,12 @@ func _physics_process(delta: float) -> void:
 	Camera.position = Camera.position.lerp(position, 100 * camera_curve)
 	#Camera.position = Camera.position.lerp(position, 3 * delta)
 	var direction := Input.get_vector("left", "right", "up", "down")
-	velocity = velocity.lerp(direction * speed * speed_mult, accel * delta)
-	#if direction != Vector2.ZERO && !is_rolling && !in_knockback:
-		#direction *= speed_mult
-		#accelerate(speed * 3 * delta, direction * speed)
-	#else:
-		#apply_friction(speed * 5 * delta)
+	#velocity = velocity.lerp(direction * speed * speed_mult, accel * delta)
+	if direction != Vector2.ZERO:
+		direction = direction * speed_mult
+		accelerate(speed * 5 * delta, direction * speed)
+	else:
+		apply_friction(speed * 5 * delta)
 	roll_input(direction)
 	move_and_slide()
 
@@ -200,6 +202,7 @@ func _on_stun_timer_timeout() -> void:
 	speed_mult = 1
 	can_attack = true
 	in_knockback = false
+	knockback_dir = Vector2.ZERO
 	modulate = Color(1, 1, 1)
 
 func _on_stamina_gen_timer_timeout() -> void:

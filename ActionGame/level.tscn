@@ -26,7 +26,7 @@ agent_radius = 70.0
 [node name="Texture01" type="Sprite2D" parent="."]
 texture_repeat = 2
 position = Vector2(72.5001, 21.5)
-scale = Vector2(2.74001, 1.50613)
+scale = Vector2(2.75323, 7.11883)
 texture = ExtResource("3_x655n")
 region_enabled = true
 region_rect = Rect2(-315.855, -473.456, 1777.23, 2039.25)
