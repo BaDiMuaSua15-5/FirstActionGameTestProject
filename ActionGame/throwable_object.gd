@@ -12,9 +12,23 @@ var start_move_time: float
 var pos_save_time: float
 var can_bounce: float = false
 
+
+var damage: int
+@export var WeaponResource: Weapon_Resource
+var attack_object: AttackObj # Attack object to damage collider in high speed collision
+
 @export var Group: String
-@export var original_collision_layer := collision_layer
-@export var original_collision_mask := collision_mask
+@onready var original_collision_layer := collision_layer
+@onready var original_collision_mask := collision_mask
+var original_avoidance_layer: int 
+
+@onready var Pariticle: GPUParticles2D = $GPUParticles2D
+@export var Sprite: Sprite2D
+@export var NavObstacle: NavigationObstacle2D
+@onready var origin_scale := Sprite.scale
+
+func _ready() -> void:
+	original_avoidance_layer = NavObstacle.avoidance_layers
 
 #var collision: KinematicCollision2D
 func _physics_process(delta: float) -> void:
@@ -29,13 +43,13 @@ func _physics_process(delta: float) -> void:
 			velocity = process_collision(collision, direction, delta)
 			
 			
-			#velocity = direction
-			
 			
 	else:
 		if (velocity.length() < 100):
 			can_bounce = false
-		velocity = velocity.normalized() * min(3000.0, velocity.length())
+		else:
+			can_bounce = true
+		velocity = velocity.normalized() * min(6000.0, velocity.length())
 		var collision := move_and_collide(velocity * delta)
 		velocity = process_collision(collision, velocity, delta)
 			
@@ -59,9 +73,11 @@ func _input(event: InputEvent) -> void:
 		draggable = false
 		can_bounce = true
 		visual_feedback()
-		#collision_layer = original_collision_layer
+		collision_layer = original_collision_layer
+		collision_mask = original_collision_mask
+		NavObstacle.avoidance_layers = original_avoidance_layer
 		if elapsed_time - start_move_time < 0.1:
-			velocity = prev_velocity.normalized() * min(3000.0, prev_velocity.length() * 60)
+			velocity = prev_velocity.normalized() * min(6000.0, prev_velocity.length() * 60)
 		else:
 			velocity = Vector2.ZERO
 		
@@ -82,21 +98,28 @@ func process_collision(collision: KinematicCollision2D, dir_to_mouse: Vector2, d
 	
 	if !draggable: # Bounce behavior
 		# ======= Damage feature =======
-		print("Colided velocity:", velocity)
+		#print("Colided velocity:", velocity)
 		var damage: AttackObj
 		if (velocity.length() > 1800.0 && collider.has_method("high_velocity_collide")):
-			collider.high_velocity_collide()
-		
+			
+			var attack: AttackObj = AttackObj.new()
+			attack.damage = WeaponResource.Damage
+			attack.knockback = WeaponResource.knockback
+			attack.stun_time = WeaponResource.stun_time
+			attack.direction = velocity.normalized()
+			collider.high_velocity_collide(attack)
+			Sprite.visible = false 
+			Pariticle.emitting = true
 		# ===============================
 		
 		# Push the collied object away
 		if (collider is CharacterBody2D): # If collided with a movable object
-			print("collided with: ", collider)
-			(collider as CharacterBody2D).velocity = velocity * 0.25
+			#print("collided with: ", collider)
+			(collider as CharacterBody2D).velocity = velocity * 0.5
 		# Calculate reflected bounce direction
 		var reflected_velocity := dir_to_mouse.bounce(collision.get_normal())
-		print("Remainder length: ", remainder.length())
-		print("Bounce: ", reflected_velocity)
+		#print("Remainder length: ", remainder.length())
+		#print("Bounce: ", reflected_velocity)
 		if can_bounce:
 			return reflected_velocity.normalized() * velocity.length() * 0.25# Times 30 for a more forceful bounce
 		else:
@@ -107,9 +130,6 @@ func process_collision(collision: KinematicCollision2D, dir_to_mouse: Vector2, d
 			# Mimic pushing behavior
 			
 			var normal:= collision.get_normal()
-			var direction := velocity.normalized()
-			var length := velocity.length()
-			var travel : = collision.get_travel()
 			var deflected_vec := dir_to_mouse - normal * dir_to_mouse.dot(normal)
 			print("push angle: ", rad_to_deg(velocity.angle_to(normal)))
 			if !(rad_to_deg(velocity.angle_to(normal)) <= 150.0 && rad_to_deg(velocity.angle_to(normal)) >= -150.0):
@@ -134,10 +154,10 @@ func process_collision(collision: KinematicCollision2D, dir_to_mouse: Vector2, d
 
 func visual_feedback() -> void:
 	if draggable:
-		get_child(0).scale = Vector2(1.05, 1.05)
+		get_child(0).scale = Vector2(origin_scale.x + 0.05, origin_scale.y + 0.05)
 		modulate = Color("fcfc00")
 	else:
-		get_child(0).scale = Vector2(1, 1)
+		get_child(0).scale = Vector2(origin_scale.x, origin_scale.y)
 		modulate = Color(1, 1, 1)
 
 
@@ -160,7 +180,9 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 			Global.is_dragging = true
 			offset = get_global_mouse_position() - global_position
 			visual_feedback()
-			#collision_layer = 0
+			collision_layer = 0
+			collision_mask = 3
+			NavObstacle.avoidance_layers = 0
 
 
 func _on_mouse_entered() -> void:
@@ -180,3 +202,7 @@ func _on_mouse_exited() -> void:
 
 
 
+
+
+func _on_gpu_particles_2d_finished() -> void:
+	queue_free()

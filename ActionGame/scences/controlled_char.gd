@@ -62,11 +62,11 @@ func _process(delta: float) -> void:
 		if (roll_time <= 0.0): # When end of the roll
 			if !in_push: #Check if the roll force is an atk_push
 				#If not then start the stamnia_regen Timer
-				print("Rolled")
+				#print("Rolled")
 				%StaminaGenTimer.wait_time = 0.5
 				%StaminaGenTimer.start()
 			else: # If is atk_push then let the atk_finish Signal start the Timer
-				print("Pushed")
+				#print("Pushed")
 				in_push = false
 				
 			roll_time = MAX_ROLL_TIME
@@ -77,6 +77,11 @@ func _process(delta: float) -> void:
 			return
 		roll_time -= delta
 
+	if Global.is_dragging:
+		stamnia_regen = 0
+		StaminaComp.stamina -= 40 * delta
+		%StaminaGenTimer.wait_time = 2
+		%StaminaGenTimer.start()
 
 var roll_dir: Vector2
 var knockback_dir: Vector2
@@ -168,7 +173,7 @@ func roll_input(direction: Vector2) -> void:
 
 func _on_weapons_manager_attack_signal() -> void:
 	%StaminaGenTimer.stop()
-	print("Attack intercept")
+	#print("Attack intercept")
 	speed_mult = 0
 	stamnia_regen = 0
 	rotationSpeed = 1.5
@@ -191,7 +196,7 @@ func _on_weapons_manager_attack_finished() -> void:
 	rotationSpeed = DEFAULT_RTA_SPD
 	%StaminaGenTimer.stop()
 	
-	print("Stamina: ", StaminaComp.stamina)
+	#print("Stamina: ", StaminaComp.stamina)
 	if (StaminaComp.stamina <= 0.0):
 		%StaminaGenTimer.wait_time = 0.9
 	else:
@@ -206,5 +211,5 @@ func _on_stun_timer_timeout() -> void:
 	modulate = Color(1, 1, 1)
 
 func _on_stamina_gen_timer_timeout() -> void:
-	print("Stamina gen timer out")
+	#print("Stamina gen timer out")
 	stamnia_regen = DEFAULT_STM_GEN

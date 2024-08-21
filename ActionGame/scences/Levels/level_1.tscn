@@ -1,0 +1,267 @@
+[gd_scene load_steps=10 format=3 uid="uid://bemwjr88w3yb5"]
+
+[ext_resource type="Texture2D" uid="uid://bslrdqdla2t36" path="res://PNG/Dark/texture_01.png" id="1_icpgu"]
+[ext_resource type="PackedScene" uid="uid://bao061uq5658n" path="res://scences/controlled_char.tscn" id="2_kci5l"]
+[ext_resource type="PackedScene" uid="uid://h3s1746k6kp4" path="res://scences/Infrastructure/corner_wall.tscn" id="3_uvjm3"]
+[ext_resource type="PackedScene" uid="uid://c0lpbgmdo6qki" path="res://scences/Infrastructure/long_wall.tscn" id="4_1qful"]
+[ext_resource type="PackedScene" uid="uid://cvud6v7tqmseg" path="res://scences/Infrastructure/cross_wall.tscn" id="5_eat8s"]
+[ext_resource type="PackedScene" uid="uid://cgr1iow7o12r6" path="res://enemy.tscn" id="6_hkyq7"]
+[ext_resource type="PackedScene" uid="uid://bo3tdr745vksn" path="res://scences/throwable_object.tscn" id="7_div2w"]
+[ext_resource type="PackedScene" uid="uid://bh3v0q07ukyu4" path="res://ui.tscn" id="8_8almx"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_8q3r1"]
+vertices = PackedVector2Array(388, 17, -724, 10, -728, -250, -338, -250, 391, -245, 18, -253, -338, -686, 18, -688, 1874, 488, 1874, 1185, -722, 1178, -722, 994, 830, 454, -1350, 454, -1158, 454, -1158, 646, -730, 646, -730, 454, -714, -686, -714, -1258, 1795, -1258, 830, -676, 1802, -303, 1803, -290, -1150, 994, -1150, 1186, -1342, 1186, -3330, -1274, -1342, 1614, -1150, 1614, -1150, 2830, -722, 2830, -722, 2350, 1874, 2350, 1874, 3282, -3330, 3282, -1350, 32, -1158, -1274, -1158, 24)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 4, 3), PackedInt32Array(5, 3, 6, 7), PackedInt32Array(8, 9, 10, 11, 12), PackedInt32Array(13, 14, 15), PackedInt32Array(16, 17, 12, 11), PackedInt32Array(6, 18, 19, 20, 7), PackedInt32Array(21, 7, 20), PackedInt32Array(21, 20, 22, 12), PackedInt32Array(12, 22, 23), PackedInt32Array(12, 23, 8), PackedInt32Array(16, 11, 24, 15), PackedInt32Array(15, 24, 25, 26, 27, 13), PackedInt32Array(28, 29, 30), PackedInt32Array(31, 32, 33, 34), PackedInt32Array(31, 34, 35, 30), PackedInt32Array(30, 35, 27, 28), PackedInt32Array(26, 28, 27), PackedInt32Array(36, 13, 27), PackedInt32Array(36, 27, 37, 38)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-3480, -1424, -1008, -1424, -1008, 168, -1200, 176, -1200, 304, -1008, 304, -1008, 496, -880, 496, -880, 304, 680, 304, 680, -528, 168, -536, 168, -400, 544, -392, 536, 168, -872, 160, -880, -400, -488, -400, -488, -536, -864, -536, -864, -1084.2, -864, -1408, 1944, -1408, 1952, -304, 2024, 488, 2024, 1336, -872, 1328, -872, 1144, -1000, 1144, -1000, 1336, -1192, 1336, -1192, 1464, -1000, 1464, -1000, 2680, -872, 2680, -872, 2200, 2024, 2200, 2024, 3432, -1008, 3432, -3480, 3432)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 150.0
+
+[node name="Level_1" type="Node2D"]
+
+[node name="Texture01" type="Sprite2D" parent="."]
+texture_repeat = 2
+position = Vector2(-186, -12)
+scale = Vector2(-5.38626, 5.01544)
+texture = ExtResource("1_icpgu")
+region_enabled = true
+region_rect = Rect2(513, 513, 2079, 1702)
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="ControlledChar" parent="." instance=ExtResource("2_kci5l")]
+position = Vector2(-520, 1176)
+
+[node name="Walls" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="CornerWall" parent="Walls" instance=ExtResource("3_uvjm3")]
+position = Vector2(616, -464)
+
+[node name="CornerWall3" parent="Walls" instance=ExtResource("3_uvjm3")]
+position = Vector2(616, 240)
+rotation = 1.5708
+
+[node name="CornerWall7" parent="Walls" instance=ExtResource("3_uvjm3")]
+position = Vector2(-3544, 3496)
+rotation = 3.14159
+
+[node name="CornerWall2" parent="Walls" instance=ExtResource("3_uvjm3")]
+position = Vector2(-944, -464)
+rotation = -1.5708
+
+[node name="CornerWall8" parent="Walls" instance=ExtResource("3_uvjm3")]
+position = Vector2(-3544, -1488)
+rotation = -1.5708
+
+[node name="CornerWall5" parent="Walls" instance=ExtResource("3_uvjm3")]
+position = Vector2(2592, 1400)
+rotation = 1.5708
+
+[node name="CornerWall6" parent="Walls" instance=ExtResource("3_uvjm3")]
+position = Vector2(3984, 949)
+
+[node name="CornerWall10" parent="Walls" instance=ExtResource("3_uvjm3")]
+position = Vector2(4648, 949)
+rotation = -1.5708
+
+[node name="CornerWall9" parent="Walls" instance=ExtResource("3_uvjm3")]
+position = Vector2(4648, 3496)
+rotation = 1.5708
+
+[node name="LongWall" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(-176, 240)
+
+[node name="LongWall4" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(2016, -816)
+rotation = 1.57079
+
+[node name="LongWall5" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(3041, 948)
+rotation = 3.14159
+
+[node name="LongWall10" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(-168, 1400)
+rotation = 3.14159
+
+[node name="LongWall11" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(856, 1400)
+rotation = 3.14159
+
+[node name="LongWall12" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(1880, 1400)
+rotation = 3.14159
+
+[node name="LongWall13" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(-360, 2136)
+rotation = 3.14159
+
+[node name="LongWall14" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(664, 2136)
+rotation = 3.14159
+
+[node name="LongWall15" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(1688, 2136)
+rotation = 3.14159
+
+[node name="LongWall27" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(3984, 1608)
+rotation = 4.71239
+
+[node name="LongWall28" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(2712, 2136)
+rotation = 6.28319
+
+[node name="LongWall33" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(3536, 2136)
+rotation = 6.28319
+
+[node name="LongWall34" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(2664, 3496)
+rotation = 6.28319
+
+[node name="LongWall29" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(3688, 3496)
+rotation = 6.28319
+
+[node name="LongWall35" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(4648, 2536)
+rotation = 7.85398
+
+[node name="LongWall37" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(2088, 3048)
+rotation = 7.85398
+
+[node name="LongWall36" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(4648, 1512)
+rotation = 7.85398
+
+[node name="LongWall30" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(1512, 3496)
+rotation = 6.28319
+
+[node name="LongWall31" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(488, 3496)
+rotation = 6.28319
+
+[node name="LongWall32" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(-536, 3496)
+rotation = 6.28319
+
+[node name="LongWall8" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(3616, -368)
+rotation = 3.14159
+
+[node name="LongWall9" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(2592, -368)
+rotation = 3.14159
+
+[node name="LongWall6" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(2088, 1000)
+rotation = 1.57079
+
+[node name="LongWall16" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(2088, 2024)
+rotation = 1.57079
+
+[node name="LongWall7" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(-944, -1040)
+rotation = 1.57079
+
+[node name="LongWall17" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(-1560, -1488)
+rotation = 3.14159
+
+[node name="LongWall38" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(-744, -1488)
+rotation = 3.14159
+
+[node name="LongWall18" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(-3544, -528)
+rotation = 4.71239
+
+[node name="LongWall19" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(-3544, 496)
+rotation = 4.71239
+
+[node name="LongWall21" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(-2584, -1488)
+rotation = 6.28319
+
+[node name="LongWall20" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(-3544, 1520)
+rotation = 4.71239
+
+[node name="LongWall22" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(-2584, 3496)
+rotation = 6.28319
+
+[node name="LongWall24" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(-784, 4096)
+rotation = 6.28319
+
+[node name="LongWall25" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(-1560, 3496)
+rotation = 6.28319
+
+[node name="LongWall26" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(-936, 2168)
+rotation = 7.85398
+
+[node name="LongWall23" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(-3544, 2544)
+rotation = 7.85397
+
+[node name="LongWall2" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(280, -1488)
+
+[node name="LongWall3" parent="Walls" instance=ExtResource("4_1qful")]
+position = Vector2(1304, -1488)
+
+[node name="CrossWall" parent="Walls" instance=ExtResource("5_eat8s")]
+position = Vector2(-936, 1400)
+
+[node name="CrossWall4" parent="Walls" instance=ExtResource("5_eat8s")]
+position = Vector2(1143, 4070)
+
+[node name="CrossWall2" parent="Walls" instance=ExtResource("5_eat8s")]
+position = Vector2(-944, 240)
+
+[node name="CrossWall3" parent="Walls" instance=ExtResource("5_eat8s")]
+position = Vector2(2016, -1488)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="Walls"]
+navigation_polygon = SubResource("NavigationPolygon_8q3r1")
+metadata/_edit_lock_ = true
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="Enemy3" parent="Enemies" instance=ExtResource("6_hkyq7")]
+position = Vector2(-1536, 1376)
+
+[node name="Enemy4" parent="Enemies" instance=ExtResource("6_hkyq7")]
+position = Vector2(-1536, 248)
+rotation = 3.14159
+
+[node name="Enemy5" parent="Enemies" instance=ExtResource("6_hkyq7")]
+position = Vector2(-568, -864)
+rotation = 1.57079
+
+[node name="Enemy6" parent="Enemies" instance=ExtResource("6_hkyq7")]
+position = Vector2(2360, 1016)
+
+[node name="Objects" type="Node" parent="."]
+
+[node name="ThrowableObject" parent="Objects" instance=ExtResource("7_div2w")]
+position = Vector2(-876, 603)
+
+[node name="ThrowableObject2" parent="Objects" instance=ExtResource("7_div2w")]
+position = Vector2(-616, 632)
+
+[node name="ThrowableObject3" parent="Objects" instance=ExtResource("7_div2w")]
+position = Vector2(-496, 752)
+
+[node name="ThrowableObject4" parent="Objects" instance=ExtResource("7_div2w")]
+position = Vector2(-368, 584)
+
+[node name="CanvasLayer" parent="." node_paths=PackedStringArray("Player") instance=ExtResource("8_8almx")]
+Player = NodePath("../ControlledChar")

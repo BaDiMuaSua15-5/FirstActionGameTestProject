@@ -20,6 +20,16 @@ func enter() -> void:
 	print("Vector up:",Vector2.UP)
 	
 	ObstructionRay.enabled = true
+	var cast_count: int = int(angle_cone_of_vision / angle_between_rays) + 1
+	
+	for index: int in cast_count:
+		var angle := angle_between_rays * (index - int(cast_count / 2.0))
+		var cast_vector: Vector2 = view_distance * Vector2.UP.rotated(angle)
+		
+		test_hit_positions.append(cast_vector)
+	queue_redraw()
+	
+	Entity.player= null
 
 func transition(delta: float) -> void:
 	if (player_near):
@@ -32,17 +42,13 @@ func transition(delta: float) -> void:
 		var angle := angle_between_rays * (index - int(cast_count / 2.0))
 		var cast_vector: Vector2 = view_distance * Vector2.UP.rotated(angle)
 		
-		#test_hit_positions.append(cast_vector)
 		ObstructionRay.target_position = cast_vector
 		ObstructionRay.force_raycast_update()
 		
 		#await ObstructionRay.draw
 		if ObstructionRay.is_colliding():
-			#enity_object.player = ObstructionRay.get_collider()
-			#enity_object.obtruct_by_wall = true
 			hit_pos = ObstructionRay.get_collision_point()
 			var collider := ObstructionRay.get_collider()
-			queue_redraw()
 			if collider is PlayerObj:
 				player_near = true
 				Entity.player = collider
@@ -50,16 +56,15 @@ func transition(delta: float) -> void:
 				ObstructionRay.target_position = Vector2.ZERO
 				break
 			
-	queue_redraw()
 	
 		
-#func _draw() -> void:
+func _draw() -> void:
 	#draw_circle((hit_pos - global_position).rotated(global_rotation), 10, Color.CRIMSON)
 	#draw_line(Vector2(0, 0), (hit_pos - global_position).rotated(global_rotation), Color.CRIMSON, 1)
-	#
-	##for hit:Vector2 in test_hit_positions:
-		##draw_circle((hit), 5, Color.CRIMSON)
-		##draw_line(Vector2(), (hit), Color.CRIMSON, 1)
+	
+	for hit:Vector2 in test_hit_positions:
+		#draw_circle((hit - global_position).rotated(global_rotation), 5, Color.CRIMSON)
+		draw_line(Vector2(0, 0), (hit), Color.CRIMSON, 2)
 
 func _on_notice_area_2d_body_entered(body: PhysicsBody2D) -> void:
 	if body is PlayerObj:

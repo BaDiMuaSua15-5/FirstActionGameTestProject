@@ -35,7 +35,8 @@ func chain_attack(attack_index: int) -> void:
 	attack_started.emit()
 
 func stop_attack() -> void:
-	weaponAnimPlayer.stop()
+	#weaponAnimPlayer.stop(false)
+	weaponAnimPlayer.call_deferred("stop", false)
 
 func weapon_ready() -> void:
 	if !weaponAnimPlayer.is_playing():

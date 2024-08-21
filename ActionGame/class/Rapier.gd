@@ -14,6 +14,8 @@ func _on_rp_hitbox_area_entered(area: Area2D) -> void:
 		attack.direction = Vector2(area.owner.global_position - owner.global_position).normalized()
 		attack.knockback = weapon_resource.knockback
 		attack.stun_time = weapon_resource.stun_time
+		if area.has_method("hit"):
+			print("Area has hit method")
 		area.hit(attack)
 
 signal chain_atk

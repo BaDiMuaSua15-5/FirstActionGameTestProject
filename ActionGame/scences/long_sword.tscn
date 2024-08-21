@@ -427,7 +427,7 @@ scale = Vector2(3.88847, 1)
 mesh = SubResource("BoxMesh_j1oua")
 
 [node name="LS_hitbox" type="Area2D" parent="LS_Mesh"]
-collision_layer = 8
+collision_layer = 0
 collision_mask = 12
 
 [node name="LS_hitbox" type="CollisionShape2D" parent="LS_Mesh/LS_hitbox"]
@@ -444,7 +444,6 @@ blend_times = [&"LS attack", &"LS recover", 0.1]
 [node name="WallCheckRay" type="RayCast2D" parent="."]
 modulate = Color(1, 0, 0, 1)
 visibility_layer = 4
-target_position = Vector2(564, 27.0029)
 collision_mask = 4
 
 [connection signal="area_entered" from="LS_Mesh/LS_hitbox" to="." method="_on_ls_hitbox_area_entered"]

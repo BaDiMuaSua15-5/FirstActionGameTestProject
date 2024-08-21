@@ -16,5 +16,6 @@ scale = Vector2(512, 128)
 mesh = SubResource("BoxMesh_fo85s")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
 position = Vector2(-254.4, 1.60001)
 polygon = PackedVector2Array(-1.60001, -65.6, 190.4, -65.6, 190.4, -257.6, 318.4, -257.6, 318.4, -65.6, 510.4, -65.6, 510.4, 62.4, 318.4, 62.4, 318.4, 254.4, 190.4, 254.4, 190.4, 62.4, -1.60001, 62.4)

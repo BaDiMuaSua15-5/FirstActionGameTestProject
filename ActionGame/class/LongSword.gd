@@ -20,7 +20,10 @@ func _on_ls_hitbox_area_entered(area: Area2D) -> void:
 		print("Hitted", area.owner)
 		var target: Vector2 = (area.global_position - global_position).rotated(-global_rotation)
 		WallRay.target_position = area.global_position - global_position
-		await (WallRay as RayCast2D).draw
+		#await (WallRay as RayCast2D).draw
+		
+		if area.has_method("hit"):
+				print("Area has hit method")
 		
 		if WallRay.is_colliding():
 			print("Collide ", WallRay.get_collider())
@@ -31,7 +34,10 @@ func _on_ls_hitbox_area_entered(area: Area2D) -> void:
 			attack.direction = Vector2(area.owner.global_position - owner.global_position).normalized()
 			attack.knockback = weapon_resource.knockback
 			attack.stun_time = weapon_resource.stun_time
+			
 			area.hit(attack)
+			
+			#WallRay.enabled = false
 
 
 
@@ -50,7 +56,7 @@ func emit_finish_attack() -> void:
 	
 func emit_push_attack() -> void:
 	push_atk.emit()
-	print('pushedd')
+	#print('pushedd')
 #==================================================
 
 func _on_animation_player_animation_finished(anim_name: String) -> void:

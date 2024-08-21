@@ -109,7 +109,7 @@ func attack() -> void:
 	#check for timed chainAttack
 	if (AnimPlayer.is_playing() and AnimPlayer.get_current_animation().match(Current_Weapon.Attack_Anim)): # Attack anim is playing
 		if !($Weapons.get_node(Current_Weapon.Weapon_Name).isAttacking): # Not in attacking state
-			print("Chain attack")
+			#print("Chain attack")
 			attackChain = true
 	else: # Not in attack anim
 		AnimPlayer.queue(Current_Weapon.Attack_Anim)

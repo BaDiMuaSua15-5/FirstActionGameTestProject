@@ -7,19 +7,31 @@ script = ExtResource("1_su5vw")
 
 [node name="Status" type="Control" parent="."]
 layout_mode = 3
-anchor_right = 0.339
-anchor_bottom = 0.194
-offset_right = 0.471985
-offset_bottom = 0.287994
+anchor_left = 0.229
+anchor_top = 0.832
+anchor_right = 0.773
+anchor_bottom = 1.0
+offset_left = -0.680023
+offset_top = 1.44
+offset_right = -0.160156
 grow_horizontal = 2
 grow_vertical = 2
+rotation = -0.00114236
 
 [node name="MarginContainer" type="MarginContainer" parent="Status"]
 layout_mode = 1
-offset_right = 347.0
-offset_bottom = 140.0
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -173.5
+offset_top = -50.5
+offset_right = 173.5
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Status/MarginContainer"]
 layout_mode = 2

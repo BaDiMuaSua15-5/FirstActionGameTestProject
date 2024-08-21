@@ -11,8 +11,9 @@ config_version=5
 [application]
 
 config/name="first creation"
-run/main_scene="res://test_scene.tscn"
+run/main_scene="res://scences/Levels/level_1.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
+run/max_fps=60
 config/icon="res://icon.svg"
 
 [autoload]
@@ -30,7 +31,6 @@ window/size/viewport_height=1080
 window/size/initial_position_type=2
 window/size/window_width_override=1270
 window/size/window_height_override=720
-window/stretch/mode="viewport"
 
 [dotnet]
 

@@ -15,11 +15,11 @@ size = Vector2(720, 20)
 
 [node name="Texture01" type="Sprite2D" parent="."]
 texture_repeat = 2
-position = Vector2(72.5001, 21.5)
-scale = Vector2(2.74001, 1.50613)
+position = Vector2(-570.581, -140.294)
+scale = Vector2(-10.3736, 6.29253)
 texture = ExtResource("1_5q8c2")
 region_enabled = true
-region_rect = Rect2(-315.855, -473.456, 1777.23, 2039.25)
+region_rect = Rect2(253, 253, 518, 518)
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2(576, 216)
@@ -31,7 +31,7 @@ position = Vector2(696, -360)
 shape = SubResource("RectangleShape2D_e1gkp")
 
 [node name="LongWall" parent="." instance=ExtResource("5_vopnd")]
-position = Vector2(752, 104)
+position = Vector2(1040, -952)
 rotation = 0.523598
 
 [node name="LongWall2" parent="." instance=ExtResource("5_vopnd")]
@@ -54,7 +54,7 @@ position = Vector2(264, 376)
 position = Vector2(400, 200)
 
 [node name="Enemy" parent="." instance=ExtResource("7_5lkpd")]
-position = Vector2(1624, 512)
+position = Vector2(-442, -385)
 
 [node name="CanvasLayer" parent="." node_paths=PackedStringArray("Player") instance=ExtResource("1_y3sod")]
 Player = NodePath("../ControlledChar")

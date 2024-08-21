@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=3 uid="uid://bao061uq5658n"]
+
+[ext_resource type="Script" path="res://scences/controlled_char.gd" id="1_cao7d"]
+[ext_resource type="PackedScene" uid="uid://dqhfkg5ldoc2p" path="res://scences/weapons_manager.tscn" id="2_etlth"]
+[ext_resource type="Script" path="res://PlayerHealthComponent.gd" id="3_hvvsn"]
+[ext_resource type="Script" path="res://HitBoxComponent.gd" id="4_1esed"]
+[ext_resource type="Script" path="res://scences/StaminaComponent.gd" id="4_5oki5"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_tb1as"]
+lightmap_size_hint = Vector2i(14, 21)
+size = Vector3(200, 200, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_71txj"]
+radius = 10.0
+height = 20.0
+
+[node name="ControlledChar" type="CharacterBody2D" node_paths=PackedStringArray("HealthComponent")]
+collision_mask = 14
+platform_floor_layers = 1
+script = ExtResource("1_cao7d")
+HealthComponent = NodePath("Components/HealthComponent")
+health = 100
+
+[node name="Camera2D" type="Camera2D" parent="."]
+top_level = true
+zoom = Vector2(0.475, 0.475)
+position_smoothing_speed = 10.0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, -97, 100, 103, -100, 103)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+position = Vector2(0, 3)
+rotation = -3.14159
+mesh = SubResource("PrismMesh_tb1as")
+
+[node name="Weapons_Manager" parent="." node_paths=PackedStringArray("ControlledChar") instance=ExtResource("2_etlth")]
+unique_name_in_owner = true
+ControlledChar = NodePath("..")
+
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+mesh = SubResource("SphereMesh_71txj")
+
+[node name="Components" type="Node2D" parent="."]
+position = Vector2(3, 0)
+
+[node name="HealthComponent" type="Node" parent="Components" node_paths=PackedStringArray("OwnerEntity")]
+unique_name_in_owner = true
+script = ExtResource("3_hvvsn")
+OwnerEntity = NodePath("../..")
+max_health = 30
+
+[node name="HitTimer" type="Timer" parent="Components/HealthComponent"]
+
+[node name="StaminaComponent" type="Node" parent="Components"]
+unique_name_in_owner = true
+script = ExtResource("4_5oki5")
+
+[node name="StaminaGenTimer" type="Timer" parent="Components/StaminaComponent"]
+unique_name_in_owner = true
+wait_time = 0.5
+one_shot = true
+
+[node name="HitBoxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("HealthComponent")]
+unique_name_in_owner = true
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("4_1esed")
+HealthComponent = NodePath("../HealthComponent")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Components/HitBoxComponent"]
+polygon = PackedVector2Array(100, 103, -100, 103, 0, -97)
+
+[node name="StunTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
+[connection signal="timeout" from="Components/StaminaComponent/StaminaGenTimer" to="." method="_on_stamina_gen_timer_timeout"]
+[connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]

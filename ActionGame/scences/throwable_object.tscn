@@ -1,28 +1,80 @@
-[gd_scene load_steps=4 format=3 uid="uid://bo3tdr745vksn"]
+[gd_scene load_steps=7 format=3 uid="uid://bo3tdr745vksn"]
 
 [ext_resource type="Script" path="res://throwable_object.gd" id="1_bi6b7"]
-[ext_resource type="Texture2D" uid="uid://ksyo6a5ba1e2" path="res://icon.svg" id="2_jx3wr"]
+[ext_resource type="Script" path="res://Resources/weapon_resource.gd" id="2_0oi74"]
+[ext_resource type="Texture2D" uid="uid://c8bdieynrk4ki" path="res://PNG/Assets/rock_png.png" id="3_yuhoi"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_j7hv0"]
-size = Vector2(120, 120)
+[sub_resource type="Resource" id="Resource_i1x2y"]
+script = ExtResource("2_0oi74")
+Weapon_Name = "Throwable"
+Active_Anim = ""
+Attack_Anim = ""
+Deactive_Anim = ""
+Recover_Anim = ""
+Recover_Time = 0.0
+Damage = 20
+Stamina_Cost = 0
+knockback = 200
+stun_time = 1.0
+Auto_Fire = false
 
-[node name="ThrowableObject" type="CharacterBody2D" groups=["throwable"]]
+[sub_resource type="CircleShape2D" id="CircleShape2D_kvmer"]
+radius = 58.4637
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4lpmh"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(0, 0, 0)
+initial_velocity_min = 441.65
+initial_velocity_max = 535.99
+gravity = Vector3(0, 0, 0)
+linear_accel_max = 100.0
+tangential_accel_min = -100.0
+tangential_accel_max = 100.0
+scale_min = 0.13
+scale_max = 0.15
+
+[node name="ThrowableObject" type="CharacterBody2D" node_paths=PackedStringArray("Sprite", "NavObstacle") groups=["throwable"]]
 collision_layer = 4
 collision_mask = 7
 input_pickable = true
 script = ExtResource("1_bi6b7")
+WeaponResource = SubResource("Resource_i1x2y")
 Group = "draggable"
+Sprite = NodePath("Sprite2D")
+NavObstacle = NodePath("NavigationObstacle2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_jx3wr")
+unique_name_in_owner = true
+position = Vector2(-4.76837e-06, -1.90735e-06)
+scale = Vector2(0.375, 0.375)
+texture = ExtResource("3_yuhoi")
+region_enabled = true
+region_rect = Rect2(22, 24, 315, 302)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_j7hv0")
+shape = SubResource("CircleShape2D_kvmer")
+metadata/_edit_lock_ = true
 
 [node name="Bounce_Timer" type="Timer" parent="."]
 wait_time = 0.8
 autostart = true
 
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+vertices = PackedVector2Array(0, -77, -50, -58, -81, -1, -60, 49, 0, 74, 57, 55, 76, 0, 63, -48)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+modulate = Color(0.674815, 0.674815, 0.674815, 1)
+emitting = false
+amount = 7
+process_material = SubResource("ParticleProcessMaterial_4lpmh")
+texture = ExtResource("3_yuhoi")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="finished" from="GPUParticles2D" to="." method="_on_gpu_particles_2d_finished"]

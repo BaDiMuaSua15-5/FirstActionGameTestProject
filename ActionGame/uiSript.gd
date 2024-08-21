@@ -18,6 +18,8 @@ func _ready() -> void:
 	StaminaCmp.connect("stamina_change", update_stamina_bar)
 	update_health_bar(HealthCmp.health, HealthCmp.max_health)
 
+	
+	
 func _process(delta: float) -> void:
 	timer_label.text = "Timer: "+str(StaminaRegenTimer.time_left)
 	pass
@@ -25,7 +27,9 @@ func _process(delta: float) -> void:
 func update_health_bar(health_value: int, max_value: int) -> void:
 	health_bar.min_value = 0.0
 	health_bar.max_value = max_value + 0.0
-	health_bar.value = health_value + 0.0
+	#health_bar.value = health_value + 0.0
+	var tween := get_tree().create_tween()
+	tween.tween_property(health_bar, "value", health_value + 0.0, 0.5)
 	
 	health_label.text = str(health_value) + "/" + str(max_value)
   

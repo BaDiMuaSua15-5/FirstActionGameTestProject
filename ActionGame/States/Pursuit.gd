@@ -8,10 +8,10 @@ var in_attack: bool = false
 @export var WeaponComponent: WeaponComponent
 
 @onready var WallDetectRay: RayCast2D = $WallDetectRay
+@onready var CancelTimer: Timer = $CancelPursuitTimer
 
 func enter() -> void:
 	super.enter()
-	player_near = true
 	if !locked_on:
 		WeaponComponent.weapon_ready()
 		locked_on = true
@@ -21,13 +21,16 @@ func exit() -> void:
 	#owner.set_physics_process(false)
 
 func transition(delta: float) -> void:
-	if player_near == false:
+	if player_near == false || Entity.player == null:
 		locked_on = false
-		Entity.player = null
+		if Entity.player:
+			Entity.target_pos = Entity.player.position
+			Entity.player = null
+		CancelTimer.start()
 		StateMachine.change_state("Ide")
+		
 	if in_attack:
 		StateMachine.change_state("Combat")
-	
 	
 	## Temporally discard movement controlled by state
 	#if Entity.player != null:
@@ -46,6 +49,10 @@ func transition(delta: float) -> void:
 		#Entity.rotate_to(Entity.player.position, delta)
 		
 
+func _on_notice_area_2d_body_entered(body: Node2D) -> void:
+	if body is PlayerObj:
+		player_near = true
+
 func _on_notice_area_2d_body_exited(body: PhysicsBody2D) -> void:
 	if body is PlayerObj:
 		player_near = false
@@ -58,4 +65,5 @@ func _on_attack_area_body_exited(body: PhysicsBody2D) -> void:
 	if body is PlayerObj:
 		in_attack = false
 
-
+func _on_cancel_pursuit_timer_timeout() -> void:
+	Entity.target_pos = Entity.origin_pos
