@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dek0upkbx1eab"]
+
+[ext_resource type="Script" path="res://scences/UI/Shakeable_Camera.gd" id="1_3ii7u"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_k2ns7"]
+noise_type = 0
+seed = 1
+fractal_octaves = 4
+fractal_lacunarity = 0.5
+domain_warp_enabled = true
+
+[node name="Shakeable_Camera" type="Node2D"]
+top_level = true
+script = ExtResource("1_3ii7u")
+noise = SubResource("FastNoiseLite_k2ns7")
+
+[node name="Camera2D" type="Camera2D" parent="."]

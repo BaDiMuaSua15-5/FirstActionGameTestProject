@@ -15,12 +15,12 @@ var Weapon_List: Dictionary = {} #hashMap<String weapon_name, Weapon_Resource we
 
 @export var _weapon_resources: Array[Weapon_Resource]
 
-@export var Start_Weapon: Array[String]
+@export var Start_Weapons: Array[String]
 
 @export var ControlledChar: PlayerObj
 
 func _ready() -> void:
-	Initalize(Start_Weapon)
+	Initalize(Start_Weapons)
 	for weapon: Weapon in $Weapons.get_children(false):
 		weapon.connect("animation_finished", _on_animation_player_animation_finished)
 		weapon.chain_atk.connect(chain_attack) #Signal for checking chain attack
@@ -28,6 +28,9 @@ func _ready() -> void:
 		weapon.push_atk.connect(_on_weapon_push_attack)
 
 func _input(event: InputEvent) -> void:
+	if ControlledChar.is_dead || ControlledChar.in_knockback:
+		return
+	
 	if event.is_action_pressed("switch weapon up"):
 		Weapon_Index = min(Weapon_Index + 1, 1)
 		exit(Weapon_Stack[Weapon_Index])
@@ -38,9 +41,9 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("attack"):
 		if ControlledChar.StaminaComp.stamina > 0:
 			attack()
+	return
 
 func Initalize(_start_weapons: Array) -> void:
-	
 	for weapon in _weapon_resources: #create and add weapon to a "dictionary" for future references
 		Weapon_List[weapon.Weapon_Name] = weapon
 	print(Weapon_List)

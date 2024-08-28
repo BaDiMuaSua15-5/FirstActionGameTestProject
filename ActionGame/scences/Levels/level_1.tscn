@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://bemwjr88w3yb5"]
+[gd_scene load_steps=15 format=3 uid="uid://bemwjr88w3yb5"]
 
+[ext_resource type="Script" path="res://scences/Levels/level_1.gd" id="1_384h3"]
 [ext_resource type="Texture2D" uid="uid://bslrdqdla2t36" path="res://PNG/Dark/texture_01.png" id="1_icpgu"]
 [ext_resource type="PackedScene" uid="uid://bao061uq5658n" path="res://scences/controlled_char.tscn" id="2_kci5l"]
 [ext_resource type="PackedScene" uid="uid://h3s1746k6kp4" path="res://scences/Infrastructure/corner_wall.tscn" id="3_uvjm3"]
@@ -7,16 +8,20 @@
 [ext_resource type="PackedScene" uid="uid://cvud6v7tqmseg" path="res://scences/Infrastructure/cross_wall.tscn" id="5_eat8s"]
 [ext_resource type="PackedScene" uid="uid://cgr1iow7o12r6" path="res://enemy.tscn" id="6_hkyq7"]
 [ext_resource type="PackedScene" uid="uid://bo3tdr745vksn" path="res://scences/throwable_object.tscn" id="7_div2w"]
+[ext_resource type="PackedScene" uid="uid://dek0upkbx1eab" path="res://scences/UI/shakeable_camera.tscn" id="8_6h0en"]
 [ext_resource type="PackedScene" uid="uid://bh3v0q07ukyu4" path="res://ui.tscn" id="8_8almx"]
+[ext_resource type="AudioStream" uid="uid://c7oqhv2l0aosh" path="res://Audio/solid_impact.ogg" id="11_dpxi3"]
+[ext_resource type="AudioStream" uid="uid://ctbevby32mmuc" path="res://Audio/doorhit-98828.mp3" id="12_4wjbs"]
+[ext_resource type="AudioStream" uid="uid://dtu6ash3d4jpc" path="res://Audio/rock-destroy-6409.mp3" id="12_wobxk"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_8q3r1"]
-vertices = PackedVector2Array(388, 17, -724, 10, -728, -250, -338, -250, 391, -245, 18, -253, -338, -686, 18, -688, 1874, 488, 1874, 1185, -722, 1178, -722, 994, 830, 454, -1350, 454, -1158, 454, -1158, 646, -730, 646, -730, 454, -714, -686, -714, -1258, 1795, -1258, 830, -676, 1802, -303, 1803, -290, -1150, 994, -1150, 1186, -1342, 1186, -3330, -1274, -1342, 1614, -1150, 1614, -1150, 2830, -722, 2830, -722, 2350, 1874, 2350, 1874, 3282, -3330, 3282, -1350, 32, -1158, -1274, -1158, 24)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 4, 3), PackedInt32Array(5, 3, 6, 7), PackedInt32Array(8, 9, 10, 11, 12), PackedInt32Array(13, 14, 15), PackedInt32Array(16, 17, 12, 11), PackedInt32Array(6, 18, 19, 20, 7), PackedInt32Array(21, 7, 20), PackedInt32Array(21, 20, 22, 12), PackedInt32Array(12, 22, 23), PackedInt32Array(12, 23, 8), PackedInt32Array(16, 11, 24, 15), PackedInt32Array(15, 24, 25, 26, 27, 13), PackedInt32Array(28, 29, 30), PackedInt32Array(31, 32, 33, 34), PackedInt32Array(31, 34, 35, 30), PackedInt32Array(30, 35, 27, 28), PackedInt32Array(26, 28, 27), PackedInt32Array(36, 13, 27), PackedInt32Array(36, 27, 37, 38)])
+vertices = PackedVector2Array(526, 157, -862, 150, -870, -390, -478, -390, 533, -382, 158, -390, 2014, 489, 2014, 1325, -862, 1318, -862, 1134, 690, 314, 1942, -303, -1210, 314, -1018, 314, -1018, 506, -870, 506, -870, 314, 158, -546, -478, -546, -854, -546, -854, -1398, 1934, -1398, 690, -538, 1942, -304, -1010, 1134, -1010, 1326, -1202, 1326, -3470, -1414, -1202, 1474, -1010, 1474, -1010, 2690, -862, 2690, -862, 2210, 2014, 2210, 2014, 3422, -3470, 3422, -1210, 166, -1018, -1414, -1018, 158)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 4, 3), PackedInt32Array(6, 7, 8, 9, 10, 11), PackedInt32Array(12, 13, 14), PackedInt32Array(15, 16, 10, 9), PackedInt32Array(17, 5, 3, 18), PackedInt32Array(18, 19, 20, 21), PackedInt32Array(17, 18, 21), PackedInt32Array(22, 17, 21), PackedInt32Array(10, 22, 21, 23, 11), PackedInt32Array(15, 9, 24, 14), PackedInt32Array(14, 24, 25, 26, 27, 12), PackedInt32Array(28, 29, 30), PackedInt32Array(31, 32, 33, 34), PackedInt32Array(31, 34, 35, 30), PackedInt32Array(30, 35, 27, 28), PackedInt32Array(26, 28, 27), PackedInt32Array(36, 12, 27), PackedInt32Array(36, 27, 37, 38)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-3480, -1424, -1008, -1424, -1008, 168, -1200, 176, -1200, 304, -1008, 304, -1008, 496, -880, 496, -880, 304, 680, 304, 680, -528, 168, -536, 168, -400, 544, -392, 536, 168, -872, 160, -880, -400, -488, -400, -488, -536, -864, -536, -864, -1084.2, -864, -1408, 1944, -1408, 1952, -304, 2024, 488, 2024, 1336, -872, 1328, -872, 1144, -1000, 1144, -1000, 1336, -1192, 1336, -1192, 1464, -1000, 1464, -1000, 2680, -872, 2680, -872, 2200, 2024, 2200, 2024, 3432, -1008, 3432, -3480, 3432)])
 source_geometry_group_name = &"navigation_polygon_source_group"
-agent_radius = 150.0
 
 [node name="Level_1" type="Node2D"]
+script = ExtResource("1_384h3")
 
 [node name="Texture01" type="Sprite2D" parent="."]
 texture_repeat = 2
@@ -28,11 +33,8 @@ region_rect = Rect2(513, 513, 2079, 1702)
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="ControlledChar" parent="." instance=ExtResource("2_kci5l")]
-position = Vector2(-520, 1176)
-
 [node name="Walls" type="Node2D" parent="."]
-metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="CornerWall" parent="Walls" instance=ExtResource("3_uvjm3")]
 position = Vector2(616, -464)
@@ -233,35 +235,71 @@ position = Vector2(2016, -1488)
 navigation_polygon = SubResource("NavigationPolygon_8q3r1")
 metadata/_edit_lock_ = true
 
+[node name="Effect" type="Node" parent="."]
+
 [node name="Enemies" type="Node" parent="."]
 
 [node name="Enemy3" parent="Enemies" instance=ExtResource("6_hkyq7")]
-position = Vector2(-1536, 1376)
+position = Vector2(104, 56)
 
 [node name="Enemy4" parent="Enemies" instance=ExtResource("6_hkyq7")]
 position = Vector2(-1536, 248)
 rotation = 3.14159
+
+[node name="Enemy7" parent="Enemies" instance=ExtResource("6_hkyq7")]
+position = Vector2(-2376, 552)
+rotation = 2.61799
 
 [node name="Enemy5" parent="Enemies" instance=ExtResource("6_hkyq7")]
 position = Vector2(-568, -864)
 rotation = 1.57079
 
 [node name="Enemy6" parent="Enemies" instance=ExtResource("6_hkyq7")]
-position = Vector2(2360, 1016)
+position = Vector2(1488, 192)
+
+[node name="ControlledChar" parent="." instance=ExtResource("2_kci5l")]
+position = Vector2(-520, 1176)
+
+[node name="Shakeable_Camera" parent="ControlledChar" node_paths=PackedStringArray("parent") instance=ExtResource("8_6h0en")]
+parent = NodePath("..")
+zoom = 0.605
 
 [node name="Objects" type="Node" parent="."]
 
 [node name="ThrowableObject" parent="Objects" instance=ExtResource("7_div2w")]
-position = Vector2(-876, 603)
+position = Vector2(-944, 992)
 
 [node name="ThrowableObject2" parent="Objects" instance=ExtResource("7_div2w")]
-position = Vector2(-616, 632)
+position = Vector2(-915, 838)
 
 [node name="ThrowableObject3" parent="Objects" instance=ExtResource("7_div2w")]
 position = Vector2(-496, 752)
 
+[node name="ThrowableObject6" parent="Objects" instance=ExtResource("7_div2w")]
+position = Vector2(-254, 947)
+
+[node name="ThrowableObject5" parent="Objects" instance=ExtResource("7_div2w")]
+position = Vector2(-784, 816)
+
 [node name="ThrowableObject4" parent="Objects" instance=ExtResource("7_div2w")]
 position = Vector2(-368, 584)
 
-[node name="CanvasLayer" parent="." node_paths=PackedStringArray("Player") instance=ExtResource("8_8almx")]
+[node name="UI" parent="." node_paths=PackedStringArray("Player") instance=ExtResource("8_8almx")]
 Player = NodePath("../ControlledChar")
+
+[node name="Sound" type="Node" parent="."]
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="Sound"]
+top_level = true
+stream = ExtResource("11_dpxi3")
+pitch_scale = 0.65
+
+[node name="ThrowCollideSound" type="AudioStreamPlayer2D" parent="Sound"]
+top_level = true
+stream = ExtResource("12_4wjbs")
+volume_db = -4.55
+pitch_scale = 0.8
+
+[node name="ThrowBreakSound" type="AudioStreamPlayer2D" parent="Sound"]
+top_level = true
+stream = ExtResource("12_wobxk")

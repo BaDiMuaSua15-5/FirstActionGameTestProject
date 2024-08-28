@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bsxj0funilgnj"]
+
+[ext_resource type="Script" path="res://scences/dash_effect.gd" id="1_dmjjh"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_36jda"]
+lightmap_size_hint = Vector2i(14, 21)
+size = Vector3(200, 200, 1)
+
+[node name="dash_effect" type="Node2D"]
+modulate = Color(1, 1, 1, 0.45098)
+show_behind_parent = true
+script = ExtResource("1_dmjjh")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+position = Vector2(0.00025177, -16.9997)
+rotation = -3.14159
+mesh = SubResource("PrismMesh_36jda")

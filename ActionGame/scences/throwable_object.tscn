@@ -39,6 +39,7 @@ scale_max = 0.15
 collision_layer = 4
 collision_mask = 7
 input_pickable = true
+motion_mode = 1
 script = ExtResource("1_bi6b7")
 WeaponResource = SubResource("Resource_i1x2y")
 Group = "draggable"
@@ -62,7 +63,7 @@ wait_time = 0.8
 autostart = true
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-vertices = PackedVector2Array(0, -77, -50, -58, -81, -1, -60, 49, 0, 74, 57, 55, 76, 0, 63, -48)
+radius = 60.0
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 modulate = Color(0.674815, 0.674815, 0.674815, 1)
@@ -74,7 +75,12 @@ lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
 
+[node name="FreeTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="finished" from="GPUParticles2D" to="." method="_on_gpu_particles_2d_finished"]
+[connection signal="timeout" from="FreeTimer" to="." method="_on_free_timer_timeout"]

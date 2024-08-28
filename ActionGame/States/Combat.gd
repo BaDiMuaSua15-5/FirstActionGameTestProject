@@ -15,7 +15,12 @@ func exit() -> void:
 	super.exit()
 
 func transition(delta: float) -> void:
-	if !in_attack_range:
+	player_track()
+	
+	if Entity.is_dead:
+		StateMachine.change_state("Ide")
+	
+	if !in_attack_range || Entity.player == null:
 		StateMachine.change_state("Pursuit")
 	
 	if can_attack && !Entity.wallRay.is_colliding(): # If there is no obsticle
@@ -23,7 +28,15 @@ func transition(delta: float) -> void:
 		WeaponComponent.attack()
 		can_attack = false
 		%"Attack Timer".start()
-		#attack.emit()
+	return
+
+func player_track() -> void:
+	if Entity.player == null:
+		#("Combat - No player")
+		return
+	#print("Combat - have player")
+	var player_position := Entity.player.global_position
+	Entity.target_pos = player_position
 
 # The player is out of the attack range
 func _on_attack_area_body_exited(body: PhysicsBody2D) -> void:

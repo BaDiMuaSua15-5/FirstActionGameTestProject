@@ -4,19 +4,45 @@ extends Weapon
 #@export var animation_player: AnimationPlayer
 
 func _ready() -> void:
+	WallRay = $WallCheckRay
 	animation_player.play("RESET")
 	print(weapon_resource.Auto_Fire)
 
 func _on_rp_hitbox_area_entered(area: Area2D) -> void:
 	if area is HitBoxComponent and area.owner != owner.owner:
-		var attack: AttackObj = AttackObj.new()
-		attack.damage = weapon_resource.Damage
-		attack.direction = Vector2(area.owner.global_position - owner.global_position).normalized()
-		attack.knockback = weapon_resource.knockback
-		attack.stun_time = weapon_resource.stun_time
-		if area.has_method("hit"):
-			print("Area has hit method")
-		area.hit(attack)
+		area = area as HitBoxComponent
+		if !area:
+			return
+		print("Hitted", area.owner)
+		
+		var space_rid := get_world_2d().space
+		var space_state := PhysicsServer2D.space_get_direct_state(space_rid)
+		var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.new()
+		query.collision_mask = 0b0100
+		query.exclude = [self]
+		query.from = get_parent().global_position
+		query.to = area.global_position
+		var wall_check_result := space_state.intersect_ray(query)
+		
+		if wall_check_result:
+			print("Blocked by wall ", wall_check_result["collider"])
+			return
+		else:
+			# Ignore if the hitted entity is in the group same as owner
+			if area.owner.get_groups()[0] == ManagingComponent.owner.get_groups()[0]:
+				print("Hitted Entity in same group")
+				return
+			else:
+				print("Hit deal damage")
+				var attack: AttackObj = AttackObj.new()
+				attack.damage = weapon_resource.Damage
+				attack.direction = Vector2(area.owner.global_position - owner.global_position).normalized()
+				attack.knockback = weapon_resource.knockback
+				attack.stun_time = weapon_resource.stun_time
+				attack.Attacker = ManagingComponent.owner
+				
+				area.hit(attack)
+
 
 signal chain_atk
 signal push_atk #Still waiting adding
@@ -37,3 +63,8 @@ func emit_push_attack() -> void:
 
 func _on_animation_player_animation_finished(anim_name: String) -> void:
 	animation_finished.emit(anim_name)
+	
+func play_weappon_sound() -> void:
+	var audio_player := $AudioStreamPlayer2D as AudioStreamPlayer2D
+	audio_player.pitch_scale = randf_range(0.9, 1.1)
+	audio_player.play()

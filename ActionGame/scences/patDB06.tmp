@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8ikje2meppvi"]
+
+[ext_resource type="Script" path="res://PathTest.gd" id="1_y1r6b"]
+[ext_resource type="PackedScene" uid="uid://bjt4ea8lfmgdw" path="res://scences/steering_test.tscn" id="2_0lq22"]
+
+[sub_resource type="Curve2D" id="Curve2D_ss3xv"]
+_data = {
+"points": PackedVector2Array(-27.591, 56.5636, 27.591, -56.5636, 99, -124, -114.164, -15.4597, 114.164, 15.4597, 617, -174, -79.6769, -74.92, 79.6769, 74.92, 1060, 100, -54.7035, -92.7581, 54.7035, 92.7581, 1540, 180, 53.5143, -51.1359, -53.5143, 51.1359, 1431, 490, 86.8121, 54.7035, -86.8121, -54.7035, 920, 567, -15.4597, 59.4603, 15.4597, -59.4603, 879, 360, 111.785, -41.6222, -111.785, 41.6222, 685, 287, 71.3524, -59.4603, -71.3524, 59.4603, 544, 549, 86.8121, -2.37841, -86.8121, 2.37841, 243, 662, -16.6489, 147.462, 16.6489, -147.462, 72, 501, 16.8179, 116.044, -16.8179, -116.044, 307, 200, -0.5, 42.5, 0.5, -42.5, 81, -65, 0, 0, 0, 0, 99, -124)
+}
+point_count = 14
+
+[node name="PathTest" type="Path2D"]
+position = Vector2(120, 335)
+curve = SubResource("Curve2D_ss3xv")
+script = ExtResource("1_y1r6b")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(1639.4, 264.231)
+rotation = 0.7232
+progress = 1535.46
+h_offset = 147.55
+
+[node name="SteeringTest" parent="." instance=ExtResource("2_0lq22")]
+position = Vector2(42, 453)
+max_speed = null
+steer_force = null
+look_ahead = null
+num_rays = null
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(557, 125)
+collision_layer = 64
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-281, -173, 53, -170, 448, 80, 855, 121, 772, 269, 463, 310, 396, 126, 119, 26, -86, 249, -300, 401, -172, 169, -157, -33)
+disabled = true
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-477, 18, -606, -206, -496, -379, 109, -403, 642, -174, 1098, -76, 1110, 273, 944, 467, 418, 573, 191, 434, 186, 270, 101, 470, -236, 621, -536, 615, -626, 394, -574, 183, -477, 18, -661, 18, -712, 602, -169, 746, 248, 602, 1053, 551, 1258, 110, 1129, -246, -147, -508, -639, -381, -661, 18)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(840, 206)
+zoom = Vector2(0.645, 0.645)

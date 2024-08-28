@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cgr1iow7o12r6"]
+[gd_scene load_steps=16 format=3 uid="uid://cgr1iow7o12r6"]
 
 [ext_resource type="Script" path="res://enemy.gd" id="1_tcifc"]
 [ext_resource type="Script" path="res://HitBoxComponent.gd" id="2_anltf"]
@@ -14,6 +14,10 @@
 [sub_resource type="PrismMesh" id="PrismMesh_yqss2"]
 size = Vector3(200, -200, 1)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_27g4h"]
+radius = 49.0
+height = 166.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_hfwor"]
 radius = 1423.14
 
@@ -21,36 +25,48 @@ radius = 1423.14
 radius = 464.069
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7mmex"]
-radius = 139.714
+radius = 159.4
 
-[node name="Enemy" type="CharacterBody2D"]
+[node name="Enemy" type="CharacterBody2D" groups=["Enemies"]]
 collision_layer = 2
-collision_mask = 13
-platform_floor_layers = 2
+collision_mask = 7
+motion_mode = 1
 script = ExtResource("1_tcifc")
 max_speed = 300
+num_rays = 32
 
 [node name="FacingNode" type="Node2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(0, -128)
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_max_distance = 150.0
-avoidance_enabled = true
-radius = 140.0
-max_speed = 450.0
+path_desired_distance = 70.0
 debug_enabled = true
-debug_path_custom_color = Color(1, 0, 0, 1)
+debug_path_custom_color = Color(0.42644, 0.488232, 0.915093, 1)
+debug_path_custom_point_size = 20.0
+debug_path_custom_line_width = 2.0
 
 [node name="NavTimer" type="Timer" parent="."]
+wait_time = 0.6
 autostart = true
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-polygon = PackedVector2Array(-100, 100, 100, 100, 0, -100)
 
 [node name="enemy display" type="MeshInstance2D" parent="."]
 unique_name_in_owner = true
+self_modulate = Color(0.796078, 0, 0, 0.364706)
+position = Vector2(0, -17)
 mesh = SubResource("PrismMesh_yqss2")
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_27g4h")
+
+[node name="WallDetectRay" type="RayCast2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(4.81308e-06, 0, 0.951464, 1)
+top_level = true
+target_position = Vector2(0, -384)
+collision_mask = 4
+
+[node name="Line2D" type="Line2D" parent="WallDetectRay"]
 
 [node name="NoticeArea2D" type="Area2D" parent="."]
 unique_name_in_owner = true
@@ -70,7 +86,6 @@ collision_mask = 3
 shape = SubResource("CircleShape2D_504ff")
 
 [node name="CloseArea" type="Area2D" parent="."]
-position = Vector2(0, 24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CloseArea"]
 shape = SubResource("CircleShape2D_7mmex")
@@ -88,20 +103,23 @@ one_shot = true
 
 [node name="HitBoxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("HealthComponent")]
 unique_name_in_owner = true
+visible = false
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("2_anltf")
 HealthComponent = NodePath("../HealthComponent")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Components/HitBoxComponent"]
-polygon = PackedVector2Array(100, 103, -100, 103, 0, -97)
+polygon = PackedVector2Array(100, 100, -100, 100, 0, -100)
 
-[node name="WeaponComponent" type="Node2D" parent="Components"]
+[node name="WeaponComponent" type="Node2D" parent="Components" node_paths=PackedStringArray("ControlledChar")]
 unique_name_in_owner = true
 script = ExtResource("4_wtulb")
+ControlledChar = NodePath("../..")
 
-[node name="LongSword" parent="Components/WeaponComponent" instance=ExtResource("5_ossfq")]
+[node name="LongSword" parent="Components/WeaponComponent" node_paths=PackedStringArray("ManagingComponent") instance=ExtResource("5_ossfq")]
 modulate = Color(1, 1, 1, 0)
+ManagingComponent = NodePath("..")
 
 [node name="Marker2D" type="Marker2D" parent="Components/WeaponComponent"]
 position = Vector2(0, -532)
@@ -123,16 +141,12 @@ script = ExtResource("7_3147a")
 Entity = NodePath("../..")
 WeaponComponent = NodePath("../../Components/WeaponComponent")
 
-[node name="WallDetectRay" type="RayCast2D" parent="FiniteStateMachine/Pursuit"]
-unique_name_in_owner = true
-target_position = Vector2(0, -384)
-collision_mask = 6
-
-[node name="Line2D" type="Line2D" parent="FiniteStateMachine/Pursuit/WallDetectRay"]
-
 [node name="CancelPursuitTimer" type="Timer" parent="FiniteStateMachine/Pursuit"]
 wait_time = 5.0
 one_shot = true
+
+[node name="VisionRay" type="RayCast2D" parent="FiniteStateMachine/Pursuit"]
+collision_mask = 5
 
 [node name="Combat" type="Node2D" parent="FiniteStateMachine" node_paths=PackedStringArray("Entity", "WeaponComponent")]
 script = ExtResource("8_do1ep")
@@ -175,9 +189,10 @@ scale = Vector2(1, 0.635)
 allow_greater = true
 allow_lesser = true
 
+[node name="ContextRays" type="Node2D" parent="."]
+
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout"]
-[connection signal="body_entered" from="NoticeArea2D" to="FiniteStateMachine/Ide" method="_on_notice_area_2d_body_entered"]
 [connection signal="body_entered" from="NoticeArea2D" to="FiniteStateMachine/Pursuit" method="_on_notice_area_2d_body_entered"]
 [connection signal="body_exited" from="NoticeArea2D" to="FiniteStateMachine/Pursuit" method="_on_notice_area_2d_body_exited"]
 [connection signal="body_entered" from="AttackArea" to="FiniteStateMachine/Pursuit" method="_on_attack_area_body_entered"]

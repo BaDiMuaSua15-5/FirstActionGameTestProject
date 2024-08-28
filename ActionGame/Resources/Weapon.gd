@@ -3,8 +3,10 @@ class_name Weapon
 
 @export var weapon_resource: Weapon_Resource
 @export var animation_player: AnimationPlayer
-@onready var WallRay: RayCast2D
+@export var ManagingComponent: Node2D
+var WallRay: RayCast2D
 var Character: CharacterBody2D
+var owner_group: String
 
 func _ready() -> void:
 	instantiate()
@@ -26,3 +28,6 @@ func weapon_ready() -> void:
 	
 func weapon_unready() -> void:
 	print("weapon_unready() function not implemented")
+
+func play_weappon_sound() -> void:
+	print("play_weappon_sound() function not implemented")

@@ -25,4 +25,5 @@ func _on_stun_timer_timeout() -> void:
 	stun = false
 	WeaponComponent.weapon_ready()
 	Entity.in_knockback = false
+	Entity.speed_mult = 1
 	

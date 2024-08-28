@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cvud6v7tqmseg"]
+[gd_scene load_steps=3 format=3 uid="uid://cvud6v7tqmseg"]
+
+[ext_resource type="Texture2D" uid="uid://dv5k48q1w8s7o" path="res://PNG/Orange/texture_01.png" id="1_qbg07"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_fo85s"]
 
@@ -9,11 +11,13 @@ collision_mask = 11
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 scale = Vector2(512, 128)
 mesh = SubResource("BoxMesh_fo85s")
+texture = ExtResource("1_qbg07")
 
 [node name="MeshInstance2D2" type="MeshInstance2D" parent="."]
 rotation = 1.5708
 scale = Vector2(512, 128)
 mesh = SubResource("BoxMesh_fo85s")
+texture = ExtResource("1_qbg07")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 visible = false

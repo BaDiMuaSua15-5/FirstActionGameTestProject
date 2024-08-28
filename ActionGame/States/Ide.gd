@@ -32,6 +32,9 @@ func enter() -> void:
 	Entity.player= null
 
 func transition(delta: float) -> void:
+	if Entity.is_dead:
+		return
+	
 	if (player_near):
 		StateMachine.change_state("Pursuit")
 		return
@@ -45,6 +48,9 @@ func transition(delta: float) -> void:
 		ObstructionRay.target_position = cast_vector
 		ObstructionRay.force_raycast_update()
 		
+		test_hit_positions.append(cast_vector) 
+	
+		
 		#await ObstructionRay.draw
 		if ObstructionRay.is_colliding():
 			hit_pos = ObstructionRay.get_collision_point()
@@ -53,21 +59,17 @@ func transition(delta: float) -> void:
 				player_near = true
 				Entity.player = collider
 				ObstructionRay.enabled = false
-				ObstructionRay.target_position = Vector2.ZERO
-				break
+				#break
 			
+	queue_redraw()
 	
 		
 func _draw() -> void:
+	return
 	#draw_circle((hit_pos - global_position).rotated(global_rotation), 10, Color.CRIMSON)
 	#draw_line(Vector2(0, 0), (hit_pos - global_position).rotated(global_rotation), Color.CRIMSON, 1)
 	
 	for hit:Vector2 in test_hit_positions:
-		#draw_circle((hit - global_position).rotated(global_rotation), 5, Color.CRIMSON)
+		draw_circle((hit - global_position).rotated(global_rotation), 5, Color.CRIMSON)
 		draw_line(Vector2(0, 0), (hit), Color.CRIMSON, 2)
-
-func _on_notice_area_2d_body_entered(body: PhysicsBody2D) -> void:
-	if body is PlayerObj:
-		#player_near = true
-		#Entity.player = body
-		pass
+	test_hit_positions.clear()

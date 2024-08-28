@@ -21,7 +21,8 @@ func _ready() -> void:
 	
 	
 func _process(delta: float) -> void:
-	timer_label.text = "Timer: "+str(StaminaRegenTimer.time_left)
+	#if Player:
+		#timer_label.text = "Timer: "+str(StaminaRegenTimer.time_left)
 	pass
 
 func update_health_bar(health_value: int, max_value: int) -> void:

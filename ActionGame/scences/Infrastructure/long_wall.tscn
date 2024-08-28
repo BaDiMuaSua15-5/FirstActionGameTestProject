@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://c0lpbgmdo6qki"]
+[gd_scene load_steps=4 format=3 uid="uid://c0lpbgmdo6qki"]
+
+[ext_resource type="Texture2D" uid="uid://dv5k48q1w8s7o" path="res://PNG/Orange/texture_01.png" id="1_wi1dk"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_13y4t"]
 
@@ -13,7 +15,9 @@ collision_mask = 11
 position = Vector2(-6.10352e-05, -7.62939e-06)
 scale = Vector2(1024, 128)
 mesh = SubResource("BoxMesh_13y4t")
+texture = ExtResource("1_wi1dk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-6.10352e-05, -7.62939e-06)
 shape = SubResource("RectangleShape2D_vxw8v")

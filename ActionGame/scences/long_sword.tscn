@@ -1,7 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://br5mbsfsh1wpa"]
+[gd_scene load_steps=13 format=3 uid="uid://br5mbsfsh1wpa"]
 
 [ext_resource type="Script" path="res://class/LongSword.gd" id="1_p0ah2"]
 [ext_resource type="Resource" uid="uid://c2otcldx6dj8v" path="res://weapon resources/Long_Sword.tres" id="2_mqpft"]
+[ext_resource type="Texture2D" uid="uid://c1f8765s3wwet" path="res://PNG/Assets/LongSword.png" id="3_rf0p0"]
+[ext_resource type="AudioStream" uid="uid://f3jsqeifhubo" path="res://Audio/swing-whoosh-5-198498.mp3" id="4_nugiv"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_j1oua"]
 size = Vector3(100, 20, 1)
@@ -88,7 +90,7 @@ tracks/5/keys = {
 
 [sub_resource type="Animation" id="Animation_y0wen"]
 resource_name = "LS attack"
-length = 1.55
+length = 1.475
 step = 0.025
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -97,7 +99,7 @@ tracks/0/path = NodePath("LongSword:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.3, 0.4, 0.475, 0.675, 0.725, 0.775, 0.875, 0.95, 1.1, 1.3, 1.4, 1.55, 1.75),
+"times": PackedFloat32Array(0, 0.25, 0.3, 0.4, 0.475, 0.6, 0.65, 0.7, 0.8, 0.875, 1.025, 1.1, 1.2, 1.35, 1.55),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [10.2312, 10.3667, 10.2312, 8.23875, 6.1976, 5.9011, 6.04935, 6.1976, 8.23875, 10.2312, 10.4308, 10.2312, 10.2312, 10.2312, 10.2312]
@@ -133,10 +135,10 @@ tracks/3/path = NodePath("LongSword/LS_Mesh:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.95, 1.1, 1.3, 1.4, 1.425, 1.55, 1.75),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.875, 1.025, 1.1, 1.2, 1.35, 1.55),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 0.217638, 1, 1),
 "update": 0,
-"values": [Vector2(-135.001, 115.999), Vector2(-306.332, 124.023), Vector2(-306.332, 124.023), Vector2(-306.332, 124.023), Vector2(-135.001, 115.999), Vector2(-95.8075, 83.9153), Vector2(99.8286, 193.431), Vector2(197.647, 248.189), Vector2(-135.001, 115.999)]
+"values": [Vector2(-135.001, 115.999), Vector2(-306.332, 124.023), Vector2(-306.332, 124.023), Vector2(-306.332, 124.023), Vector2(-135.001, 115.999), Vector2(-95.8075, 83.9153), Vector2(197.647, 248.189), Vector2(-135.001, 115.999)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -145,10 +147,10 @@ tracks/4/path = NodePath("LongSword/LS_Mesh:rotation")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.25, 0.3, 0.475, 0.675, 0.725, 0.775, 0.95, 1.1, 1.3, 1.4, 1.425, 1.55, 1.75),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.05, 0.25, 0.3, 0.475, 0.6, 0.65, 0.7, 0.875, 1.025, 1.1, 1.2, 1.35, 1.55),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.217638, 1, 1),
 "update": 0,
-"values": [-1.94538, -0.384835, -0.252037, -0.384835, -0.384835, -0.617864, -0.50135, -0.384835, -0.384835, -0.225593, -1.94538, -2.67904, -2.60419, -2.56677, -1.94538]
+"values": [-1.94538, -0.384835, -0.252037, -0.384835, -0.384835, -0.617864, -0.50135, -0.384835, -0.384835, -0.225593, -1.94538, -2.67904, -2.56677, -1.94538]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -157,7 +159,7 @@ tracks/5/path = NodePath("LongSword/LS_Mesh/LS_hitbox/LS_hitbox:disabled")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.475, 0.8, 0.95, 1.4, 1.55),
+"times": PackedFloat32Array(0, 0.3, 0.475, 0.725, 0.875, 1.2, 1.35),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [true, false, true, false, true, false, true]
@@ -169,7 +171,7 @@ tracks/6/path = NodePath("LongSword")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0.65, 1.25),
+"times": PackedFloat32Array(0.575, 1.05),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [0],
@@ -186,7 +188,7 @@ tracks/7/path = NodePath("LongSword")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0.325, 0.85, 1.425),
+"times": PackedFloat32Array(0.325, 0.775, 1.225),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
 "args": [],
@@ -199,14 +201,34 @@ tracks/7/keys = {
 "method": &"emit_push_attack"
 }]
 }
-tracks/8/type = "value"
+tracks/8/type = "method"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("LongSword:isAttacking")
+tracks/8/path = NodePath("LongSword")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.65, 0.825, 1.25, 1.425),
+"times": PackedFloat32Array(0.4, 0.8, 1.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"play_weappon_sound"
+}, {
+"args": [],
+"method": &"play_weappon_sound"
+}, {
+"args": [],
+"method": &"play_weappon_sound"
+}]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("LongSword:isAttacking")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.575, 0.75, 1.05, 1.225),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [true, false, true, false, true, false]
@@ -414,25 +436,39 @@ _data = {
 }
 
 [node name="LongSword" type="Node2D" node_paths=PackedStringArray("animation_player")]
+modulate = Color(1, 1, 1, 0)
 rotation = 10.2312
 script = ExtResource("1_p0ah2")
 weapon_resource = ExtResource("2_mqpft")
 animation_player = NodePath("AnimationPlayer")
 
 [node name="LS_Mesh" type="MeshInstance2D" parent="."]
-self_modulate = Color(0, 1, 1, 1)
-position = Vector2(-306.332, 124.023)
-rotation = -0.384835
+self_modulate = Color(0, 1, 1, 0)
+position = Vector2(-135.001, 115.999)
+rotation = -1.94538
 scale = Vector2(3.88847, 1)
 mesh = SubResource("BoxMesh_j1oua")
 
 [node name="LS_hitbox" type="Area2D" parent="LS_Mesh"]
+visible = false
 collision_layer = 0
 collision_mask = 12
 
 [node name="LS_hitbox" type="CollisionShape2D" parent="LS_Mesh/LS_hitbox"]
 shape = SubResource("RectangleShape2D_bt8cn")
+disabled = true
 debug_color = Color(0.952941, 0.2, 0.231373, 1)
+
+[node name="Node2D" type="Node2D" parent="LS_Mesh"]
+position = Vector2(49.6194, -0.292984)
+rotation = -1.08614
+
+[node name="Sprite2D" type="Sprite2D" parent="LS_Mesh/Node2D"]
+position = Vector2(-19.7478, -45.7951)
+rotation = -1.0472
+scale = Vector2(0.0641587, 0.175807)
+skew = -1.0088
+texture = ExtResource("3_rf0p0")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../..")
@@ -443,8 +479,12 @@ blend_times = [&"LS attack", &"LS recover", 0.1]
 
 [node name="WallCheckRay" type="RayCast2D" parent="."]
 modulate = Color(1, 0, 0, 1)
+top_level = true
 visibility_layer = 4
 collision_mask = 4
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_nugiv")
 
 [connection signal="area_entered" from="LS_Mesh/LS_hitbox" to="." method="_on_ls_hitbox_area_entered"]
 [connection signal="body_entered" from="LS_Mesh/LS_hitbox" to="." method="_on_ls_hitbox_body_entered"]

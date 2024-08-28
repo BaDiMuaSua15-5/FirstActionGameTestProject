@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bjt4ea8lfmgdw"]
+
+[ext_resource type="Script" path="res://SteeringTest.gd" id="1_5iqkk"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_trilo"]
+
+[node name="SteeringTest" type="CharacterBody2D"]
+collision_mask = 64
+motion_mode = 1
+script = ExtResource("1_5iqkk")
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+rotation = 1.57079
+polygon = PackedVector2Array(0, -76, 65, 54, -65, 54)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+visible = false
+position = Vector2(11, 0)
+rotation = 1.57079
+scale = Vector2(130, -130)
+mesh = SubResource("PrismMesh_trilo")

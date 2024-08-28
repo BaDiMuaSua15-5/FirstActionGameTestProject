@@ -42,8 +42,6 @@ func _physics_process(delta: float) -> void:
 			var direction := get_global_mouse_position() - offset - global_position
 			velocity = process_collision(collision, direction, delta)
 			
-			
-			
 	else:
 		if (velocity.length() < 100):
 			can_bounce = false
@@ -98,28 +96,28 @@ func process_collision(collision: KinematicCollision2D, dir_to_mouse: Vector2, d
 	
 	if !draggable: # Bounce behavior
 		# ======= Damage feature =======
-		#print("Colided velocity:", velocity)
 		var damage: AttackObj
 		if (velocity.length() > 1800.0 && collider.has_method("high_velocity_collide")):
-			
 			var attack: AttackObj = AttackObj.new()
 			attack.damage = WeaponResource.Damage
 			attack.knockback = WeaponResource.knockback
 			attack.stun_time = WeaponResource.stun_time
 			attack.direction = velocity.normalized()
+			attack.Attacker = self
 			collider.high_velocity_collide(attack)
 			Sprite.visible = false 
 			Pariticle.emitting = true
+			$FreeTimer.start(2.0)
+			Global.play_throw_break_sound()
 		# ===============================
-		
+		else:
+			Global.play_throw_collide_sound()
 		# Push the collied object away
 		if (collider is CharacterBody2D): # If collided with a movable object
 			#print("collided with: ", collider)
-			(collider as CharacterBody2D).velocity = velocity * 0.5
+			(collider as CharacterBody2D).velocity = velocity * 0.25
 		# Calculate reflected bounce direction
 		var reflected_velocity := dir_to_mouse.bounce(collision.get_normal())
-		#print("Remainder length: ", remainder.length())
-		#print("Bounce: ", reflected_velocity)
 		if can_bounce:
 			return reflected_velocity.normalized() * velocity.length() * 0.25# Times 30 for a more forceful bounce
 		else:
@@ -169,7 +167,6 @@ func is_on_top() -> bool:
 			
 	return true
 
-
 func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event.is_action_pressed("mouse_pickup"):
 		if is_on_top():
@@ -182,8 +179,8 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 			visual_feedback()
 			collision_layer = 0
 			collision_mask = 3
-			NavObstacle.avoidance_layers = 0
-
+			NavObstacle.avoidance_layers = 0b0
+	return
 
 func _on_mouse_entered() -> void:
 	add_to_group(Group + "hovered")
@@ -198,11 +195,9 @@ func _on_mouse_exited() -> void:
 	#if !Global.is_dragging:
 		#draggable = false
 		#scale = Vector2(1, 1)
-	
-
-
-
-
 
 func _on_gpu_particles_2d_finished() -> void:
+	queue_free()
+
+func _on_free_timer_timeout() -> void:
 	queue_free()

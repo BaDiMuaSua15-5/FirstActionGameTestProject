@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8ikje2meppvi"]
+
+[ext_resource type="Script" path="res://PathTest.gd" id="1_y1r6b"]
+[ext_resource type="PackedScene" uid="uid://bjt4ea8lfmgdw" path="res://scences/steering_test.tscn" id="2_0lq22"]
+[ext_resource type="PackedScene" uid="uid://bo3tdr745vksn" path="res://scences/throwable_object.tscn" id="3_7r77r"]
+
+[sub_resource type="Curve2D" id="Curve2D_ss3xv"]
+_data = {
+"points": PackedVector2Array(-27.591, 56.5636, 27.591, -56.5636, 99, -124, -114.164, -15.4597, 114.164, 15.4597, 617, -174, -79.6769, -74.92, 79.6769, 74.92, 1060, 100, -54.7035, -92.7581, 54.7035, 92.7581, 1540, 180, 53.5143, -51.1359, -53.5143, 51.1359, 1431, 490, 86.8121, 54.7035, -86.8121, -54.7035, 920, 567, -15.4597, 59.4603, 15.4597, -59.4603, 879, 360, 111.785, -41.6222, -111.785, 41.6222, 685, 287, 71.3524, -59.4603, -71.3524, 59.4603, 544, 549, 86.8121, -2.37841, -86.8121, 2.37841, 243, 662, -16.6489, 147.462, 16.6489, -147.462, 72, 501, 16.8179, 116.044, -16.8179, -116.044, 307, 200, -0.5, 42.5, 0.5, -42.5, 81, -65, 0, 0, 0, 0, 99, -124)
+}
+point_count = 14
+
+[node name="PathTest" type="Path2D" node_paths=PackedStringArray("marker")]
+position = Vector2(120, 335)
+curve = SubResource("Curve2D_ss3xv")
+script = ExtResource("1_y1r6b")
+marker = NodePath("ThrowableObject")
+metadata/_edit_lock_ = true
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+position = Vector2(939.605, 2.41296)
+rotation = 0.635942
+progress = 898.91
+
+[node name="SteeringTest" parent="." instance=ExtResource("2_0lq22")]
+position = Vector2(683, -130)
+rotation = -2.35619
+scale = Vector2(0.858578, 0.547451)
+
+[node name="SteeringTest3" parent="." instance=ExtResource("2_0lq22")]
+position = Vector2(853, -90)
+rotation = -2.35619
+scale = Vector2(0.858578, 0.547451)
+max_speed = 350
+
+[node name="SteeringTest4" parent="." instance=ExtResource("2_0lq22")]
+position = Vector2(1021, -6.00003)
+rotation = -2.35619
+scale = Vector2(0.858578, 0.547451)
+max_speed = 500
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(557, 125)
+collision_layer = 64
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-281, -173, 53, -170, 448, 80, 855, 121, 772, 269, 463, 310, 396, 126, 119, 26, -104, 364, -221, 411, -307, 361, -195, 235, -159, 90, -157, -33)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-477, 18, -606, -206, -496, -379, 109, -403, 642, -174, 1098, -76, 1110, 273, 944, 467, 418, 573, 243, 442, 245, 312, 212, 252, 136, 312, 101, 470, -236, 621, -536, 615, -626, 394, -574, 183, -477, 18, -661, 18, -712, 602, -169, 746, 248, 602, 1053, 551, 1258, 110, 1129, -246, -147, -508, -639, -381, -661, 18)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(845, 207)
+scale = Vector2(-12.2203, 545.77)
+
+[node name="ThrowableObject" parent="." instance=ExtResource("3_7r77r")]
+position = Vector2(823, 301)
+scale = Vector2(0.692184, 0.611858)
+collision_layer = 0
+collision_mask = 0

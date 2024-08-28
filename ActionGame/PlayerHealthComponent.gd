@@ -31,14 +31,17 @@ signal health_change
 		print(OwnerEntity, " Health after change: ", health)
 
 func damage(attack: AttackObj) -> void:
+	var health_before := health
 	health -= attack.damage
+	if OwnerEntity.has_method("knockback") && health != health_before:
+		OwnerEntity.knockback(attack)
 	if (health == 0):
 		print(OwnerEntity, 'out of health')
 		OwnerEntity.modulate = "ff0000"
+		await hit_timer(1.7)
 		OwnerEntity.set_physics_process(false)
 		OwnerEntity.queue_free()
-	if OwnerEntity.has_method("knockback"):
-		OwnerEntity.knockback(attack)
+	
 		pass
 
 func hit_timer(sec: float) -> void:

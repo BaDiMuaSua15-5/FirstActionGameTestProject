@@ -6,39 +6,49 @@ extends Weapon
 #var Character: CharacterBody2D
 
 func _ready() -> void:
-	WallRay = $WallCheckRay
-	
+	WallRay = ($WallCheckRay as RayCast2D)
+	WallRay.enabled = true
 	animation_player.play("RESET")
-	var owner_test := owner
 
 func _physics_process(delta: float) -> void:
 	WallRay.global_rotation = 0
+	WallRay.position = global_position
 
 func _on_ls_hitbox_area_entered(area: Area2D) -> void:
 	if area is HitBoxComponent and area.owner != owner.owner:
 		area = area as HitBoxComponent
+		if !area:
+			return
 		print("Hitted", area.owner)
-		var target: Vector2 = (area.global_position - global_position).rotated(-global_rotation)
-		WallRay.target_position = area.global_position - global_position
-		#await (WallRay as RayCast2D).draw
 		
-		if area.has_method("hit"):
-				print("Area has hit method")
+		var space_rid := get_world_2d().space
+		var space_state := PhysicsServer2D.space_get_direct_state(space_rid)
+		var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.new()
+		query.collision_mask = 0b0100
+		query.exclude = [self]
+		query.from = global_position
+		query.to = area.global_position
+		var wall_check_result := space_state.intersect_ray(query)
 		
-		if WallRay.is_colliding():
-			print("Collide ", WallRay.get_collider())
+		if wall_check_result:
+			print("Blocked by wall ", wall_check_result["collider"])
 			return
 		else:
-			var attack: AttackObj = AttackObj.new()
-			attack.damage = weapon_resource.Damage
-			attack.direction = Vector2(area.owner.global_position - owner.global_position).normalized()
-			attack.knockback = weapon_resource.knockback
-			attack.stun_time = weapon_resource.stun_time
-			
-			area.hit(attack)
-			
-			#WallRay.enabled = false
-
+			# Ignore if the hitted entity is in the group same as owner
+			if area.owner.get_groups()[0] == ManagingComponent.owner.get_groups()[0]:
+				print("Hitted Entity in same group")
+				return
+			else:
+				print("Hit deal damage")
+				var attack: AttackObj = AttackObj.new()
+				attack.damage = weapon_resource.Damage
+				attack.direction = Vector2(area.owner.global_position - owner.global_position).normalized()
+				attack.knockback = weapon_resource.knockback
+				attack.stun_time = weapon_resource.stun_time
+				attack.Attacker = ManagingComponent.owner
+				
+				area.hit(attack)
+	return
 
 
 signal chain_atk
@@ -65,3 +75,8 @@ func _on_animation_player_animation_finished(anim_name: String) -> void:
 
 func _on_ls_hitbox_body_entered(_body: PhysicsBody2D) -> void:
 	pass
+	
+func play_weappon_sound() -> void:
+	var audio_player := $AudioStreamPlayer2D as AudioStreamPlayer2D
+	audio_player.pitch_scale = randf_range(0.9, 1.1)
+	audio_player.play()
