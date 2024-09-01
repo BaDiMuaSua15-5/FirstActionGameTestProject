@@ -10,6 +10,7 @@ var origin_rotation_vector: Vector2
 @export var speed: float
 @export var speed_mult: float = 1
 var movement_acceleration: float = 450
+var start_strafe_distance: float = 400
 
 @export var health: int = 100
 @export var MAX_HEALTH: int = 100
@@ -19,6 +20,7 @@ var rotation_speed: float = 2.25
 var is_dead: bool = false
 var in_knockback: bool = false
 var in_atk_push: bool = false
+var in_combat: bool = false
 
 var atk_push_time: float = MAX_PUSH_TIME
 const MAX_PUSH_TIME: float = 0.37
@@ -57,6 +59,7 @@ func _ready() -> void:
 	
 	rotation_speed = max_rotation_speed
 	speed = max_speed
+	start_strafe_distance = randi_range(200, 400)
 	origin_pos = global_position
 	origin_rotation_vector = Vector2.UP.rotated(global_rotation)
 	target_pos = origin_pos
@@ -87,13 +90,12 @@ func set_context_rays() -> void:
 	
 	
 func _draw() -> void:
-	return
 	if ray_directions.is_empty() || interest.is_empty():
 		return
 	for i in num_rays:
 		draw_line(Vector2(), (ray_directions[i] * look_ahead * interest[i]), Color.CHARTREUSE, 3.0)
 	
-	draw_line(Vector2(), chosen_dir * 300, Color.CHARTREUSE, 3.0)
+	draw_line(Vector2(), chosen_dir * max_speed, Color.DEEP_PINK, 3.0)
 
 func set_interest() -> void:
 	wallRay.target_position = target_pos - global_position
@@ -107,10 +109,22 @@ func set_interest() -> void:
 		for i in num_rays:
 			var d := ray_directions[i].rotated(rotation).dot(path_direction.normalized())
 			interest[i] = max(0, d)
-	# If not go straight for target
+	# If no obstruction go straight for target
 	elif (target_pos - global_position).length() > 0.0:
 		var next_position := target_pos - global_position
 		var path_direction: Vector2 = next_position
+		# Movement in Combat
+		if player && in_combat:
+			var distance_to_player := (player.global_position - global_position).length()
+			# Strafe arounf player
+			if distance_to_player <= start_strafe_distance + 150 && distance_to_player >= start_strafe_distance:
+				var stafe_direction := Vector2(path_direction.y, -path_direction.x)
+				stafe_direction = stafe_direction if randi_range(0, 1) == 1 else -stafe_direction
+				path_direction = stafe_direction
+			# If player is too close move away
+			elif distance_to_player < start_strafe_distance:
+				print("Too close")
+				path_direction = -path_direction
 		for i in num_rays:
 			var d := ray_directions[i].rotated(rotation).dot(path_direction.normalized())
 			interest[i] = max(0, d)
@@ -131,9 +145,10 @@ func set_danger() -> void:
 		var ray := ContextRays.get_child(i) as RayCast2D
 		# set strenght of danger based on distance
 		if ray.is_colliding():
+			var collider := ray.get_collider()
 			var collide_position := ray.get_collision_point()
-			var distance_ratio := ((collide_position - global_position).length() - 130) / (look_ahead - 130.0) # 130 to account for enemy radius
-			danger[i] = min(0.75 ,1.0 - distance_ratio) * 2
+			var distance_ratio := ((collide_position - global_position).length()) / (look_ahead) # 130 to account for enemy radius
+			danger[i] = min(0.6 ,1.0 - distance_ratio) * 2
 		else:
 			danger[i] = 0.0
 		
@@ -153,11 +168,6 @@ func choose_direction() -> void:
 var knockback_dir: Vector2
 var atk_push_dir: Vector2
 func _physics_process(delta: float) -> void:
-	#var max := (target_pos - global_position).length() / delta
-	#var dir :Vector2= (target_pos - global_position).normalized() * min(max_speed, max)
-	#velocity = dir
-	#move_and_slide()
-	#return
 	if (in_knockback):
 		#print("Is knockback")
 		velocity = knockback_dir * 7.0
@@ -190,11 +200,11 @@ func _physics_process(delta: float) -> void:
 	else:
 		var distance_to_target := (target_pos - global_position).length()
 		desired_velocity = desired_velocity * speed_mult
-		if distance_to_target >= max_speed:
+		if distance_to_target / delta > max_speed:
 			accelerate(movement_acceleration * delta, desired_velocity)
 		else:
-			var max := (target_pos - global_position).length() / delta
-			var dir :Vector2= (target_pos - global_position).normalized() * min(max_speed, max) * speed_mult
+			var max := distance_to_target / delta
+			var dir :Vector2= desired_velocity.normalized() * max * speed_mult
 			velocity = dir
 		rotate_to(target_pos, delta)
 	move_and_slide()
@@ -218,7 +228,7 @@ func rotate_to(target: Vector2, delta: float) -> void:
 	var angleTo: float = (-transform.y).angle_to(direction)
 	rotate(sign(angleTo) * min(delta * rotation_speed, abs(angleTo)))
 
-func knockback(attack: AttackObj) -> void:
+func hitted(attack: AttackObj) -> void:
 	if is_dead:
 		print(self, ", Is dead")
 		return
@@ -234,8 +244,16 @@ func knockback(attack: AttackObj) -> void:
 		player = attack.Attacker
 	#=======================
 	
+	
 	StunTimer.wait_time = attack.stun_time
 	FSM.change_state("Stun")
+
+func _on_death() -> void:
+	set_physics_process(false)
+	var tween := get_tree().create_tween()
+	tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.6)
+	await tween.finished
+	queue_free()
 
 func high_velocity_collide(attack: AttackObj) -> void:
 	print(self, ": collided high velocity")

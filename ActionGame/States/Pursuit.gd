@@ -32,7 +32,7 @@ func transition(delta: float) -> void:
 		Entity.player = null
 		locked_on = false
 		StateMachine.change_state("Ide")
-	if in_attack && Entity.player && player_near:
+	if in_attack && Entity.player:
 		StateMachine.change_state("Combat")
 		
 	return
@@ -82,7 +82,6 @@ func check_vision() -> void:
 
 func _draw() -> void:
 	return
-	
 	for i in test_hit_vectors.size():
 		
 		draw_line(Vector2(), test_hit_vectors[i].rotated(-global_rotation), Color.CRIMSON, 4)
@@ -90,7 +89,7 @@ func _draw() -> void:
 	for i in hit_positions.size():
 		draw_circle((hit_positions[i] - global_position).rotated(-global_rotation), 10, Color.CHARTREUSE)
 	
-	draw_line(Vector2(), direct_to_plyr * 400, Color.BLUE_VIOLET, 7)
+	#draw_line(Vector2(), direct_to_plyr * 400, Color.BLUE_VIOLET, 7)
 	draw_circle((last_seen - global_position).rotated(-global_rotation), 10, Color.CHARTREUSE)
 	
 	hit_positions.clear()

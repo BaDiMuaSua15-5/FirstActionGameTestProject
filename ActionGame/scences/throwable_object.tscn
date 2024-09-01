@@ -1,30 +1,26 @@
-[gd_scene load_steps=7 format=3 uid="uid://bo3tdr745vksn"]
+[gd_scene load_steps=9 format=3 uid="uid://bo3tdr745vksn"]
 
 [ext_resource type="Script" path="res://throwable_object.gd" id="1_bi6b7"]
-[ext_resource type="Script" path="res://Resources/weapon_resource.gd" id="2_0oi74"]
-[ext_resource type="Texture2D" uid="uid://c8bdieynrk4ki" path="res://PNG/Assets/rock_png.png" id="3_yuhoi"]
-
-[sub_resource type="Resource" id="Resource_i1x2y"]
-script = ExtResource("2_0oi74")
-Weapon_Name = "Throwable"
-Active_Anim = ""
-Attack_Anim = ""
-Deactive_Anim = ""
-Recover_Anim = ""
-Recover_Time = 0.0
-Damage = 20
-Stamina_Cost = 0
-knockback = 200
-stun_time = 1.0
-Auto_Fire = false
+[ext_resource type="Resource" uid="uid://csy1heemn8ypa" path="res://weapon resources/Throwable.tres" id="2_t46nq"]
+[ext_resource type="Texture2D" uid="uid://c56ox3rqr40em" path="res://PNG/Assets/Rock-Pixel.png" id="3_5xd54"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kvmer"]
 radius = 58.4637
 
+[sub_resource type="Curve" id="Curve_rwf2o"]
+_data = [Vector2(0, 0.255962), 0.0, 0.0, 0, 0, Vector2(0.957854, 0.111288), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_c06d8"]
+curve = SubResource("Curve_rwf2o")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_4lpmh"]
+particle_flag_align_y = true
 particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 1.0
+emission_shape = 2
+emission_sphere_radius = 41.0
+angle_min = -180.0
+angle_max = 180.0
 direction = Vector3(0, 0, 0)
 initial_velocity_min = 441.65
 initial_velocity_max = 535.99
@@ -32,8 +28,12 @@ gravity = Vector3(0, 0, 0)
 linear_accel_max = 100.0
 tangential_accel_min = -100.0
 tangential_accel_max = 100.0
-scale_min = 0.13
-scale_max = 0.15
+scale_min = 14.88
+scale_max = 28.77
+scale_curve = SubResource("CurveTexture_c06d8")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1yrug"]
+radius = 377.97
 
 [node name="ThrowableObject" type="CharacterBody2D" node_paths=PackedStringArray("Sprite", "NavObstacle") groups=["throwable"]]
 collision_layer = 4
@@ -41,7 +41,7 @@ collision_mask = 7
 input_pickable = true
 motion_mode = 1
 script = ExtResource("1_bi6b7")
-WeaponResource = SubResource("Resource_i1x2y")
+WeaponResource = ExtResource("2_t46nq")
 Group = "draggable"
 Sprite = NodePath("Sprite2D")
 NavObstacle = NodePath("NavigationObstacle2D")
@@ -49,10 +49,10 @@ NavObstacle = NodePath("NavigationObstacle2D")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(-4.76837e-06, -1.90735e-06)
-scale = Vector2(0.375, 0.375)
-texture = ExtResource("3_yuhoi")
+scale = Vector2(7.255, 7.255)
+texture = ExtResource("3_5xd54")
 region_enabled = true
-region_rect = Rect2(22, 24, 315, 302)
+region_rect = Rect2(0, 0, 24, 24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_kvmer")
@@ -63,14 +63,15 @@ wait_time = 0.8
 autostart = true
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+visible = false
 radius = 60.0
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 modulate = Color(0.674815, 0.674815, 0.674815, 1)
 emitting = false
-amount = 7
+amount = 5
 process_material = SubResource("ParticleProcessMaterial_4lpmh")
-texture = ExtResource("3_yuhoi")
+texture = ExtResource("3_5xd54")
 lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
@@ -79,8 +80,18 @@ explosiveness = 1.0
 wait_time = 2.0
 one_shot = true
 
+[node name="ExplodeArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplodeArea"]
+shape = SubResource("CircleShape2D_1yrug")
+
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="finished" from="GPUParticles2D" to="." method="_on_gpu_particles_2d_finished"]
 [connection signal="timeout" from="FreeTimer" to="." method="_on_free_timer_timeout"]
+[connection signal="area_entered" from="ExplodeArea" to="." method="_on_explode_area_area_entered"]
+[connection signal="area_exited" from="ExplodeArea" to="." method="_on_explode_area_area_exited"]

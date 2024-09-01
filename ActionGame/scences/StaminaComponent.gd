@@ -35,6 +35,8 @@ func deplete_stamina(deplete_amount: float, start_recover_time: float = 0.0) -> 
 	can_regen = false
 	if start_recover_time > 0.0:
 		delay_regen_timer(start_recover_time)
+	elif stamina <= 0.0:
+		delay_regen_timer(0.9)
 	
 func delay_regen_timer(time: float) -> void:
 	RegenTimer.wait_time = time

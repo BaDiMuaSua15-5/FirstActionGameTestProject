@@ -1,15 +1,16 @@
-[gd_scene load_steps=13 format=3 uid="uid://br5mbsfsh1wpa"]
+[gd_scene load_steps=14 format=3 uid="uid://br5mbsfsh1wpa"]
 
 [ext_resource type="Script" path="res://class/LongSword.gd" id="1_p0ah2"]
 [ext_resource type="Resource" uid="uid://c2otcldx6dj8v" path="res://weapon resources/Long_Sword.tres" id="2_mqpft"]
 [ext_resource type="Texture2D" uid="uid://c1f8765s3wwet" path="res://PNG/Assets/LongSword.png" id="3_rf0p0"]
 [ext_resource type="AudioStream" uid="uid://f3jsqeifhubo" path="res://Audio/swing-whoosh-5-198498.mp3" id="4_nugiv"]
+[ext_resource type="Texture2D" uid="uid://dh4broyefw8p4" path="res://PNG/Assets/Daco_1001955.png" id="4_rewuu"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_j1oua"]
 size = Vector3(100, 20, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bt8cn"]
-size = Vector2(100.297, 20)
+size = Vector2(74.557, 31.6072)
 
 [sub_resource type="Animation" id="Animation_fngqm"]
 resource_name = "LS ready"
@@ -436,27 +437,26 @@ _data = {
 }
 
 [node name="LongSword" type="Node2D" node_paths=PackedStringArray("animation_player")]
-modulate = Color(1, 1, 1, 0)
-rotation = 10.2312
+rotation = 7.21818
 script = ExtResource("1_p0ah2")
 weapon_resource = ExtResource("2_mqpft")
 animation_player = NodePath("AnimationPlayer")
 
 [node name="LS_Mesh" type="MeshInstance2D" parent="."]
 self_modulate = Color(0, 1, 1, 0)
-position = Vector2(-135.001, 115.999)
-rotation = -1.94538
+position = Vector2(-306.332, 124.023)
+rotation = -0.384835
 scale = Vector2(3.88847, 1)
 mesh = SubResource("BoxMesh_j1oua")
 
 [node name="LS_hitbox" type="Area2D" parent="LS_Mesh"]
 visible = false
 collision_layer = 0
-collision_mask = 12
+collision_mask = 8
 
 [node name="LS_hitbox" type="CollisionShape2D" parent="LS_Mesh/LS_hitbox"]
+position = Vector2(-18.3668, 1.52588e-05)
 shape = SubResource("RectangleShape2D_bt8cn")
-disabled = true
 debug_color = Color(0.952941, 0.2, 0.231373, 1)
 
 [node name="Node2D" type="Node2D" parent="LS_Mesh"]
@@ -464,11 +464,19 @@ position = Vector2(49.6194, -0.292984)
 rotation = -1.08614
 
 [node name="Sprite2D" type="Sprite2D" parent="LS_Mesh/Node2D"]
-position = Vector2(-19.7478, -45.7951)
+visible = false
+position = Vector2(-19.5615, -45.4319)
 rotation = -1.0472
-scale = Vector2(0.0641587, 0.175807)
-skew = -1.0088
+scale = Vector2(0.0601396, 0.167057)
+skew = -0.947714
 texture = ExtResource("3_rf0p0")
+
+[node name="Sprite2D2" type="Sprite2D" parent="LS_Mesh/Node2D"]
+position = Vector2(-23.2699, -50.4423)
+rotation = -3.91652
+scale = Vector2(0.105806, 0.163108)
+skew = -1.16064
+texture = ExtResource("4_rewuu")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../..")

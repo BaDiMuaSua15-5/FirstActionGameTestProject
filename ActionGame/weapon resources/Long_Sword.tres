@@ -11,6 +11,7 @@ Deactive_Anim = "LS deactive"
 Recover_Anim = "LS recover"
 Recover_Time = 0.1
 Damage = 20
+ap_accumalation = 10
 Stamina_Cost = 30
 knockback = 135
 stun_time = 0.6

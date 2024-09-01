@@ -36,6 +36,7 @@ func _on_rp_hitbox_area_entered(area: Area2D) -> void:
 				print("Hit deal damage")
 				var attack: AttackObj = AttackObj.new()
 				attack.damage = weapon_resource.Damage
+				attack.ap_accumulation = weapon_resource.ap_accumalation
 				attack.direction = Vector2(area.owner.global_position - owner.global_position).normalized()
 				attack.knockback = weapon_resource.knockback
 				attack.stun_time = weapon_resource.stun_time

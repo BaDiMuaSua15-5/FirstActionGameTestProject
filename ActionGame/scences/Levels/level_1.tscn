@@ -15,9 +15,9 @@
 [ext_resource type="AudioStream" uid="uid://dtu6ash3d4jpc" path="res://Audio/rock-destroy-6409.mp3" id="12_wobxk"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_8q3r1"]
-vertices = PackedVector2Array(526, 157, -862, 150, -870, -390, -478, -390, 533, -382, 158, -390, 2014, 489, 2014, 1325, -862, 1318, -862, 1134, 690, 314, 1942, -303, -1210, 314, -1018, 314, -1018, 506, -870, 506, -870, 314, 158, -546, -478, -546, -854, -546, -854, -1398, 1934, -1398, 690, -538, 1942, -304, -1010, 1134, -1010, 1326, -1202, 1326, -3470, -1414, -1202, 1474, -1010, 1474, -1010, 2690, -862, 2690, -862, 2210, 2014, 2210, 2014, 3422, -3470, 3422, -1210, 166, -1018, -1414, -1018, 158)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 4, 3), PackedInt32Array(6, 7, 8, 9, 10, 11), PackedInt32Array(12, 13, 14), PackedInt32Array(15, 16, 10, 9), PackedInt32Array(17, 5, 3, 18), PackedInt32Array(18, 19, 20, 21), PackedInt32Array(17, 18, 21), PackedInt32Array(22, 17, 21), PackedInt32Array(10, 22, 21, 23, 11), PackedInt32Array(15, 9, 24, 14), PackedInt32Array(14, 24, 25, 26, 27, 12), PackedInt32Array(28, 29, 30), PackedInt32Array(31, 32, 33, 34), PackedInt32Array(31, 34, 35, 30), PackedInt32Array(30, 35, 27, 28), PackedInt32Array(26, 28, 27), PackedInt32Array(36, 12, 27), PackedInt32Array(36, 27, 37, 38)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-3480, -1424, -1008, -1424, -1008, 168, -1200, 176, -1200, 304, -1008, 304, -1008, 496, -880, 496, -880, 304, 680, 304, 680, -528, 168, -536, 168, -400, 544, -392, 536, 168, -872, 160, -880, -400, -488, -400, -488, -536, -864, -536, -864, -1084.2, -864, -1408, 1944, -1408, 1952, -304, 2024, 488, 2024, 1336, -872, 1328, -872, 1144, -1000, 1144, -1000, 1336, -1192, 1336, -1192, 1464, -1000, 1464, -1000, 2680, -872, 2680, -872, 2200, 2024, 2200, 2024, 3432, -1008, 3432, -3480, 3432)])
+vertices = PackedVector2Array(5429, -1381, 5560, 1334, 5108, 870, 4140, -286, 4566, 870, 526, 157, -862, 150, -870, -390, -478, -390, 533, -382, 158, -390, 2006, 470, 2013, 1325, -862, 1318, -862, 1134, 690, 314, 1934, -286, -1210, 314, -1018, 314, -1018, 506, -870, 506, -870, 314, 158, -546, -478, -546, -854, -546, -854, -1398, 1934, -1398, 690, -538, 4566, 3414, 2170, 3414, 2170, 2218, 4066, 2218, 4066, 870, 2510, 870, 2170, 470, 2510, 1318, 2170, 1318, -1010, 1134, -1010, 1326, -1202, 1326, -3470, -1414, -1202, 1474, -1010, 1474, -1010, 2690, -862, 2690, -862, 2210, 2014, 2210, 2014, 3422, -3470, 3422, -1210, 166, -1018, -1414, -1018, 158)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 2, 4), PackedInt32Array(5, 6, 7, 8, 9), PackedInt32Array(10, 9, 8), PackedInt32Array(11, 12, 13, 14, 15, 16), PackedInt32Array(17, 18, 19), PackedInt32Array(20, 21, 15, 14), PackedInt32Array(22, 10, 8, 23), PackedInt32Array(23, 24, 25, 26), PackedInt32Array(22, 23, 26), PackedInt32Array(27, 22, 26), PackedInt32Array(27, 26, 16, 15), PackedInt32Array(28, 29, 30, 31), PackedInt32Array(4, 28, 31, 32, 3), PackedInt32Array(16, 3, 32, 33, 34), PackedInt32Array(33, 35, 36, 34), PackedInt32Array(16, 34, 11), PackedInt32Array(20, 14, 37, 19), PackedInt32Array(19, 37, 38, 39, 40, 17), PackedInt32Array(41, 42, 43), PackedInt32Array(44, 45, 46, 47), PackedInt32Array(44, 47, 48, 43), PackedInt32Array(43, 48, 40, 41), PackedInt32Array(39, 41, 40), PackedInt32Array(49, 17, 40), PackedInt32Array(49, 40, 50, 51)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-3480, -1424, -1008, -1424, -1008, 168, -1200, 176, -1200, 304, -1008, 304, -1008, 496, -880, 496, -880, 304, 680, 304, 680, -528, 168, -536, 168, -400, 544, -392, 536, 168, -872, 160, -880, -400, -488, -400, -488, -536, -864, -536, -864, -1084.2, -864, -1408, 1944, -1408, 1944, -296, 4136, -296, 5438, -1402, 5572, 1360, 5104, 880, 4576, 880, 4576, 3424, 2160, 3424, 2160, 2208, 4056, 2208, 4056, 880, 2520, 880, 2520, 1328, 2160, 1328, 2160, 480, 2016, 480, 2024, 1336, -872, 1328, -872, 1144, -1000, 1144, -1000, 1336, -1192, 1336, -1192, 1464, -1000, 1464, -1000, 2680, -872, 2680, -872, 2200, 2024, 2200, 2024, 3432, -1008, 3432, -3480, 3432)])
 source_geometry_group_name = &"navigation_polygon_source_group"
 
 [node name="Level_1" type="Node2D"]
@@ -34,7 +34,6 @@ metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
 [node name="Walls" type="Node2D" parent="."]
-metadata/_edit_group_ = true
 
 [node name="CornerWall" parent="Walls" instance=ExtResource("3_uvjm3")]
 position = Vector2(616, -464)
@@ -235,6 +234,21 @@ position = Vector2(2016, -1488)
 navigation_polygon = SubResource("NavigationPolygon_8q3r1")
 metadata/_edit_lock_ = true
 
+[node name="LongWall39" parent="Walls" instance=ExtResource("4_1qful")]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(576, 1776)
+scale = Vector2(2.885, 5.04)
+
+[node name="LongWall40" parent="Walls" instance=ExtResource("4_1qful")]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(3287, 1542)
+scale = Vector2(1.245, 8.4)
+
+[node name="LongWall41" parent="Walls" instance=ExtResource("4_1qful")]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(2386, 1766)
+scale = Vector2(0.719206, 4.89756)
+
 [node name="Effect" type="Node" parent="."]
 
 [node name="Enemies" type="Node" parent="."]
@@ -247,7 +261,7 @@ position = Vector2(-1536, 248)
 rotation = 3.14159
 
 [node name="Enemy7" parent="Enemies" instance=ExtResource("6_hkyq7")]
-position = Vector2(-2376, 552)
+position = Vector2(-1775, 512)
 rotation = 2.61799
 
 [node name="Enemy5" parent="Enemies" instance=ExtResource("6_hkyq7")]
@@ -267,22 +281,13 @@ zoom = 0.605
 [node name="Objects" type="Node" parent="."]
 
 [node name="ThrowableObject" parent="Objects" instance=ExtResource("7_div2w")]
-position = Vector2(-944, 992)
+position = Vector2(-96, 691)
 
 [node name="ThrowableObject2" parent="Objects" instance=ExtResource("7_div2w")]
-position = Vector2(-915, 838)
+position = Vector2(109, 742)
 
 [node name="ThrowableObject3" parent="Objects" instance=ExtResource("7_div2w")]
-position = Vector2(-496, 752)
-
-[node name="ThrowableObject6" parent="Objects" instance=ExtResource("7_div2w")]
-position = Vector2(-254, 947)
-
-[node name="ThrowableObject5" parent="Objects" instance=ExtResource("7_div2w")]
-position = Vector2(-784, 816)
-
-[node name="ThrowableObject4" parent="Objects" instance=ExtResource("7_div2w")]
-position = Vector2(-368, 584)
+position = Vector2(-1500, 443)
 
 [node name="UI" parent="." node_paths=PackedStringArray("Player") instance=ExtResource("8_8almx")]
 Player = NodePath("../ControlledChar")
@@ -292,13 +297,13 @@ Player = NodePath("../ControlledChar")
 [node name="HitSound" type="AudioStreamPlayer2D" parent="Sound"]
 top_level = true
 stream = ExtResource("11_dpxi3")
-pitch_scale = 0.65
+pitch_scale = 0.58
 
 [node name="ThrowCollideSound" type="AudioStreamPlayer2D" parent="Sound"]
 top_level = true
 stream = ExtResource("12_4wjbs")
 volume_db = -4.55
-pitch_scale = 0.8
+pitch_scale = 0.78
 
 [node name="ThrowBreakSound" type="AudioStreamPlayer2D" parent="Sound"]
 top_level = true

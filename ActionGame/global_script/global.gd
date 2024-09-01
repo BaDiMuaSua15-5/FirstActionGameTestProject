@@ -14,16 +14,22 @@ func hitstop_effect(time_scale:float, duration: float) -> void:
 	await get_tree().create_timer(duration * time_scale).timeout
 	Engine.time_scale = 1.0
 
-func _ready() -> void:
-	return
 
 func play_hit_sound() -> void:
 	if player_hit_sound == null:
 		return
 	if player:
 		player_hit_sound.global_position = player.position
-	player_hit_sound.pitch_scale = randf_range(0.65, 0.8)
+	player_hit_sound.pitch_scale = randf_range(0.4, 0.6)
 	player_hit_sound.play()
+
+func play_kill_sound() -> void:
+	if throwable_break_sound == null:
+		return
+	if player:
+		throwable_break_sound.global_position = player.position
+	throwable_break_sound.pitch_scale = randf_range(2.3, 2.6)
+	throwable_break_sound.play()
 
 func play_throw_break_sound() -> void:
 	if throwable_break_sound == null:

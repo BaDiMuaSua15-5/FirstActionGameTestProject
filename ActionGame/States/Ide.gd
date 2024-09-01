@@ -5,7 +5,7 @@ var player_near: bool = false
 @export var WeaponComponent: WeaponComponent
 
 @export var angle_cone_of_vision: float = deg_to_rad(90)
-@export var view_distance: float = 800
+@export var view_distance: float = 1200
 @export var angle_between_rays: float = deg_to_rad(90/10)
 var hit_pos: Vector2
 
@@ -66,8 +66,6 @@ func transition(delta: float) -> void:
 		
 func _draw() -> void:
 	return
-	#draw_circle((hit_pos - global_position).rotated(global_rotation), 10, Color.CRIMSON)
-	#draw_line(Vector2(0, 0), (hit_pos - global_position).rotated(global_rotation), Color.CRIMSON, 1)
 	
 	for hit:Vector2 in test_hit_positions:
 		draw_circle((hit - global_position).rotated(global_rotation), 5, Color.CRIMSON)

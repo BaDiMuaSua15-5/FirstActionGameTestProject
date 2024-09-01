@@ -3,6 +3,7 @@ class_name PlayerObj
 
 @export var ghost_node: PackedScene
 
+@onready var APComp: APComponent = %APComponent
 @onready var WeaponManager: WeaponsManager = $Weapons_Manager
 @onready var HitBoxComp: HitBoxComponent = %HitBoxComponent
 @onready var StaminaComp:StaminaComponent = %StaminaComponent
@@ -25,6 +26,8 @@ var can_attack: bool = true
 var is_dead: bool
 var is_rolling: bool = false
 var in_knockback: bool = false
+var attacker_queue: Array[int]
+var atk_queue_max: int = 2
 
 @export var max_health: int = 200
 @export var health: int = 200
@@ -69,13 +72,10 @@ func _process(delta: float) -> void:
 			if !in_push: 
 				#If is rolling then start the stamnia_regen_delay Timer
 				StaminaComp.delay_regen_timer(0.5)
-				$DashEffectTimer.stop()
-				#%StaminaGenTimer.wait_time = 0.5
-				#%StaminaGenTimer.start()
 			# If is atk_push then let the atk_finish Signal start the Timer
 			else: 
 				in_push = false
-				
+			$DashEffectTimer.stop()
 			roll_time = MAX_ROLL_TIME
 			is_rolling = false
 			roll_dir = Vector2.ZERO
@@ -83,13 +83,7 @@ func _process(delta: float) -> void:
 			modulate = Color(1, 1, 1)
 			return
 		roll_time -= delta
-
-	if Global.is_dragging:
-		#stamnia_regen = 0
-		#StaminaComp.stamina -= 40 * delta
-		#%StaminaGenTimer.wait_time = 2
-		#%StaminaGenTimer.start()
-		StaminaComp.deplete_stamina(40 * delta, 2)
+	return
 
 var roll_dir: Vector2
 var knockback_dir: Vector2
@@ -113,18 +107,18 @@ func _physics_process(delta: float) -> void:
 		if in_push:
 			velocity = roll_dir * 750.0
 		else:
-			velocity = roll_dir * 1000.0
+			velocity = roll_dir * 1150.0
 		move_and_slide()
 		roll_dir = roll_dir.lerp(Vector2.ZERO, delta * 0.5)
 		
 		var direction_to_mouse := get_global_mouse_position() - global_position
 		direction_to_mouse = direction_to_mouse / 2
-		direction_to_mouse.x = clamp(direction_to_mouse.x, -200, 200)
-		direction_to_mouse.y = clamp(direction_to_mouse.y, -200, 200)
+		direction_to_mouse.x = clamp(direction_to_mouse.x, -50, 50)
+		direction_to_mouse.y = clamp(direction_to_mouse.y, -50, 50)
 	
 		var mid_point_to_mouse :Vector2 = global_position
 		var camera_curve := delta * delta * (3.0 - 2.0 * delta)
-		Camera.global_position = Camera.global_position.lerp(mid_point_to_mouse, 30 * camera_curve)
+		Camera.global_position = Camera.global_position.lerp(mid_point_to_mouse, 20 * camera_curve)
 		return
 	
 	# Normal movement & Camera
@@ -135,9 +129,8 @@ func _physics_process(delta: float) -> void:
 	var mid_point_to_mouse :Vector2 = global_position + direction_to_mouse
 	var camera_curve := delta * delta * (3.0 - 2.0 * delta)
 	Camera.global_position = Camera.global_position.lerp(mid_point_to_mouse, 75 * camera_curve)
-	##Camera.position = Camera.position.lerp(position, 3 * delta)
+	
 	var direction := Input.get_vector("left", "right", "up", "down")
-	#velocity = velocity.lerp(direction * speed * speed_mult, accel * delta)
 	if direction != Vector2.ZERO:
 		direction = direction * speed_mult
 		accelerate(speed * 5 * delta, direction * speed)
@@ -160,11 +153,10 @@ func _input(event: InputEvent) -> void:
 	if is_dead || is_rolling || in_knockback:
 		return
 	
-	#if event.is_action_pressed("attack") && StaminaComp.stamina > 0:
-		#StaminaComp.stamina > 0
-		#pressed_attack.emit()
+	#if event.is_action_pressed("attack"):
+		#APComp.accumulate(30)
 
-func knockback(attack: AttackObj) -> void:
+func hitted(attack: AttackObj) -> void:
 	if !is_dead:
 		speed_mult = 0
 		%StunTimer.wait_time = attack.stun_time
@@ -173,7 +165,12 @@ func knockback(attack: AttackObj) -> void:
 		in_knockback = true
 		modulate = "ff0000"
 		knockback_dir = attack.direction * attack.knockback
-		(Global.camera as ShakeableCamera).add_trauma(0.35)
+		(Camera.get_parent() as ShakeableCamera).add_trauma(0.35)
+
+func _on_death() -> void:
+	is_dead = true
+	set_physics_process(false)
+	await get_tree().create_timer(1.7).timeout
 
 func rotate_to(target: Vector2, delta: float) -> void:
 	var direction := (target - global_position).normalized()
@@ -187,7 +184,7 @@ func roll_input(direction: Vector2) -> void:
 		is_rolling = true
 		roll_time = MAX_ROLL_TIME
 		stamnia_regen = 0
-		StaminaComp.deplete_stamina(4)
+		StaminaComp.deplete_stamina(20)
 		HitBoxComp.get_child(0).disabled = true
 		modulate = Color(0, 0.81176471710205, 0)
 		$DashEffectTimer.start()
@@ -219,8 +216,7 @@ func _on_weapons_manager_push_signal() -> void:
 
 func _on_weapons_manager_attack_finished() -> void:
 	speed_mult = 1
-	#rotationSpeed = DEFAULT_RTA_SPD
-	#%StaminaGenTimer.stop()
+	rotationSpeed = DEFAULT_RTA_SPD
 	
 	#print("Stamina: ", StaminaComp.stamina)
 	# Delay stamina regen
@@ -249,3 +245,24 @@ func add_dash_effect() -> void:
 
 func _on_dash_effect_timer_timeout() -> void:
 	add_dash_effect()
+
+# Attacker queue for attack
+func _on_attacker_queue(attacker_id: int) -> void:
+	var result_index := attacker_queue.find(attacker_id)
+	if attacker_queue.size() < 3 && result_index < 0:
+		attacker_queue.append(attacker_id)
+
+# Attacker check if in queue to attack
+func _on_attacker_dequeue(attacker_id: int) -> bool:
+	var result_index := attacker_queue.find(attacker_id)
+	print(result_index)
+	if result_index >= 0:
+		attacker_queue.remove_at(result_index)
+		return true
+	return false
+	
+func attacker_in_queue(attacker_id: int) -> bool:
+	var result_index := attacker_queue.find(attacker_id)
+	if result_index >= 0:
+		return true
+	return false

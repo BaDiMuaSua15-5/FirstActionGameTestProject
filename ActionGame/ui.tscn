@@ -7,56 +7,104 @@ script = ExtResource("1_su5vw")
 
 [node name="Status" type="Control" parent="."]
 layout_mode = 3
-anchor_left = 0.229
-anchor_top = 0.832
-anchor_right = 0.773
-anchor_bottom = 1.0
-offset_left = -0.680023
-offset_top = 1.44
-offset_right = -0.160156
-grow_horizontal = 2
-grow_vertical = 2
-rotation = -0.00114236
-
-[node name="MarginContainer" type="MarginContainer" parent="Status"]
-layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -173.5
-offset_top = -50.5
-offset_right = 173.5
-offset_bottom = 50.5
+offset_left = -258.0
+offset_top = 362.0
+offset_right = 259.0
+offset_bottom = 493.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.2, 1.2)
+rotation = -0.00114236
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Status/MarginContainer"]
+[node name="ColorRect" type="ColorRect" parent="Status"]
+modulate = Color(0.192157, 0.192157, 0.192157, 0.529412)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -9.0
+offset_top = -12.0
+offset_right = 9.99994
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Status"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 420
+
+[node name="StatusDisplay" type="VBoxContainer" parent="Status/HSplitContainer"]
+layout_direction = 2
 layout_mode = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="HealthBar" type="ProgressBar" parent="Status/MarginContainer/VBoxContainer"]
+[node name="HealthBar" type="ProgressBar" parent="Status/HSplitContainer/StatusDisplay"]
 unique_name_in_owner = true
 modulate = Color(0.984314, 0, 0, 1)
+custom_minimum_size = Vector2(0, 31.92)
 layout_mode = 2
 step = 0.005
 value = 59.395
+show_percentage = false
 
-[node name="Label" type="Label" parent="Status/MarginContainer/VBoxContainer/HealthBar"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="Label" type="Label" parent="Status/HSplitContainer/StatusDisplay/HealthBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "number/number"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="StaminaBar" type="ProgressBar" parent="Status/MarginContainer/VBoxContainer"]
+[node name="StaminaBar" type="ProgressBar" parent="Status/HSplitContainer/StatusDisplay"]
 unique_name_in_owner = true
 modulate = Color(0, 0.690196, 0, 1)
 layout_mode = 2
 value = 65.0
 
-[node name="Label" type="Label" parent="Status/MarginContainer/VBoxContainer"]
+[node name="Timer" type="Label" parent="Status/HSplitContainer/StatusDisplay"]
 layout_mode = 2
 text = "Timer: "
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Status/HSplitContainer"]
+layout_mode = 2
+
+[node name="ActionPointDisplay" type="VBoxContainer" parent="Status/HSplitContainer/HSplitContainer"]
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="ActionPointLabel" type="Label" parent="Status/HSplitContainer/HSplitContainer/ActionPointDisplay"]
+layout_mode = 2
+text = "AP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ActionPointCounter" type="Label" parent="Status/HSplitContainer/HSplitContainer/ActionPointDisplay"]
+layout_mode = 2
+text = "999"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="Status/HSplitContainer/HSplitContainer"]
+self_modulate = Color(0.101961, 0.498039, 0.74902, 0.952941)
+custom_minimum_size = Vector2(15.025, 0)
+layout_direction = 3
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 1
+value = 100.0
+fill_mode = 3

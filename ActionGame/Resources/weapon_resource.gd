@@ -10,6 +10,7 @@ class_name Weapon_Resource
 @export var Recover_Time: float
 
 @export var Damage: int
+@export var ap_accumalation: int
 @export var Stamina_Cost: int
 @export var knockback: int
 @export var stun_time: float

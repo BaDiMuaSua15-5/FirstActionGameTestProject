@@ -11,6 +11,7 @@ Deactive_Anim = "RP deactive"
 Recover_Anim = "RP recover"
 Recover_Time = 0.0
 Damage = 4
+ap_accumalation = 40
 Stamina_Cost = 15
 knockback = 100
 stun_time = 0.45

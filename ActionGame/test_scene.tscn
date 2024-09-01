@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dirh8gdqr37k6"]
+[gd_scene load_steps=9 format=3 uid="uid://dirh8gdqr37k6"]
 
 [ext_resource type="Texture2D" uid="uid://bslrdqdla2t36" path="res://PNG/Dark/texture_01.png" id="1_5q8c2"]
 [ext_resource type="Script" path="res://Area2D_test.gd" id="4_ngr3q"]
+[ext_resource type="PackedScene" uid="uid://dek0upkbx1eab" path="res://scences/UI/shakeable_camera.tscn" id="5_mhpi3"]
 [ext_resource type="PackedScene" uid="uid://c0lpbgmdo6qki" path="res://scences/Infrastructure/long_wall.tscn" id="5_vopnd"]
 [ext_resource type="PackedScene" uid="uid://cgr1iow7o12r6" path="res://enemy.tscn" id="7_5lkpd"]
 [ext_resource type="PackedScene" uid="uid://bo3tdr745vksn" path="res://scences/throwable_object.tscn" id="7_l5rbq"]
@@ -42,6 +43,8 @@ node_a = NodePath("../LongWall")
 node_b = NodePath("../LongWall2")
 
 [node name="ControlledChar" parent="." instance=ExtResource("8_32eqs")]
+
+[node name="Shakeable_Camera" parent="ControlledChar" instance=ExtResource("5_mhpi3")]
 
 [node name="ThrowableObject" parent="." instance=ExtResource("7_l5rbq")]
 position = Vector2(520, 360)

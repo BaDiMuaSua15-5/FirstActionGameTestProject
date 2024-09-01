@@ -6,4 +6,3 @@ func _ready() -> void:
 	Global.throwable_collide_sound = $Sound/ThrowCollideSound as AudioStreamPlayer2D
 	Global.player = $ControlledChar
 	Global.camera = $ControlledChar/Shakeable_Camera as ShakeableCamera
-	Global.throwable_break_sound.stream

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="first creation"
-run/main_scene="res://scences/Levels/level_1.tscn"
+run/main_scene="res://TEST/level_assests_test.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
@@ -30,7 +30,7 @@ window/size/viewport_height=1080
 window/size/initial_position_type=2
 window/size/window_width_override=1270
 window/size/window_height_override=720
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 
 [dotnet]
 
@@ -95,4 +95,5 @@ mouse_pickup={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 anti_aliasing/quality/msaa_2d=3

@@ -25,7 +25,7 @@ func _ready() -> void:
 		weapon.connect("animation_finished", _on_animation_player_animation_finished)
 		weapon.chain_atk.connect(chain_attack) #Signal for checking chain attack
 		#weapon.connect("finish_atk", _on_weapon_finish_attack)
-		weapon.push_atk.connect(_on_weapon_push_attack)
+		weapon.push_atk.connect(ControlledChar._on_weapons_manager_push_signal)
 
 func _input(event: InputEvent) -> void:
 	if ControlledChar.is_dead || ControlledChar.in_knockback:

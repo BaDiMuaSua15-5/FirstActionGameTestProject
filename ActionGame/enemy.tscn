@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://cgr1iow7o12r6"]
+[gd_scene load_steps=17 format=3 uid="uid://cgr1iow7o12r6"]
 
 [ext_resource type="Script" path="res://enemy.gd" id="1_tcifc"]
 [ext_resource type="Script" path="res://HitBoxComponent.gd" id="2_anltf"]
+[ext_resource type="Texture2D" uid="uid://cgwtakbl03k6a" path="res://PNG/Assets/ship-03.png" id="2_fvxcb"]
 [ext_resource type="Script" path="res://PlayerHealthComponent.gd" id="2_p5gl7"]
 [ext_resource type="Script" path="res://WeaponComponent.gd" id="4_wtulb"]
 [ext_resource type="Script" path="res://FSM.gd" id="5_endji"]
@@ -32,7 +33,6 @@ collision_layer = 2
 collision_mask = 7
 motion_mode = 1
 script = ExtResource("1_tcifc")
-max_speed = 300
 num_rays = 32
 
 [node name="FacingNode" type="Node2D" parent="."]
@@ -52,11 +52,30 @@ autostart = true
 
 [node name="enemy display" type="MeshInstance2D" parent="."]
 unique_name_in_owner = true
+visible = false
 self_modulate = Color(0.796078, 0, 0, 0.364706)
 position = Vector2(0, -17)
 mesh = SubResource("PrismMesh_yqss2")
 
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 0.392157)
+position = Vector2(7.27596e-12, 8)
+rotation = 3.14159
+scale = Vector2(3.80969, 3.705)
+texture = ExtResource("2_fvxcb")
+region_enabled = true
+region_rect = Rect2(36, 0, 51, 76)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(7.27596e-12, 8)
+rotation = 3.14159
+scale = Vector2(3.515, 3.515)
+texture = ExtResource("2_fvxcb")
+region_enabled = true
+region_rect = Rect2(36, 0, 51, 76)
+
 [node name="CollisionPolygon2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CapsuleShape2D_27g4h")
 
 [node name="WallDetectRay" type="RayCast2D" parent="."]
@@ -86,6 +105,7 @@ collision_mask = 3
 shape = SubResource("CircleShape2D_504ff")
 
 [node name="CloseArea" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CloseArea"]
 shape = SubResource("CircleShape2D_7mmex")
@@ -101,16 +121,17 @@ OwnerEntity = NodePath("../..")
 wait_time = 0.2
 one_shot = true
 
-[node name="HitBoxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("HealthComponent")]
+[node name="HitBoxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("HealthComp")]
 unique_name_in_owner = true
 visible = false
+position = Vector2(0, -17)
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("2_anltf")
-HealthComponent = NodePath("../HealthComponent")
+HealthComp = NodePath("../HealthComponent")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Components/HitBoxComponent"]
-polygon = PackedVector2Array(100, 100, -100, 100, 0, -100)
+polygon = PackedVector2Array(80, 49, 40, 97, 0, 105, -40, 97, -80, 49, -80, 25, -48, -103, 0, -103, 48, -103, 80, 25)
 
 [node name="WeaponComponent" type="Node2D" parent="Components" node_paths=PackedStringArray("ControlledChar")]
 unique_name_in_owner = true
@@ -119,6 +140,7 @@ ControlledChar = NodePath("../..")
 
 [node name="LongSword" parent="Components/WeaponComponent" node_paths=PackedStringArray("ManagingComponent") instance=ExtResource("5_ossfq")]
 modulate = Color(1, 1, 1, 0)
+rotation = 10.2312
 ManagingComponent = NodePath("..")
 
 [node name="Marker2D" type="Marker2D" parent="Components/WeaponComponent"]
@@ -170,6 +192,7 @@ one_shot = true
 
 [node name="debug" type="Label" parent="."]
 unique_name_in_owner = true
+visible = false
 top_level = true
 offset_left = -59.0
 offset_top = 5.99998

@@ -33,16 +33,15 @@ signal health_change
 func damage(attack: AttackObj) -> void:
 	var health_before := health
 	health -= attack.damage
-	if OwnerEntity.has_method("knockback") && health != health_before:
-		OwnerEntity.knockback(attack)
+	#if OwnerEntity.has_method("knockback") && health != health_before:
+		#OwnerEntity.knockback(attack)
 	if (health == 0):
 		print(OwnerEntity, 'out of health')
 		OwnerEntity.modulate = "ff0000"
-		await hit_timer(1.7)
-		OwnerEntity.set_physics_process(false)
-		OwnerEntity.queue_free()
-	
-		pass
+		Global.play_kill_sound()
+		(Global.camera as ShakeableCamera).add_trauma(0.6)
+		OwnerEntity._on_death()
+	return
 
 func hit_timer(sec: float) -> void:
 	await get_tree().create_timer(sec).timeout

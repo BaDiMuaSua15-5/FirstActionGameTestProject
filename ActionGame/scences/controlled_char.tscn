@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bao061uq5658n"]
+[gd_scene load_steps=11 format=3 uid="uid://bao061uq5658n"]
 
 [ext_resource type="Script" path="res://scences/controlled_char.gd" id="1_cao7d"]
 [ext_resource type="PackedScene" uid="uid://dqhfkg5ldoc2p" path="res://scences/weapons_manager.tscn" id="2_etlth"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://PlayerHealthComponent.gd" id="3_hvvsn"]
 [ext_resource type="Script" path="res://HitBoxComponent.gd" id="4_1esed"]
 [ext_resource type="Script" path="res://scences/StaminaComponent.gd" id="4_5oki5"]
+[ext_resource type="Script" path="res://scences/Componetn_ActionPoint.gd" id="7_i2vee"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_tb1as"]
 lightmap_size_hint = Vector2i(14, 21)
@@ -63,17 +64,22 @@ unique_name_in_owner = true
 wait_time = 0.5
 one_shot = true
 
-[node name="HitBoxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("HealthComponent")]
+[node name="HitBoxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("HealthComp")]
 unique_name_in_owner = true
 position = Vector2(0, -20)
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("4_1esed")
-HealthComponent = NodePath("../HealthComponent")
+HealthComp = NodePath("../HealthComponent")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Components/HitBoxComponent"]
 position = Vector2(-3, 0)
 polygon = PackedVector2Array(100, 103, -100, 103, 0, -97)
+
+[node name="APComponent" type="Node" parent="Components"]
+unique_name_in_owner = true
+script = ExtResource("7_i2vee")
+ap_count = 2
 
 [node name="CollisionPolygon2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_yiw0x")
@@ -83,7 +89,7 @@ unique_name_in_owner = true
 one_shot = true
 
 [node name="DashEffectTimer" type="Timer" parent="."]
-wait_time = 0.15
+wait_time = 0.1
 
 [connection signal="timeout" from="Components/StaminaComponent/StaminaGenTimer" to="." method="_on_stamina_gen_timer_timeout"]
 [connection signal="timeout" from="Components/StaminaComponent/StaminaGenTimer" to="Components/StaminaComponent" method="_on_stamina_gen_timer_timeout"]

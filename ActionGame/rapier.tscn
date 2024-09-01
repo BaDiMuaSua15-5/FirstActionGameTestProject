@@ -9,7 +9,8 @@
 size = Vector3(5, 100, 1)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ywx4e"]
-height = 375.073
+radius = 21.2298
+height = 308.26
 
 [sub_resource type="Animation" id="Animation_7xoi3"]
 length = 0.001
@@ -141,6 +142,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_ha6vd"]
 resource_name = "RP attack"
+length = 0.85
 step = 0.025
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -150,7 +152,7 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.25, 0.45, 0.5, 0.7, 0.75, 0.9, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 9.18, 1, 1),
+"transitions": PackedFloat32Array(1, 1, 0.203, 1, 0.203, 1, 0.203, 9.18, 1, 1),
 "update": 0,
 "values": [Vector2(132, 103), Vector2(136, -19), Vector2(57, -72), Vector2(20, -246), Vector2(-57, -72), Vector2(-20, -246), Vector2(57, -72), Vector2(20, -246), Vector2(136, -19), Vector2(132, 103)]
 }
@@ -197,7 +199,7 @@ tracks/4/path = NodePath(".")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0.425, 0.675),
+"times": PackedFloat32Array(0.4, 0.65),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [0],
@@ -214,7 +216,7 @@ tracks/5/path = NodePath(".")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0.2, 0.45, 0.7),
+"times": PackedFloat32Array(0.2, 0.475, 0.725),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
 "args": [],
@@ -234,7 +236,7 @@ tracks/6/path = NodePath(".")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
-"times": PackedFloat32Array(0.175, 0.45, 0.7),
+"times": PackedFloat32Array(0.175, 0.475, 0.725),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
 "args": [],
@@ -338,7 +340,8 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_uxeqg"]
 resource_name = "RP recover"
-length = 0.2
+length = 0.1
+step = 0.025
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -346,7 +349,7 @@ tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.1),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(132, 103)]
@@ -358,7 +361,7 @@ tracks/1/path = NodePath(".:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
+"times": PackedFloat32Array(0.1),
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [-0.785397]
@@ -414,7 +417,6 @@ modulate = Color(1, 1, 1, 0)
 position = Vector2(132, 103)
 rotation = -0.785397
 script = ExtResource("1_whxn6")
-isAttacking = true
 weapon_resource = ExtResource("2_5obyc")
 animation_player = NodePath("AnimationPlayer")
 
@@ -433,11 +435,11 @@ skew = 0.431096
 texture = ExtResource("3_jthfj")
 
 [node name="RP_hitbox" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 12
 
 [node name="RP_hitbox" type="CollisionShape2D" parent="RP_hitbox"]
+position = Vector2(43.5065, -0.00942278)
 rotation = -1.56225
 shape = SubResource("CapsuleShape2D_ywx4e")
 disabled = true
@@ -447,6 +449,7 @@ debug_color = Color(0.968627, 0.141176, 0.0117647, 0.611765)
 libraries = {
 "": SubResource("AnimationLibrary_7o5b3")
 }
+blend_times = [&"RP attack", &"RP recover", 0.025]
 
 [node name="WallCheckRay" type="RayCast2D" parent="."]
 modulate = Color(1, 0, 0, 1)
