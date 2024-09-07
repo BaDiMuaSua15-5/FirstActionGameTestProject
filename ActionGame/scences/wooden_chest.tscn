@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://bq25ar4da3n6l"]
+
+[ext_resource type="Texture2D" uid="uid://cfdog7n186la0" path="res://PNG/Assets/wooden_chest.png" id="1_b7w70"]
+[ext_resource type="Script" path="res://scences/wooden_chest.gd" id="1_lqu8n"]
+[ext_resource type="Script" path="res://HitBoxComponent.gd" id="2_lcplb"]
+[ext_resource type="Texture2D" uid="uid://bmgdcj4mrkahl" path="res://PNG/Assets/wooden_chest_openedt.png" id="2_slyr2"]
+[ext_resource type="Script" path="res://PlayerHealthComponent.gd" id="3_g6dul"]
+[ext_resource type="AudioStream" uid="uid://ctbevby32mmuc" path="res://Audio/doorhit-98828.mp3" id="5_o28a5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bxhmg"]
+size = Vector2(160, 160)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vmnpk"]
+size = Vector2(156, 150)
+
+[node name="wooden_chest" type="StaticBody2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_lqu8n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_bxhmg")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+scale = Vector2(6, 6)
+texture = ExtResource("2_slyr2")
+region_enabled = true
+region_rect = Rect2(1, 0, 30, 32)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(6, 6)
+texture = ExtResource("1_b7w70")
+region_enabled = true
+region_rect = Rect2(1, 0, 30, 32)
+
+[node name="HitBoxComponent" type="Area2D" parent="." node_paths=PackedStringArray("HealthComp")]
+visible = false
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("2_lcplb")
+HealthComp = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_vmnpk")
+debug_color = Color(0.941176, 0, 0, 0.247059)
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("3_g6dul")
+max_health = 1
+health = 1
+
+[node name="HitTimer" type="Timer" parent="HealthComponent"]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_o28a5")
+pitch_scale = 1.24

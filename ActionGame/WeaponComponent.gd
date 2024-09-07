@@ -9,7 +9,8 @@ signal attack_finished
 signal attack_started
 
 func _ready() -> void:
-	CurrentWeapon = get_child(0)
+	CurrentWeapon = get_child(0) as Weapon
+	CurrentWeapon.ManagingComponent
 	WeaponResource = CurrentWeapon.weapon_resource
 	weaponAnimPlayer = CurrentWeapon.animation_player
 	CurrentWeapon.connect("chain_atk", chain_attack)

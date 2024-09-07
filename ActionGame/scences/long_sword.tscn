@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://br5mbsfsh1wpa"]
+[gd_scene load_steps=25 format=3 uid="uid://br5mbsfsh1wpa"]
 
 [ext_resource type="Script" path="res://class/LongSword.gd" id="1_p0ah2"]
 [ext_resource type="Resource" uid="uid://c2otcldx6dj8v" path="res://weapon resources/Long_Sword.tres" id="2_mqpft"]
-[ext_resource type="Texture2D" uid="uid://c1f8765s3wwet" path="res://PNG/Assets/LongSword.png" id="3_rf0p0"]
+[ext_resource type="Texture2D" uid="uid://b1t3eus2yqu1f" path="res://PNG/Assets/sweep_sprite.png" id="3_ooj05"]
 [ext_resource type="AudioStream" uid="uid://f3jsqeifhubo" path="res://Audio/swing-whoosh-5-198498.mp3" id="4_nugiv"]
 [ext_resource type="Texture2D" uid="uid://dh4broyefw8p4" path="res://PNG/Assets/Daco_1001955.png" id="4_rewuu"]
+[ext_resource type="Texture2D" uid="uid://dq2pw7m7cstvd" path="res://PNG/Assets/sweep_sheet.png" id="6_lxtns"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_j1oua"]
 size = Vector3(100, 20, 1)
@@ -87,6 +88,18 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("LongSword/Effect:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_y0wen"]
@@ -234,6 +247,86 @@ tracks/9/keys = {
 "update": 1,
 "values": [true, false, true, false, true, false]
 }
+tracks/10/type = "method"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("LongSword")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0.325, 0.725, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"play_effect"
+}, {
+"args": [],
+"method": &"play_effect"
+}, {
+"args": [],
+"method": &"play_effect_poke"
+}]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("LongSword/Effect:rotation")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0.35, 0.375, 0.4, 0.45, 0.475, 0.775, 0.8, 0.825, 0.85, 1.2, 1.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1e+06, 1, 1),
+"update": 0,
+"values": [-4.53626, -4.00139, -3.5308, -2.15777, -1.48457, -3.01438, -3.51899, -4.19158, -4.85208, -5.52414, -5.53042]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("LongSword/Effect:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.35, 0.475, 0.775, 0.875, 1.2, 1.475),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true, false]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("LongSword/Effect:scale")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0.35, 0.775, 1.2),
+"transitions": PackedFloat32Array(1e+06, 1, 1),
+"update": 0,
+"values": [Vector2(1, -1), Vector2(1, 1), Vector2(0.355, 0.355)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("LongSword/Effect:position")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0.35, 0.775, 1.2, 1.25, 1.325, 1.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(61.3543, 58.8273), Vector2(266.32, 253.966), Vector2(292.306, 278.881), Vector2(288.697, 275.42)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("LongSword/Effect:modulate")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 1.175, 1.475),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_iagqv"]
 resource_name = "LS deactive"
@@ -273,6 +366,18 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("LongSword/Effect:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_b7fsy"]
@@ -351,6 +456,18 @@ tracks/5/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("LongSword/Effect:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_4s53b"]
 length = 0.001
@@ -426,6 +543,66 @@ tracks/5/keys = {
 "update": 0,
 "values": [-1.94538]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("LongSword/Effect:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-4.53626]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("LongSword/Effect:scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("LongSword/Effect:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("LongSword/Effect:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("LongSword/Effect:modulate")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_v0s5g"]
 _data = {
@@ -436,16 +613,110 @@ _data = {
 "RESET": SubResource("Animation_4s53b")
 }
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_nyvnf"]
+atlas = ExtResource("6_lxtns")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mid1c"]
+atlas = ExtResource("6_lxtns")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1awaf"]
+atlas = ExtResource("6_lxtns")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3k368"]
+atlas = ExtResource("6_lxtns")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_koskl"]
+atlas = ExtResource("6_lxtns")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gwjpf"]
+atlas = ExtResource("6_lxtns")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02udo"]
+atlas = ExtResource("6_lxtns")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0qqt"]
+atlas = ExtResource("6_lxtns")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sb8wi"]
+atlas = ExtResource("6_lxtns")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l30p7"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nyvnf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mid1c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1awaf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3k368")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"new_animation",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_koskl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwjpf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwjpf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_02udo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g0qqt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sb8wi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sb8wi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sb8wi")
+}],
+"loop": false,
+"name": &"poke",
+"speed": 31.0
+}]
+
 [node name="LongSword" type="Node2D" node_paths=PackedStringArray("animation_player")]
-rotation = 7.21818
+rotation = 10.2312
 script = ExtResource("1_p0ah2")
+isAttacking = true
 weapon_resource = ExtResource("2_mqpft")
 animation_player = NodePath("AnimationPlayer")
 
 [node name="LS_Mesh" type="MeshInstance2D" parent="."]
 self_modulate = Color(0, 1, 1, 0)
-position = Vector2(-306.332, 124.023)
-rotation = -0.384835
+position = Vector2(-135.001, 115.999)
+rotation = -1.94538
 scale = Vector2(3.88847, 1)
 mesh = SubResource("BoxMesh_j1oua")
 
@@ -457,19 +728,22 @@ collision_mask = 8
 [node name="LS_hitbox" type="CollisionShape2D" parent="LS_Mesh/LS_hitbox"]
 position = Vector2(-18.3668, 1.52588e-05)
 shape = SubResource("RectangleShape2D_bt8cn")
+disabled = true
 debug_color = Color(0.952941, 0.2, 0.231373, 1)
 
 [node name="Node2D" type="Node2D" parent="LS_Mesh"]
 position = Vector2(49.6194, -0.292984)
 rotation = -1.08614
 
-[node name="Sprite2D" type="Sprite2D" parent="LS_Mesh/Node2D"]
-visible = false
-position = Vector2(-19.5615, -45.4319)
-rotation = -1.0472
-scale = Vector2(0.0601396, 0.167057)
-skew = -0.947714
-texture = ExtResource("3_rf0p0")
+[node name="SweepEffect" type="Sprite2D" parent="LS_Mesh/Node2D"]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(-79.0514, -37.877)
+rotation = 2.69033
+scale = Vector2(10.641, 5.85596)
+skew = 1.02102
+texture = ExtResource("3_ooj05")
+flip_h = true
+flip_v = true
 
 [node name="Sprite2D2" type="Sprite2D" parent="LS_Mesh/Node2D"]
 position = Vector2(-23.2699, -50.4423)
@@ -493,6 +767,17 @@ collision_mask = 4
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_nugiv")
+
+[node name="Effect" type="Node2D" parent="."]
+visible = false
+rotation = -4.53626
+scale = Vector2(1, -1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Effect"]
+position = Vector2(355.013, -0.223625)
+scale = Vector2(21.765, 21.765)
+sprite_frames = SubResource("SpriteFrames_l30p7")
+animation = &"poke"
 
 [connection signal="area_entered" from="LS_Mesh/LS_hitbox" to="." method="_on_ls_hitbox_area_entered"]
 [connection signal="body_entered" from="LS_Mesh/LS_hitbox" to="." method="_on_ls_hitbox_body_entered"]

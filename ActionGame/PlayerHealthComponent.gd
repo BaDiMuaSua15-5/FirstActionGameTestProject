@@ -2,7 +2,7 @@ extends Node
 class_name PlayerHealthComponent
 
 @onready var HitTimer: Timer = $HitTimer
-@export var OwnerEntity: CollisionObject2D
+@onready var OwnerEntity: CollisionObject2D = self.owner
 
 @export var max_health: int = 10:
 	set(value):
@@ -25,21 +25,15 @@ signal health_change
 		else:
 			if vulnerable:
 				health = max(value, 0)
-				vulnerable = false
-				hit_timer(0.2)
 		health_change.emit(health, max_health)
 		print(OwnerEntity, " Health after change: ", health)
 
 func damage(attack: AttackObj) -> void:
 	var health_before := health
 	health -= attack.damage
-	#if OwnerEntity.has_method("knockback") && health != health_before:
-		#OwnerEntity.knockback(attack)
+	hit_timer(0.2)
+	vulnerable = false
 	if (health == 0):
-		print(OwnerEntity, 'out of health')
-		OwnerEntity.modulate = "ff0000"
-		Global.play_kill_sound()
-		(Global.camera as ShakeableCamera).add_trauma(0.6)
 		OwnerEntity._on_death()
 	return
 

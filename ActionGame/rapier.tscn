@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://cms4qukafcm8u"]
+[gd_scene load_steps=24 format=3 uid="uid://cms4qukafcm8u"]
 
 [ext_resource type="Script" path="res://class/Rapier.gd" id="1_whxn6"]
 [ext_resource type="Resource" uid="uid://4xi28410gcns" path="res://weapon resources/Rapier.tres" id="2_5obyc"]
 [ext_resource type="Texture2D" uid="uid://b0fvadsfiihgk" path="res://PNG/Assets/Rapier.png" id="3_jthfj"]
 [ext_resource type="AudioStream" uid="uid://bv0fd6g5rf8yi" path="res://Audio/rapier_sound.mp3" id="4_eear6"]
+[ext_resource type="Texture2D" uid="uid://dq2pw7m7cstvd" path="res://PNG/Assets/sweep_sheet.png" id="5_p7ok7"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_f0gr5"]
 size = Vector3(5, 100, 1)
@@ -74,6 +75,66 @@ tracks/4/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Effect:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Effect:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.283, 0.283)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Effect:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(44.23, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Effect:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.57079]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Effect:modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_e3al6"]
 resource_name = "RP active"
@@ -138,6 +199,18 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Effect:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_ha6vd"]
@@ -249,29 +322,109 @@ tracks/6/keys = {
 "method": &"play_weappon_sound"
 }]
 }
-tracks/7/type = "value"
+tracks/7/type = "method"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath(".:isAttacking")
+tracks/7/path = NodePath(".")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
+"times": PackedFloat32Array(0.175, 0.425, 0.675),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [],
+"method": &"play_effect_poke"
+}, {
+"args": [],
+"method": &"play_effect_poke"
+}, {
+"args": [],
+"method": &"play_effect_poke"
+}]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".:isAttacking")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
 "times": PackedFloat32Array(0, 0.25, 0.45, 0.5, 0.7, 0.75),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [true, false, true, false, true, false]
 }
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("RP_hitbox/RP_hitbox:disabled")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("RP_hitbox/RP_hitbox:disabled")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.25, 0.45, 0.5, 0.7, 0.75),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [true, false, true, false, true, false, true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Effect:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.425, 0.45, 0.65, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Effect:scale")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.283, 0.283)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Effect:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 0.175, 0.2, 0.225, 0.25, 0.325, 0.4, 0.425, 0.45, 0.475, 0.575, 0.65, 0.675, 0.7, 0.725, 0.75, 0.85),
+"transitions": PackedFloat32Array(1, 1e-05, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-20.5063, -166.17), Vector2(-34.5325, -90.2753), Vector2(53.297, -44.3557), Vector2(52.8778, -11.2474), Vector2(45.6315, -15.93), Vector2(109.565, 3.12114), Vector2(178.51, 3.0596), Vector2(48.5507, 36.7462), Vector2(51.8185, 43.9638), Vector2(52.0418, 10.7595), Vector2(107.494, -5.12694), Vector2(175.552, -4.33311), Vector2(48.5748, -36.7144), Vector2(55.8732, -42.5223), Vector2(57.7842, -10.2848), Vector2(53.5986, -15.205), Vector2(53.5986, -15.205)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Effect:rotation")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 0.175, 0.2, 0.225, 0.25, 0.325, 0.4, 0.425, 0.45, 0.475, 0.575, 0.65, 0.675, 0.7, 0.725, 0.75, 0.85),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [-0.785397, 0.291745, 0.307834, 0.196572, 0.0908844, -0.0537495, -0.195983, -0.243394, -0.294933, -0.203324, 0.0345911, 0.19098, 0.241734, 0.296194, 0.194116, 0.0940265, 0.0940265]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Effect:modulate")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 0.325, 0.425, 0.45, 0.525, 0.65, 0.675, 0.75, 0.85),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 7.72749, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_k843s"]
@@ -336,6 +489,18 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Effect:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_uxeqg"]
@@ -402,6 +567,18 @@ tracks/4/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Effect:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7o5b3"]
 _data = {
@@ -412,11 +589,105 @@ _data = {
 "RP recover": SubResource("Animation_uxeqg")
 }
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_nyvnf"]
+atlas = ExtResource("5_p7ok7")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mid1c"]
+atlas = ExtResource("5_p7ok7")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1awaf"]
+atlas = ExtResource("5_p7ok7")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3k368"]
+atlas = ExtResource("5_p7ok7")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_koskl"]
+atlas = ExtResource("5_p7ok7")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gwjpf"]
+atlas = ExtResource("5_p7ok7")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02udo"]
+atlas = ExtResource("5_p7ok7")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0qqt"]
+atlas = ExtResource("5_p7ok7")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sb8wi"]
+atlas = ExtResource("5_p7ok7")
+region = Rect2(352, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7nybi"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nyvnf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mid1c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1awaf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3k368")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": false,
+"name": &"new_animation",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_koskl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwjpf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwjpf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_02udo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g0qqt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sb8wi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sb8wi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sb8wi")
+}],
+"loop": false,
+"name": &"poke",
+"speed": 30.0
+}]
+
 [node name="Rapier" type="Node2D" node_paths=PackedStringArray("animation_player")]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(132, 103)
 rotation = -0.785397
 script = ExtResource("1_whxn6")
+isAttacking = true
 weapon_resource = ExtResource("2_5obyc")
 animation_player = NodePath("AnimationPlayer")
 
@@ -435,6 +706,7 @@ skew = 0.431096
 texture = ExtResource("3_jthfj")
 
 [node name="RP_hitbox" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 12
 
@@ -460,6 +732,17 @@ collision_mask = 4
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_eear6")
 volume_db = 9.39
+
+[node name="Effect" type="Node2D" parent="."]
+position = Vector2(44.23, 0)
+rotation = -1.57079
+scale = Vector2(0.283, 0.283)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Effect"]
+position = Vector2(355.013, -0.223625)
+scale = Vector2(21.765, 21.765)
+sprite_frames = SubResource("SpriteFrames_7nybi")
+animation = &"poke"
 
 [connection signal="area_entered" from="RP_hitbox" to="." method="_on_rp_hitbox_area_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

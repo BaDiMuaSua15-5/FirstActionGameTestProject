@@ -9,13 +9,13 @@ func enter() -> void:
 	stun = true
 	WeaponComponent.stop_attack()
 	%StunTimer.start()
-	#change colour when stunned
-	Entity.modulate = "ff0000"
+	## change colour when stunned
+	#Entity.modulate = "ff0000"
 
 func exit() -> void:
 	super.exit()
-	#change colour back
-	Entity.modulate = "ffffff"
+	## change colour back
+	#Entity.modulate = "ffffff"
 
 func transition(delta: float) -> void:
 	if stun == false:

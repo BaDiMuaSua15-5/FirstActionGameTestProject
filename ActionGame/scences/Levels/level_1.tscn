@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bemwjr88w3yb5"]
+[gd_scene load_steps=17 format=3 uid="uid://bemwjr88w3yb5"]
 
 [ext_resource type="Script" path="res://scences/Levels/level_1.gd" id="1_384h3"]
 [ext_resource type="Texture2D" uid="uid://bslrdqdla2t36" path="res://PNG/Dark/texture_01.png" id="1_icpgu"]
@@ -13,12 +13,16 @@
 [ext_resource type="AudioStream" uid="uid://c7oqhv2l0aosh" path="res://Audio/solid_impact.ogg" id="11_dpxi3"]
 [ext_resource type="AudioStream" uid="uid://ctbevby32mmuc" path="res://Audio/doorhit-98828.mp3" id="12_4wjbs"]
 [ext_resource type="AudioStream" uid="uid://dtu6ash3d4jpc" path="res://Audio/rock-destroy-6409.mp3" id="12_wobxk"]
+[ext_resource type="PackedScene" uid="uid://bwwrt6ucxegwg" path="res://scences/room_templates/room_generator_corrupted.tscn" id="14_os3ci"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_8q3r1"]
 vertices = PackedVector2Array(5429, -1381, 5560, 1334, 5108, 870, 4140, -286, 4566, 870, 526, 157, -862, 150, -870, -390, -478, -390, 533, -382, 158, -390, 2006, 470, 2013, 1325, -862, 1318, -862, 1134, 690, 314, 1934, -286, -1210, 314, -1018, 314, -1018, 506, -870, 506, -870, 314, 158, -546, -478, -546, -854, -546, -854, -1398, 1934, -1398, 690, -538, 4566, 3414, 2170, 3414, 2170, 2218, 4066, 2218, 4066, 870, 2510, 870, 2170, 470, 2510, 1318, 2170, 1318, -1010, 1134, -1010, 1326, -1202, 1326, -3470, -1414, -1202, 1474, -1010, 1474, -1010, 2690, -862, 2690, -862, 2210, 2014, 2210, 2014, 3422, -3470, 3422, -1210, 166, -1018, -1414, -1018, 158)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(3, 2, 4), PackedInt32Array(5, 6, 7, 8, 9), PackedInt32Array(10, 9, 8), PackedInt32Array(11, 12, 13, 14, 15, 16), PackedInt32Array(17, 18, 19), PackedInt32Array(20, 21, 15, 14), PackedInt32Array(22, 10, 8, 23), PackedInt32Array(23, 24, 25, 26), PackedInt32Array(22, 23, 26), PackedInt32Array(27, 22, 26), PackedInt32Array(27, 26, 16, 15), PackedInt32Array(28, 29, 30, 31), PackedInt32Array(4, 28, 31, 32, 3), PackedInt32Array(16, 3, 32, 33, 34), PackedInt32Array(33, 35, 36, 34), PackedInt32Array(16, 34, 11), PackedInt32Array(20, 14, 37, 19), PackedInt32Array(19, 37, 38, 39, 40, 17), PackedInt32Array(41, 42, 43), PackedInt32Array(44, 45, 46, 47), PackedInt32Array(44, 47, 48, 43), PackedInt32Array(43, 48, 40, 41), PackedInt32Array(39, 41, 40), PackedInt32Array(49, 17, 40), PackedInt32Array(49, 40, 50, 51)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-3480, -1424, -1008, -1424, -1008, 168, -1200, 176, -1200, 304, -1008, 304, -1008, 496, -880, 496, -880, 304, 680, 304, 680, -528, 168, -536, 168, -400, 544, -392, 536, 168, -872, 160, -880, -400, -488, -400, -488, -536, -864, -536, -864, -1084.2, -864, -1408, 1944, -1408, 1944, -296, 4136, -296, 5438, -1402, 5572, 1360, 5104, 880, 4576, 880, 4576, 3424, 2160, 3424, 2160, 2208, 4056, 2208, 4056, 880, 2520, 880, 2520, 1328, 2160, 1328, 2160, 480, 2016, 480, 2024, 1336, -872, 1328, -872, 1144, -1000, 1144, -1000, 1336, -1192, 1336, -1192, 1464, -1000, 1464, -1000, 2680, -872, 2680, -872, 2200, 2024, 2200, 2024, 3432, -1008, 3432, -3480, 3432)])
 source_geometry_group_name = &"navigation_polygon_source_group"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ju4o4"]
+size = Vector2(309, 284)
 
 [node name="Level_1" type="Node2D"]
 script = ExtResource("1_384h3")
@@ -249,6 +253,10 @@ modulate = Color(0, 0, 0, 1)
 position = Vector2(2386, 1766)
 scale = Vector2(0.719206, 4.89756)
 
+[node name="RoomGenerator" parent="." instance=ExtResource("14_os3ci")]
+position = Vector2(8310, -1985)
+scale = Vector2(2.35, 2.35)
+
 [node name="Effect" type="Node" parent="."]
 
 [node name="Enemies" type="Node" parent="."]
@@ -269,10 +277,11 @@ position = Vector2(-568, -864)
 rotation = 1.57079
 
 [node name="Enemy6" parent="Enemies" instance=ExtResource("6_hkyq7")]
-position = Vector2(1488, 192)
+position = Vector2(6866, -1972)
 
 [node name="ControlledChar" parent="." instance=ExtResource("2_kci5l")]
-position = Vector2(-520, 1176)
+top_level = true
+position = Vector2(8408, -1691)
 
 [node name="Shakeable_Camera" parent="ControlledChar" node_paths=PackedStringArray("parent") instance=ExtResource("8_6h0en")]
 parent = NodePath("..")
@@ -308,3 +317,18 @@ pitch_scale = 0.78
 [node name="ThrowBreakSound" type="AudioStreamPlayer2D" parent="Sound"]
 top_level = true
 stream = ExtResource("12_wobxk")
+
+[node name="Areas" type="Node" parent="."]
+
+[node name="previous_level" type="Area2D" parent="Areas"]
+position = Vector2(2358, 1144)
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/previous_level"]
+position = Vector2(-20.5, 6)
+shape = SubResource("RectangleShape2D_ju4o4")
+
+[node name="PositionNode" type="Node2D" parent="Areas/previous_level"]
+position = Vector2(290, -383)
+
+[connection signal="body_entered" from="Areas/previous_level" to="." method="_on_previous_level_body_entered"]

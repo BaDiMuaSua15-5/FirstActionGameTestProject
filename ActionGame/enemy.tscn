@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cgr1iow7o12r6"]
+[gd_scene load_steps=21 format=3 uid="uid://cgr1iow7o12r6"]
 
 [ext_resource type="Script" path="res://enemy.gd" id="1_tcifc"]
 [ext_resource type="Script" path="res://HitBoxComponent.gd" id="2_anltf"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" path="res://States/Pursuit.gd" id="7_3147a"]
 [ext_resource type="Script" path="res://States/Combat.gd" id="8_do1ep"]
 [ext_resource type="Script" path="res://States/Stun.gd" id="11_kqxmo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r6yvo"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_yqss2"]
 size = Vector3(200, -200, 1)
@@ -28,9 +30,71 @@ radius = 464.069
 [sub_resource type="CircleShape2D" id="CircleShape2D_7mmex"]
 radius = 159.4
 
+[sub_resource type="Animation" id="Animation_ui4hb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.14159]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.14159]
+}
+
+[sub_resource type="Animation" id="Animation_qmffo"]
+resource_name = "hitted"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(0.707107, 0.183011, 0.147141, 1, 1),
+"update": 0,
+"values": [3.14159, 2.61799, 3.49066, 2.79253, 3.14159]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(0.125, 0.183011, 0.148651, 1, 1),
+"update": 0,
+"values": [3.14159, 2.61799, 3.49066, 2.79253, 3.14159]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tug7g"]
+_data = {
+"RESET": SubResource("Animation_ui4hb"),
+"hitted": SubResource("Animation_qmffo")
+}
+
 [node name="Enemy" type="CharacterBody2D" groups=["Enemies"]]
+top_level = true
+material = SubResource("ShaderMaterial_r6yvo")
 collision_layer = 2
-collision_mask = 7
+collision_mask = 135
 motion_mode = 1
 script = ExtResource("1_tcifc")
 num_rays = 32
@@ -58,6 +122,7 @@ position = Vector2(0, -17)
 mesh = SubResource("PrismMesh_yqss2")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
+visible = false
 modulate = Color(0, 0, 0, 0.392157)
 position = Vector2(7.27596e-12, 8)
 rotation = 3.14159
@@ -83,7 +148,8 @@ unique_name_in_owner = true
 modulate = Color(4.81308e-06, 0, 0.951464, 1)
 top_level = true
 target_position = Vector2(0, -384)
-collision_mask = 4
+collision_mask = 132
+hit_from_inside = true
 
 [node name="Line2D" type="Line2D" parent="WallDetectRay"]
 
@@ -105,17 +171,15 @@ collision_mask = 3
 shape = SubResource("CircleShape2D_504ff")
 
 [node name="CloseArea" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CloseArea"]
 shape = SubResource("CircleShape2D_7mmex")
 
 [node name="Components" type="Node2D" parent="."]
 
-[node name="HealthComponent" type="Node" parent="Components" node_paths=PackedStringArray("OwnerEntity")]
+[node name="HealthComponent" type="Node" parent="Components"]
 unique_name_in_owner = true
 script = ExtResource("2_p5gl7")
-OwnerEntity = NodePath("../..")
 
 [node name="HitTimer" type="Timer" parent="Components/HealthComponent"]
 wait_time = 0.2
@@ -140,7 +204,6 @@ ControlledChar = NodePath("../..")
 
 [node name="LongSword" parent="Components/WeaponComponent" node_paths=PackedStringArray("ManagingComponent") instance=ExtResource("5_ossfq")]
 modulate = Color(1, 1, 1, 0)
-rotation = 10.2312
 ManagingComponent = NodePath("..")
 
 [node name="Marker2D" type="Marker2D" parent="Components/WeaponComponent"]
@@ -156,7 +219,8 @@ Entity = NodePath("../..")
 WeaponComponent = NodePath("../../Components/WeaponComponent")
 
 [node name="RayCastDetection" type="RayCast2D" parent="FiniteStateMachine/Ide"]
-collision_mask = 5
+collision_mask = 133
+hit_from_inside = true
 
 [node name="Pursuit" type="Node2D" parent="FiniteStateMachine" node_paths=PackedStringArray("Entity", "WeaponComponent")]
 script = ExtResource("7_3147a")
@@ -168,7 +232,8 @@ wait_time = 5.0
 one_shot = true
 
 [node name="VisionRay" type="RayCast2D" parent="FiniteStateMachine/Pursuit"]
-collision_mask = 5
+collision_mask = 133
+hit_from_inside = true
 
 [node name="Combat" type="Node2D" parent="FiniteStateMachine" node_paths=PackedStringArray("Entity", "WeaponComponent")]
 script = ExtResource("8_do1ep")
@@ -192,7 +257,6 @@ one_shot = true
 
 [node name="debug" type="Label" parent="."]
 unique_name_in_owner = true
-visible = false
 top_level = true
 offset_left = -59.0
 offset_top = 5.99998
@@ -213,6 +277,13 @@ allow_greater = true
 allow_lesser = true
 
 [node name="ContextRays" type="Node2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tug7g")
+}
+
+[node name="Camera2D" type="Camera2D" parent="."]
 
 [connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
 [connection signal="timeout" from="NavTimer" to="." method="_on_nav_timer_timeout"]

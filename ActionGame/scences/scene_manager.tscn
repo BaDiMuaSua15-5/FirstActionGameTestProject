@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://54jl0ubn3acw"]
+
+[ext_resource type="Script" path="res://scences/SceneManager.gd" id="1_w1w3j"]
+[ext_resource type="PackedScene" uid="uid://ffqyqmktvcwb" path="res://scences/Levels/level_assests_test.tscn" id="2_4b2lr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3dxu"]
+size = Vector2(120, 264)
+
+[node name="SceneManager" type="Node"]
+script = ExtResource("1_w1w3j")
+
+[node name="Level-Assests_Test" parent="." instance=ExtResource("2_4b2lr")]
+
+[node name="Areas2" type="Node" parent="Level-Assests_Test"]
+
+[node name="next_level" type="Area2D" parent="Level-Assests_Test/Areas2"]
+position = Vector2(2904, 2360)
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Level-Assests_Test/Areas2/next_level"]
+position = Vector2(4, -4)
+shape = SubResource("RectangleShape2D_k3dxu")

@@ -26,7 +26,8 @@ var can_attack: bool = true
 var is_dead: bool
 var is_rolling: bool = false
 var in_knockback: bool = false
-var attacker_queue: Array[int]
+
+var attacker_queue: Array[int] # Array for enemies to queue for attacks
 var atk_queue_max: int = 2
 
 @export var max_health: int = 200
@@ -44,10 +45,8 @@ func _ready() -> void:
 	speed = MAX_SPEED
 	
 	is_dead = false
-	#HitBoxComp.connect("hitted", knockback)
-	#WeaponManager.connect("attack_finished", _on_weapons_manager_attack_finished)
-	#WeaponManager.connect("attack_signal", _on_weapons_manager_attack_signal)
-	#WeaponManager.connect("attack_push", _on_weapons_manager_push_signal)
+	#$AnimatedSprite2D.top_level = true
+	#$AnimatedSprite2D.scale = scale
 	origin_pos = global_position
 
 const MAX_ROLL_TIME: float = 0.37
@@ -62,6 +61,7 @@ func _process(delta: float) -> void:
 		
 	rotate_to(target, delta)
 	StaminaComp.add(DEFAULT_STM_GEN * delta)
+	
 	#StaminaComp.stamina += stamnia_regen * delta
 	
 	#Check rolling status
@@ -72,6 +72,8 @@ func _process(delta: float) -> void:
 			if !in_push: 
 				#If is rolling then start the stamnia_regen_delay Timer
 				StaminaComp.delay_regen_timer(0.5)
+				modulate = Color(1, 1, 1)
+				$AnimatedSprite2D.modulate = Color(1, 1, 1)
 			# If is atk_push then let the atk_finish Signal start the Timer
 			else: 
 				in_push = false
@@ -80,9 +82,10 @@ func _process(delta: float) -> void:
 			is_rolling = false
 			roll_dir = Vector2.ZERO
 			HitBoxComp.get_child(0).disabled = false
-			modulate = Color(1, 1, 1)
 			return
 		roll_time -= delta
+		
+	animate_sprite(target - global_position)
 	return
 
 var roll_dir: Vector2
@@ -163,11 +166,26 @@ func hitted(attack: AttackObj) -> void:
 		%StunTimer.start()
 		can_attack = false
 		in_knockback = true
-		modulate = "ff0000"
+		damage_flash()
 		knockback_dir = attack.direction * attack.knockback
-		(Camera.get_parent() as ShakeableCamera).add_trauma(0.35)
+		Global.shake_camera(0.75)
+		Global.play_hit_sound()
+
+func damage_flash() -> void:
+	modulate = "ff0000"
+	$AnimatedSprite2D.modulate = "ff0000"
+	await get_tree().create_timer(0.05)
+	modulate = Color(1, 1, 1)
+	$AnimatedSprite2D.modulate = Color(1, 1, 1)
+	await get_tree().create_timer(0.05)
+	modulate = "ff0000"
+	$AnimatedSprite2D.modulate = "ff0000"
 
 func _on_death() -> void:
+	self.modulate = "ff0000"
+	Global.play_kill_sound()
+	Global.shake_camera(1)
+	
 	is_dead = true
 	set_physics_process(false)
 	await get_tree().create_timer(1.7).timeout
@@ -176,6 +194,32 @@ func rotate_to(target: Vector2, delta: float) -> void:
 	var direction := (target - global_position).normalized()
 	var angleTo: float = (-transform.y).angle_to(direction)
 	rotate(sign(angleTo) * min(delta * rotationSpeed, abs(angleTo)))
+
+func animate_sprite(direction: Vector2) -> void:
+	$AnimatedSprite2D.global_position = position
+	$AnimatedSprite2D.rotation = -rotation
+	var h_length: float = abs(direction.x)
+	var v_length: float = abs(direction.y)
+	if direction.x > 0:
+		$AnimatedSprite2D.flip_h = false
+	else:
+		$AnimatedSprite2D.flip_h = true
+	if velocity == Vector2.ZERO:
+		if h_length >= v_length:
+			$AnimatedSprite2D.play("idle_right")
+		else:
+			if direction.y < 0:
+				$AnimatedSprite2D.play("idle_up")
+			else:
+				$AnimatedSprite2D.play("idle_down")
+	else:
+		if h_length >= v_length:
+			$AnimatedSprite2D.play("move_right")
+		else:
+			if direction.y < 0:
+				$AnimatedSprite2D.play("move_up")
+			else:
+				$AnimatedSprite2D.play("move_down")
 
 # Process the roll input
 func roll_input(direction: Vector2) -> void:
@@ -187,6 +231,7 @@ func roll_input(direction: Vector2) -> void:
 		StaminaComp.deplete_stamina(20)
 		HitBoxComp.get_child(0).disabled = true
 		modulate = Color(0, 0.81176471710205, 0)
+		$AnimatedSprite2D.modulate = Color(0, 0.81176471710205, 0)
 		$DashEffectTimer.start()
 		
 		if direction == Vector2.ZERO:
@@ -231,6 +276,7 @@ func _on_stun_timer_timeout() -> void:
 	in_knockback = false
 	knockback_dir = Vector2.ZERO
 	modulate = Color(1, 1, 1)
+	$AnimatedSprite2D.modulate = Color(1, 1, 1)
 
 func _on_stamina_gen_timer_timeout() -> void:
 	#print("Stamina gen timer out")
@@ -239,9 +285,10 @@ func _on_stamina_gen_timer_timeout() -> void:
 
 func add_dash_effect() -> void:
 	var effect := ghost_node.instantiate() as DashEffect
-	effect.set_property(position, $MeshInstance2D.scale)
-	effect.rotation = rotation
-	get_tree().current_scene.get_node("Effect").add_child(effect)
+	effect.set_property(position, $MeshInstance2D.scale, -roll_dir)
+	#get_tree().current_scene.get_node("Effect").add_child(effect)
+	if get_parent().get_node("Effect"):
+		get_parent().get_node("Effect").add_child(effect)
 
 func _on_dash_effect_timer_timeout() -> void:
 	add_dash_effect()

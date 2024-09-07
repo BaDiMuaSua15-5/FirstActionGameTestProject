@@ -1,0 +1,19 @@
+[gd_scene load_steps=11 format=3 uid="uid://b1fehpcp3mbuf"]
+
+[ext_resource type="Script" path="res://scences/room_templates/RoomTemplates.gd" id="1_citgl"]
+[ext_resource type="PackedScene" uid="uid://iukg81652bhl" path="res://scences/room_templates/room_bl.tscn" id="2_ca5gg"]
+[ext_resource type="PackedScene" uid="uid://n25bjib4og8g" path="res://scences/room_templates/room_br.tscn" id="3_doeh7"]
+[ext_resource type="PackedScene" uid="uid://bffljqajtk05l" path="res://scences/room_templates/room_tb.tscn" id="4_ljevy"]
+[ext_resource type="PackedScene" uid="uid://7qpghg3fnvkh" path="res://scences/room_templates/room_b.tscn" id="5_svg2y"]
+[ext_resource type="PackedScene" uid="uid://c1bq0a64kfswm" path="res://scences/room_templates/room_t.tscn" id="6_amfqy"]
+[ext_resource type="PackedScene" uid="uid://15yqhpcsv7gw" path="res://scences/room_templates/room_tl.tscn" id="7_g6q1y"]
+[ext_resource type="PackedScene" uid="uid://cxcmtrsqq1hjt" path="res://scences/room_templates/room_tr.tscn" id="8_23pgy"]
+[ext_resource type="PackedScene" uid="uid://cql3tunud4gmi" path="res://scences/room_templates/room_r.tscn" id="9_w507p"]
+[ext_resource type="PackedScene" uid="uid://dygmk5eoxig44" path="res://scences/room_templates/room_l.tscn" id="10_tbipf"]
+
+[node name="RoomTemplates" type="Node2D"]
+script = ExtResource("1_citgl")
+bottom_door_rooms = Array[PackedScene]([ExtResource("5_svg2y"), ExtResource("2_ca5gg"), ExtResource("3_doeh7"), ExtResource("4_ljevy"), ExtResource("2_ca5gg"), ExtResource("3_doeh7"), ExtResource("4_ljevy")])
+top_door_rooms = Array[PackedScene]([ExtResource("6_amfqy"), ExtResource("4_ljevy"), ExtResource("7_g6q1y"), ExtResource("8_23pgy"), ExtResource("4_ljevy"), ExtResource("7_g6q1y"), ExtResource("8_23pgy")])
+right_door_rooms = Array[PackedScene]([ExtResource("3_doeh7"), ExtResource("9_w507p"), ExtResource("8_23pgy"), ExtResource("3_doeh7"), ExtResource("8_23pgy")])
+left_door_rooms = Array[PackedScene]([ExtResource("2_ca5gg"), ExtResource("2_ca5gg"), ExtResource("10_tbipf"), ExtResource("7_g6q1y"), ExtResource("7_g6q1y")])

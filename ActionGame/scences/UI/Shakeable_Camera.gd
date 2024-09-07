@@ -7,7 +7,7 @@ var max_y_offset: int = 200
 @export var parent: Node2D
 
 @export var noise :FastNoiseLite
-@export var noise_speed: float = 50.0 * 2 
+@export var noise_speed: float = 50.0 * 10
 
 @export var trauma_reduction_rate := 1.0
 var trauma: float = 0.0
@@ -47,5 +47,5 @@ func follow_parent() -> void:
 func  _input(event: InputEvent) -> void:
 	#if event.is_action_pressed("dodge"):
 		#print("add")
-		#add_trauma(0.7)
+		#add_trauma(1)
 	return

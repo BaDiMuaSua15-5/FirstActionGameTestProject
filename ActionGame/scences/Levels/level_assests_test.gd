@@ -1,7 +1,7 @@
 extends LevelClass
-class_name level_1Scene
+class_name AssetTestScene
 
-@export var level_name: String = "level_1"
+@export var level_name: String = "asset_test"
 var position_node: Node2D
 var data_parameters: Dictionary = {"player": null,
 									"other": null,}
@@ -13,16 +13,16 @@ func _ready() -> void:
 	Global.player = $ControlledChar
 	Global.camera = $ControlledChar/Shakeable_Camera as ShakeableCamera
 
-
-func _on_previous_level_body_entered(body: Node2D) -> void:
-	var previous_level_name: String = "level_assests_test"
+func _on_next_level_body_entered(body: Node2D) -> void:
+	var next_level_name: String
+	next_level_name = "level_1"
 	data_parameters["player"] = get_node("ControlledChar")
-	emit_scene_change(level_name, previous_level_name)
+	emit_scene_change(level_name, next_level_name)
 
 func enter_scene(from_scene: String, imported_parameters: Dictionary) -> void:
 	match from_scene:
-		"asset_test":
-			position_node = $Areas/previous_level/PositionNode
+		"level_1":
+			position_node = $Areas/next_level/next_level_enter
 		_:
 			return
 	process_parameters(imported_parameters)
@@ -31,12 +31,14 @@ func enter_scene(from_scene: String, imported_parameters: Dictionary) -> void:
 
 func process_parameters(imported_param: Dictionary) -> void:
 	var current_player := $ControlledChar as PlayerObj
+	# remove existing character in scene
 	if current_player:
 		current_player.name = current_player.name + "2"
 		current_player.queue_free()
-	#call_deferred("add_child", imported_param["player"])
 	imported_param["player"].reparent(self)
 	imported_param["player"].set_deferred("name", "ControlledChar")
+	Global.player = imported_param["player"]
+	Global.camera = (Global.player as PlayerObj).get_node("Shakeable_Camera")
 
 func position_player() -> void:
 	var player := get_node("ControlledChar")

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="first creation"
-run/main_scene="res://TEST/level_assests_test.tscn"
+run/main_scene="res://scences/Levels/level_assests_test.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
@@ -92,6 +92,8 @@ mouse_pickup={
 2d_physics/layer_2="Enemy"
 2d_physics/layer_3="Object"
 2d_physics/layer_4="Hurt/HitBox"
+2d_physics/layer_8="RoomVisionBarrier"
+2d_physics/layer_9="Room"
 
 [rendering]
 

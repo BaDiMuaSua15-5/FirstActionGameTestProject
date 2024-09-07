@@ -18,7 +18,6 @@ ManagingComponent = NodePath("../..")
 
 [node name="LongSword" parent="Weapons" node_paths=PackedStringArray("ManagingComponent") instance=ExtResource("5_xprj6")]
 modulate = Color(1, 1, 1, 0)
-rotation = 10.2312
 ManagingComponent = NodePath("../..")
 
 [node name="Camera2D" type="Camera2D" parent="."]

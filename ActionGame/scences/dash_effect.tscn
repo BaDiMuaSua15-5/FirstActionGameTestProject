@@ -1,17 +1,71 @@
-[gd_scene load_steps=3 format=3 uid="uid://bsxj0funilgnj"]
+[gd_scene load_steps=12 format=3 uid="uid://bsxj0funilgnj"]
 
 [ext_resource type="Script" path="res://scences/dash_effect.gd" id="1_dmjjh"]
+[ext_resource type="Texture2D" uid="uid://ksyo6a5ba1e2" path="res://icon.svg" id="2_w04yo"]
+[ext_resource type="Texture2D" uid="uid://dlpnoi2j3bigg" path="res://PNG/Assets/smoke_sprite.png" id="3_8frm4"]
+[ext_resource type="Texture2D" uid="uid://dsdhapuyqwrf3" path="res://PNG/Assets/slime_monster_spritesheet.png" id="4_rslxp"]
 
-[sub_resource type="PrismMesh" id="PrismMesh_36jda"]
-lightmap_size_hint = Vector2i(14, 21)
-size = Vector3(200, 200, 1)
+[sub_resource type="Gradient" id="Gradient_x8d7n"]
+offsets = PackedFloat32Array(0, 0.150215, 0.690987, 0.978541)
+colors = PackedColorArray(0.854902, 0.854902, 0.701961, 1, 0.882353, 0.560784, 0.0588235, 1, 0.909804, 0.313726, 0.172549, 1, 0.996078, 0.988235, 0.984314, 0.396078)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6k0wm"]
+gradient = SubResource("Gradient_x8d7n")
+
+[sub_resource type="Curve" id="Curve_s1v4t"]
+min_value = -100.0
+max_value = 100.0
+_data = [Vector2(0.00766283, -3.33864), 0.0, 0.0, 0, 0, Vector2(0.256705, 42.1304), 0.0, 0.0, 0, 0, Vector2(0.264368, 13.1955), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_0fnbe"]
+curve = SubResource("Curve_s1v4t")
+
+[sub_resource type="Curve" id="Curve_bejvl"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.452305), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_fcpmp"]
+curve = SubResource("Curve_bejvl")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v5mkt"]
+emission_shape = 1
+emission_sphere_radius = 57.0
+direction = Vector3(0, 0, 0)
+spread = 10.0
+initial_velocity_min = 708.33
+initial_velocity_max = 708.33
+gravity = Vector3(0, -1200, 0)
+radial_accel_min = -100.0
+radial_accel_max = -100.0
+radial_accel_curve = SubResource("CurveTexture_0fnbe")
+scale_min = 1.5
+scale_max = 2.75
+scale_curve = SubResource("CurveTexture_fcpmp")
+color_ramp = SubResource("GradientTexture1D_6k0wm")
 
 [node name="dash_effect" type="Node2D"]
-modulate = Color(1, 1, 1, 0.45098)
 show_behind_parent = true
 script = ExtResource("1_dmjjh")
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-position = Vector2(0.00025177, -16.9997)
-rotation = -3.14159
-mesh = SubResource("PrismMesh_36jda")
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+visible = false
+emitting = false
+amount = 2000
+process_material = SubResource("ParticleProcessMaterial_v5mkt")
+texture = ExtResource("2_w04yo")
+lifetime = 1.68
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_v5mkt")
+texture = ExtResource("3_8frm4")
+lifetime = 1.68
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.356863, 0.792157, 0.87451, 0.796078)
+scale = Vector2(8.535, 8.535)
+texture = ExtResource("4_rslxp")
+hframes = 3
+vframes = 3
+frame = 1

@@ -17,7 +17,7 @@ var Weapon_List: Dictionary = {} #hashMap<String weapon_name, Weapon_Resource we
 
 @export var Start_Weapons: Array[String]
 
-@export var ControlledChar: PlayerObj
+@onready var ControlledChar: PlayerObj = self.get_parent()
 
 func _ready() -> void:
 	Initalize(Start_Weapons)

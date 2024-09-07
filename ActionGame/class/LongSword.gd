@@ -14,8 +14,12 @@ func _physics_process(delta: float) -> void:
 	WallRay.global_rotation = 0
 	WallRay.position = global_position
 
-func _on_ls_hitbox_area_entered(area: Area2D) -> void:
-	if area is HitBoxComponent and area.owner != ManagingComponent.owner:
+func _on_ls_hitbox_area_entered(area: HitBoxComponent) -> void:
+	if area == null:
+		return
+	print("Managing component: " + str(ManagingComponent))
+	print("Area owner: " + str(area))
+	if area.owner != ManagingComponent.owner:
 		var hitbox := area as HitBoxComponent
 		if !hitbox:
 			return
@@ -25,7 +29,7 @@ func _on_ls_hitbox_area_entered(area: Area2D) -> void:
 		var space_state := PhysicsServer2D.space_get_direct_state(space_rid)
 		var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.new()
 		query.collision_mask = 0b0100
-		query.exclude = [self]
+		query.exclude = [self, area.owner]
 		query.from = global_position
 		query.to = hitbox.global_position
 		var wall_check_result := space_state.intersect_ray(query)
@@ -81,3 +85,9 @@ func play_weappon_sound() -> void:
 	var audio_player := $AudioStreamPlayer2D as AudioStreamPlayer2D
 	audio_player.pitch_scale = randf_range(0.9, 1.1)
 	audio_player.play()
+	
+func play_effect() -> void:
+	$Effect/AnimatedSprite2D.play("new_animation")
+	
+func play_effect_poke() -> void:
+	$Effect/AnimatedSprite2D.play("poke")

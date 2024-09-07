@@ -21,6 +21,7 @@ var is_dead: bool = false
 var in_knockback: bool = false
 var in_atk_push: bool = false
 var in_combat: bool = false
+signal died
 
 var atk_push_time: float = MAX_PUSH_TIME
 const MAX_PUSH_TIME: float = 0.37
@@ -70,9 +71,9 @@ func _process(delta: float) -> void:
 	else:
 		in_atk_push = false
 	
-	wallRay.position = position
-	HealthBar.position = position + Vector2(-128, -152)
-	StateLabel.position = position + Vector2(-50, 0)
+	wallRay.global_position = global_position
+	HealthBar.global_position = global_position + Vector2(-128, -152)
+	StateLabel.global_position = global_position + Vector2(-50, 0)
 
 func set_context_rays() -> void:
 	interest.resize(num_rays)
@@ -148,7 +149,7 @@ func set_danger() -> void:
 			var collider := ray.get_collider()
 			var collide_position := ray.get_collision_point()
 			var distance_ratio := ((collide_position - global_position).length()) / (look_ahead) # 130 to account for enemy radius
-			danger[i] = min(0.6 ,1.0 - distance_ratio) * 2
+			danger[i] = min(0.6 ,1.0 - distance_ratio)
 		else:
 			danger[i] = 0.0
 		
@@ -200,7 +201,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		var distance_to_target := (target_pos - global_position).length()
 		desired_velocity = desired_velocity * speed_mult
-		if distance_to_target / delta > max_speed:
+		if distance_to_target > max_speed * delta:
 			accelerate(movement_acceleration * delta, desired_velocity)
 		else:
 			var max := distance_to_target / delta
@@ -232,6 +233,20 @@ func hitted(attack: AttackObj) -> void:
 	if is_dead:
 		print(self, ", Is dead")
 		return
+	# Player accumulate AP when hit enemy
+	if attack.Attacker is PlayerObj:
+		var player := attack.Attacker as PlayerObj
+		player.APComp.accumulate(attack.ap_accumulation)
+	
+	if Global.camera:
+		# Shake camera based on attack object
+		if attack.Attacker is Throwable:
+			Global.shake_camera(0.65)
+		else:
+			Global.shake_camera(0.35)
+	Global.play_hit_sound()
+	Global.hitstop_effect(0.25, 0.14)
+		
 	if HealthComponent.health == 0:
 		is_dead = true
 	#====Knockback fix======
@@ -243,16 +258,32 @@ func hitted(attack: AttackObj) -> void:
 	if attack.Attacker is PlayerObj:
 		player = attack.Attacker
 	#=======================
-	
-	
 	StunTimer.wait_time = attack.stun_time
 	FSM.change_state("Stun")
+	damage_flash()
+	
+func damage_flash() -> void:
+	$AnimationPlayer.stop()
+	$AnimationPlayer.play("hitted")
+	modulate = "00d6be"
+	await get_tree().create_timer(0.05).timeout
+	modulate = Color(1, 1, 1)
+	await get_tree().create_timer(0.05).timeout
+	modulate = "00d6be"
+	await get_tree().create_timer(0.05).timeout
+	modulate = Color(1, 1, 1)
 
 func _on_death() -> void:
+	print(self, 'out of health')
+	self.modulate = "ff0000"
+	Global.play_kill_sound()
+	Global.shake_camera(0.75)
+	
 	set_physics_process(false)
 	var tween := get_tree().create_tween()
 	tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.6)
 	await tween.finished
+	died.emit()
 	queue_free()
 
 func high_velocity_collide(attack: AttackObj) -> void:
@@ -280,11 +311,7 @@ func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 func _on_health_change(health: int, max_health: int) -> void:
 	HealthBar.max_value = max_health
 	HealthBar.value = health
-	
-	
-	
-	
-	
+
 	
 	
 	

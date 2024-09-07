@@ -46,3 +46,9 @@ func play_throw_collide_sound() -> void:
 		throwable_collide_sound.global_position = player.position
 	throwable_collide_sound.pitch_scale = randf_range(0.7, 0.9)
 	throwable_collide_sound.play()
+
+func shake_camera(trauma: float) -> void:
+	if camera == null:
+		print("<shake camera>")
+		return
+	camera.add_trauma(trauma)

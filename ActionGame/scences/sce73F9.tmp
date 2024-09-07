@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://54jl0ubn3acw"]
+
+[ext_resource type="Script" path="res://scences/SceneManager.gd" id="1_w1w3j"]
+[ext_resource type="PackedScene" uid="uid://ffqyqmktvcwb" path="res://scences/Levels/level_assests_test.tscn" id="2_4b2lr"]
+
+[node name="SceneManager" type="Node"]
+script = ExtResource("1_w1w3j")
+
+[node name="Level-Assests_Test" parent="." instance=ExtResource("2_4b2lr")]
