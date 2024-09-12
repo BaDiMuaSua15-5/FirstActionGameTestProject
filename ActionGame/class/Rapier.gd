@@ -8,16 +8,23 @@ func _ready() -> void:
 	animation_player.play("RESET")
 	print(weapon_resource.Auto_Fire)
 
+func get_attack() -> AttackObj:
+	var attack := AttackObj.new()
+	attack.damage = weapon_resource.Damage
+	attack.ap_accumulation = weapon_resource.ap_accumalation
+	attack.direction = Vector2.ZERO
+	attack.knockback = weapon_resource.knockback
+	attack.stun_time = weapon_resource.stun_time
+	attack.Attacker = ManagingComponent.owner
+	return attack
+
 func _on_rp_hitbox_area_entered(area: Area2D) -> void:
 	if area == null:
 		return
-	print("Managing component: " + str(ManagingComponent))
-	print("Area owner: " + str(area))
 	if area.owner != ManagingComponent.owner:
 		var hitbox := area as HitBoxComponent
 		if !hitbox:
 			return
-		print("Hitted", hitbox.owner)
 		
 		var space_rid := get_world_2d().space
 		var space_state := PhysicsServer2D.space_get_direct_state(space_rid)
@@ -28,6 +35,7 @@ func _on_rp_hitbox_area_entered(area: Area2D) -> void:
 		query.to = hitbox.global_position
 		var wall_check_result := space_state.intersect_ray(query)
 		
+		# If there is a wall between self and target
 		if wall_check_result:
 			print("Blocked by wall ", wall_check_result["collider"])
 			return
@@ -35,18 +43,17 @@ func _on_rp_hitbox_area_entered(area: Area2D) -> void:
 			# Ignore if the hitted entity is in the group same as owner
 			if hitbox.owner.get_groups()[0] == ManagingComponent.owner.get_groups()[0]:
 				print("Hitted Entity in same group")
+				return
 			else:
 				print("Hit deal damage")
-				var attack := AttackObj.new()
-				attack.damage = weapon_resource.Damage
-				attack.ap_accumulation = weapon_resource.ap_accumalation
-				attack.direction = Vector2(hitbox.owner.global_position - owner.global_position).normalized()
-				attack.knockback = weapon_resource.knockback
-				attack.stun_time = weapon_resource.stun_time
-				attack.Attacker = ManagingComponent.owner
+				var attack := get_attack()
+				attack.direction = (hitbox.owner.global_position - ManagingComponent.global_position).normalized()
+				var upgrades_comp := ManagingComponent.Upgrades as UpgradesComponent
+				attack = upgrades_comp.apply_attack_upgrades(attack)
 				
 				hitbox.hit(attack)
 	return
+
 
 signal chain_atk
 signal push_atk #Still waiting adding

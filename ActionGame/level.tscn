@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://br2x766jxvwyi"]
+[gd_scene load_steps=14 format=3 uid="uid://br2x766jxvwyi"]
 
 [ext_resource type="PackedScene" uid="uid://bao061uq5658n" path="res://scences/controlled_char.tscn" id="2_vijwu"]
 [ext_resource type="Texture2D" uid="uid://bslrdqdla2t36" path="res://PNG/Dark/texture_01.png" id="3_x655n"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bo3tdr745vksn" path="res://scences/throwable_object.tscn" id="6_khhy5"]
 [ext_resource type="Script" path="res://EnemyTargetDebug.gd" id="7_s1egc"]
 [ext_resource type="AudioStream" uid="uid://c7oqhv2l0aosh" path="res://Audio/solid_impact.ogg" id="8_w181i"]
+[ext_resource type="PackedScene" uid="uid://df54yh5nvd0lg" path="res://scences/room_templates/exit_area.tscn" id="10_dbsci"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_ctnno"]
 radius = 30.0
@@ -81,3 +82,7 @@ script = ExtResource("7_s1egc")
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_w181i")
+
+[node name="ExitArea" parent="." instance=ExtResource("10_dbsci")]
+position = Vector2(523, 219)
+scale = Vector2(9, 9)

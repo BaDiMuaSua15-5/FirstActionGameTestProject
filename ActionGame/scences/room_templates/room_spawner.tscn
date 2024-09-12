@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4d08xscglppy"]
+[gd_scene load_steps=3 format=3 uid="uid://dt2itgbqxpc2u"]
 
 [ext_resource type="Script" path="res://scences/room_templates/RoomSpawner.gd" id="1_ox4dy"]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bq25ar4da3n6l"]
+[gd_scene load_steps=11 format=3 uid="uid://bq25ar4da3n6l"]
 
 [ext_resource type="Texture2D" uid="uid://cfdog7n186la0" path="res://PNG/Assets/wooden_chest.png" id="1_b7w70"]
 [ext_resource type="Script" path="res://scences/wooden_chest.gd" id="1_lqu8n"]
@@ -12,6 +12,13 @@ size = Vector2(160, 160)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vmnpk"]
 size = Vector2(156, 150)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mh0oc"]
+radius = 243.311
+
+[sub_resource type="LabelSettings" id="LabelSettings_1c1wy"]
+line_spacing = -6.965
+font_size = 331
 
 [node name="wooden_chest" type="StaticBody2D"]
 collision_layer = 4
@@ -56,3 +63,23 @@ health = 1
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_o28a5")
 pitch_scale = 1.24
+
+[node name="InteractArea" type="Area2D" parent="."]
+collision_layer = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractArea"]
+shape = SubResource("CircleShape2D_mh0oc")
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = -80.0
+offset_top = -192.0
+offset_right = 1051.0
+offset_bottom = 259.0
+scale = Vector2(0.15, 0.15)
+text = "Exit (E)"
+label_settings = SubResource("LabelSettings_1c1wy")
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="InteractArea" to="." method="_on_interact_area_body_entered"]
+[connection signal="body_exited" from="InteractArea" to="." method="_on_interact_area_body_exited"]

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="HealthMaxUpgrade" load_steps=2 format=3 uid="uid://dc6qilouqbt8t"]
+
+[ext_resource type="Script" path="res://scences/UpgradesComponent/HealthMaxUpgrade.gd" id="1_usm6y"]
+
+[resource]
+script = ExtResource("1_usm6y")
+health_bonus = 0.2
+upgrade_name = "health_max"

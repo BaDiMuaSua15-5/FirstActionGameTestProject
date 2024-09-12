@@ -5,21 +5,24 @@ var templates: RoomTemplates
 var max_count: int = 11
 var count: int = 0
 var added_rooms: Array[RoomCell]
+var last_room: RoomCell
 
 signal start_load
 signal finish_load
 
-var start_room := preload("res://scences/room_templates/room_starter.tscn")
-var closed_top := preload("res://scences/room_templates/room_b.tscn")
-var closed_bottom := preload("res://scences/room_templates/room_t.tscn")
-var closed_left := preload("res://scences/room_templates/room_r.tscn")
-var closed_right := preload("res://scences/room_templates/room_l.tscn")
+var start_room := preload("res://scences/room_templates/room_str.tscn") as PackedScene
+var closed_top := preload("res://scences/room_templates/room_bottom.tscn") as PackedScene
+var closed_bottom := preload("res://scences/room_templates/room_top.tscn") as PackedScene
+var closed_left := preload("res://scences/room_templates/room_right.tscn") as PackedScene
+var closed_right := preload("res://scences/room_templates/room_left.tscn") as PackedScene
+
 
 func _ready() -> void:
 	templates = get_node("Keep/RoomTemplates") as RoomTemplates
 	count = 1
 	#$Room_Start.start_spawn()
 	$Keep/Timer.wait_time = 1.4
+	
 		
 # function for child rooms to spawn in adjacent rooms
 func spawn_room(at_position: Vector2, room_type: int, spawner: RoomCell) -> void:
@@ -47,15 +50,19 @@ func spawn_room(at_position: Vector2, room_type: int, spawner: RoomCell) -> void
 	 
 	count += 1
 	room.spawn_caller = spawner
-	added_rooms.append(room)
 	add_child(room)
+	added_rooms.append(room)
 	room.global_position = at_position
 	$Keep/Timer.start()
+	
+	last_room = room
+	
 	
 func _input(event: InputEvent) -> void:
 	#if event.is_action_pressed("dodge"):
 		#regenerate()
 	return
+
 
 func regenerate() -> void:
 	start_load.emit()
@@ -68,6 +75,7 @@ func regenerate() -> void:
 	var temp: RoomCell = start_room.instantiate() as RoomCell
 	add_child(temp)
 	return
+
 
 func can_place_room(at_position: Vector2) -> bool:
 	var space_rid := get_world_2d().space
@@ -84,6 +92,7 @@ func can_place_room(at_position: Vector2) -> bool:
 	print("Collide none: " + str(wall_check_result))
 	return true
 
+
 func process_opened_room() -> void:
 	for room in added_rooms:
 		var spawn_points := room.get_spawn_points()
@@ -91,13 +100,8 @@ func process_opened_room() -> void:
 			#if sp.has_obstruction == false:
 			print("Spawn fix")
 			spawn_closed_room(sp.global_position, sp.room_type)
-	spawn_entities()
+	setup_level()
 
-func spawn_entities() -> void:
-	for room in added_rooms:
-		room.spawn_in_entities()
-	await get_tree().create_timer(3).timeout
-	finish_load.emit()
 
 func spawn_closed_room(at: Vector2, type: int) -> void:
 	if !can_place_room(at):
@@ -114,13 +118,34 @@ func spawn_closed_room(at: Vector2, type: int) -> void:
 			temp = closed_left.instantiate()
 		4:
 			temp = closed_right.instantiate()
-	
+		_:
+			return
 	add_child(temp)
 	temp.global_position = at
+	last_room = temp
+
+
+func setup_level() -> void:
+	# pick a room to be the exit
+	last_room.spawn_type = 2
+	# pick a room to be the item room
+	while true:
+		var rand_room := added_rooms.pick_random() as RoomCell
+		if rand_room != last_room:
+			rand_room.spawn_type = 1
+			break
 	
+	# set up rooms
+	for room in added_rooms:
+		room.setup_room()
+	# timer to wait for unfinished setups
+	await get_tree().create_timer(3).timeout
+	finish_load.emit()
+
 
 var success_count: int = 0
 var total: int = 0
+
 func _on_timer_timeout() -> void:
 	if (count < max_count):
 		total += 1

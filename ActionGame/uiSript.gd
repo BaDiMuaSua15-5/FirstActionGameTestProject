@@ -18,8 +18,8 @@ func _ready() -> void:
 		StaminaCmp = Player.find_child("StaminaComponent")
 		StaminaRegenTimer = Player.find_child("StaminaComponent").get_child(0)
 		APComp = Player.find_child("APComponent") as APComponent
-	HealthCmp.connect("health_change", update_health_bar)
-	StaminaCmp.connect("stamina_change", update_stamina_bar)
+	HealthCmp.health_change.connect(update_health_bar)
+	StaminaCmp.stamina_change.connect(update_stamina_bar)
 	APComp.ap_change.connect(update_ap_display)
 	update_health_bar(HealthCmp.health, HealthCmp.max_health)
 	update_ap_display(APComp.fill_progress, APComp.ap_count)
@@ -33,7 +33,7 @@ func _process(delta: float) -> void:
 func update_health_bar(health_value: int, max_value: int) -> void:
 	health_bar.min_value = 0.0
 	health_bar.max_value = max_value + 0.0
-	#health_bar.value = health_value + 0.0
+	print("Max health: ", max_value)
 	var tween := get_tree().create_tween()
 	tween.tween_property(health_bar, "value", health_value + 0.0, 0.5)
 	

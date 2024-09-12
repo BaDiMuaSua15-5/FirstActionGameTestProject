@@ -26,7 +26,7 @@ signal died
 var atk_push_time: float = MAX_PUSH_TIME
 const MAX_PUSH_TIME: float = 0.37
 
-@onready var HealthComponent: PlayerHealthComponent = %HealthComponent 
+@onready var HealthComp: PlayerHealthComponent = %HealthComponent 
 @onready var HitBox: HitBoxComponent = %HitBoxComponent
 @onready var FSM: FiniteStateMachine = %FiniteStateMachine
 @onready var wallRay: RayCast2D = %WallDetectRay
@@ -50,13 +50,14 @@ const CONTEXT_RAY_DETECT_MASK := 0b1111
 func _ready() -> void:
 	set_context_rays()
 	
-	HealthComponent.max_health = MAX_HEALTH
-	HealthComponent.health = health
+	HealthComp.max_health = MAX_HEALTH
+	HealthComp.health = health
 	
 	%WeaponComponent.connect("attack_finished", _on_weapons_component_attack_finished)
 	%WeaponComponent.connect("attack_started", _on_weapons_component_attack_signal)
-	HealthComponent.connect("health_change", _on_health_change)
-	call_deferred("_on_health_change", HealthComponent.health, HealthComponent.max_health)
+	HealthComp.health_depleted.connect(_on_death)
+	HealthComp.connect("health_change", _on_health_change)
+	call_deferred("_on_health_change", HealthComp.health, HealthComp.max_health)
 	
 	rotation_speed = max_rotation_speed
 	speed = max_speed
@@ -73,7 +74,7 @@ func _process(delta: float) -> void:
 	
 	wallRay.global_position = global_position
 	HealthBar.global_position = global_position + Vector2(-128, -152)
-	StateLabel.global_position = global_position + Vector2(-50, 0)
+	StateLabel.rotation = -rotation
 
 func set_context_rays() -> void:
 	interest.resize(num_rays)
@@ -88,8 +89,8 @@ func set_context_rays() -> void:
 		r.add_exception(self)
 		ContextRays.add_child(r)
 		ray_directions[i] = Vector2.UP.rotated(angle)
-	
-	
+
+
 func _draw() -> void:
 	if ray_directions.is_empty() || interest.is_empty():
 		return
@@ -243,11 +244,11 @@ func hitted(attack: AttackObj) -> void:
 		if attack.Attacker is Throwable:
 			Global.shake_camera(0.65)
 		else:
-			Global.shake_camera(0.35)
+			Global.shake_camera(0.30)
 	Global.play_hit_sound()
 	Global.hitstop_effect(0.25, 0.14)
 		
-	if HealthComponent.health == 0:
+	if HealthComp.health == 0:
 		is_dead = true
 	#====Knockback fix======
 	# Set knockback direction and status to start
@@ -277,8 +278,10 @@ func _on_death() -> void:
 	print(self, 'out of health')
 	self.modulate = "ff0000"
 	Global.play_kill_sound()
-	Global.shake_camera(0.75)
+	Global.shake_camera(0.65)
 	
+	var collision := HitBox.get_child(0)
+	collision.set_deferred("disabled", true)
 	set_physics_process(false)
 	var tween := get_tree().create_tween()
 	tween.tween_property(self, "modulate", Color(1, 1, 1, 0), 0.6)

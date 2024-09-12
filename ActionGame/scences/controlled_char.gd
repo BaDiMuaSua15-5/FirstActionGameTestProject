@@ -7,8 +7,9 @@ class_name PlayerObj
 @onready var WeaponManager: WeaponsManager = $Weapons_Manager
 @onready var HitBoxComp: HitBoxComponent = %HitBoxComponent
 @onready var StaminaComp:StaminaComponent = %StaminaComponent
-@onready var Camera: Camera2D = ($Shakeable_Camera as ShakeableCamera).Camera
-@export var HealthComponent: PlayerHealthComponent
+@onready var Camera: ShakeableCamera = ($Shakeable_Camera as ShakeableCamera)
+@export var HealthComp: PlayerHealthComponent
+@export var Upgrades: UpgradesComponent
 
 const DEFAULT_RTA_SPD = 7
 var rotationSpeed: int = DEFAULT_RTA_SPD
@@ -19,7 +20,6 @@ var rotationSpeed: int = DEFAULT_RTA_SPD
 var accel: int = 10
 
 @export var DEFAULT_STM_GEN: float = 200
-@export var stamnia_regen: float = DEFAULT_STM_GEN
 @export var MAX_STAMINA: float = 200
 
 var can_attack: bool = true
@@ -37,10 +37,10 @@ signal pressed_attack
 
 func _ready() -> void:
 	StaminaComp.max_stamina = MAX_STAMINA
-	print(StaminaComp.max_stamina)
 	
-	HealthComponent.max_health = max_health
-	HealthComponent.health = health
+	HealthComp.health_depleted.connect(_on_death)
+	HealthComp.max_health = max_health
+	HealthComp.health = health
 	
 	speed = MAX_SPEED
 	
@@ -61,8 +61,6 @@ func _process(delta: float) -> void:
 		
 	rotate_to(target, delta)
 	StaminaComp.add(DEFAULT_STM_GEN * delta)
-	
-	#StaminaComp.stamina += stamnia_regen * delta
 	
 	#Check rolling status
 	if is_rolling: 
@@ -97,6 +95,9 @@ func _physics_process(delta: float) -> void:
 	if is_dead:
 		return
 	
+	var upgrades_container := Upgrades.get_upgrades()
+	var final_speed: float = Upgrades.apply_speed_upgrade(speed)
+	
 	if in_knockback: # Knockback movement
 		velocity = knockback_dir * 10
 		knockback_dir = knockback_dir.lerp(Vector2.ZERO, delta * 5)
@@ -108,9 +109,9 @@ func _physics_process(delta: float) -> void:
 		
 	if is_rolling: # Rolling(dodge, atk_push) movement
 		if in_push:
-			velocity = roll_dir * 750.0
+			velocity = roll_dir * 750
 		else:
-			velocity = roll_dir * 1150.0
+			velocity = roll_dir * 1150
 		move_and_slide()
 		roll_dir = roll_dir.lerp(Vector2.ZERO, delta * 0.5)
 		
@@ -136,9 +137,9 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_vector("left", "right", "up", "down")
 	if direction != Vector2.ZERO:
 		direction = direction * speed_mult
-		accelerate(speed * 5 * delta, direction * speed)
+		accelerate(final_speed * 5 * delta, direction * final_speed)
 	else:
-		apply_friction(speed * 5 * delta)
+		apply_friction(final_speed * 5 * delta)
 	roll_input(direction)
 	move_and_slide()
 
@@ -168,7 +169,7 @@ func hitted(attack: AttackObj) -> void:
 		in_knockback = true
 		damage_flash()
 		knockback_dir = attack.direction * attack.knockback
-		Global.shake_camera(0.75)
+		Camera.add_trauma(0.75)
 		Global.play_hit_sound()
 
 func damage_flash() -> void:
@@ -185,15 +186,18 @@ func _on_death() -> void:
 	self.modulate = "ff0000"
 	Global.play_kill_sound()
 	Global.shake_camera(1)
+	HitBoxComp.get_child(0).disabled = true
 	
 	is_dead = true
 	set_physics_process(false)
 	await get_tree().create_timer(1.7).timeout
 
+
 func rotate_to(target: Vector2, delta: float) -> void:
 	var direction := (target - global_position).normalized()
 	var angleTo: float = (-transform.y).angle_to(direction)
 	rotate(sign(angleTo) * min(delta * rotationSpeed, abs(angleTo)))
+
 
 func animate_sprite(direction: Vector2) -> void:
 	$AnimatedSprite2D.global_position = position
@@ -221,13 +225,13 @@ func animate_sprite(direction: Vector2) -> void:
 			else:
 				$AnimatedSprite2D.play("move_down")
 
+
 # Process the roll input
 func roll_input(direction: Vector2) -> void:
 	if Input.is_action_just_pressed("dodge") and StaminaComp.stamina > 0 and !is_rolling and !WeaponManager.isAttacking:
 		%StaminaGenTimer.stop()
 		is_rolling = true
 		roll_time = MAX_ROLL_TIME
-		stamnia_regen = 0
 		StaminaComp.deplete_stamina(20)
 		HitBoxComp.get_child(0).disabled = true
 		modulate = Color(0, 0.81176471710205, 0)
@@ -239,13 +243,14 @@ func roll_input(direction: Vector2) -> void:
 		else:
 			roll_dir = direction.normalized()
 
+
 func _on_weapons_manager_attack_signal() -> void:
 	%StaminaGenTimer.stop()
 	#print("Attack intercept")
 	speed_mult = 0
-	stamnia_regen = 0
 	rotationSpeed = 1.5
 	StaminaComp.deplete_stamina(WeaponManager.Current_Weapon.Stamina_Cost)
+
 
 var in_push:bool = false
 func _on_weapons_manager_push_signal() -> void:
@@ -259,16 +264,17 @@ func _on_weapons_manager_push_signal() -> void:
 	is_rolling = true
 	in_push = true
 
+
 func _on_weapons_manager_attack_finished() -> void:
 	speed_mult = 1
 	rotationSpeed = DEFAULT_RTA_SPD
 	
-	#print("Stamina: ", StaminaComp.stamina)
 	# Delay stamina regen
 	if (StaminaComp.get_stamina() <= 0.0):
 		StaminaComp.delay_regen_timer(2)
 	else:
 		StaminaComp.delay_regen_timer(0.4)
+
 
 func _on_stun_timer_timeout() -> void:
 	speed_mult = 1
@@ -278,10 +284,10 @@ func _on_stun_timer_timeout() -> void:
 	modulate = Color(1, 1, 1)
 	$AnimatedSprite2D.modulate = Color(1, 1, 1)
 
+
 func _on_stamina_gen_timer_timeout() -> void:
-	#print("Stamina gen timer out")
-	#stamnia_regen = DEFAULT_STM_GEN
 	pass
+
 
 func add_dash_effect() -> void:
 	var effect := ghost_node.instantiate() as DashEffect
@@ -290,14 +296,17 @@ func add_dash_effect() -> void:
 	if get_parent().get_node("Effect"):
 		get_parent().get_node("Effect").add_child(effect)
 
+
 func _on_dash_effect_timer_timeout() -> void:
 	add_dash_effect()
+
 
 # Attacker queue for attack
 func _on_attacker_queue(attacker_id: int) -> void:
 	var result_index := attacker_queue.find(attacker_id)
 	if attacker_queue.size() < 3 && result_index < 0:
 		attacker_queue.append(attacker_id)
+
 
 # Attacker check if in queue to attack
 func _on_attacker_dequeue(attacker_id: int) -> bool:
@@ -307,6 +316,7 @@ func _on_attacker_dequeue(attacker_id: int) -> bool:
 		attacker_queue.remove_at(result_index)
 		return true
 	return false
+	
 	
 func attacker_in_queue(attacker_id: int) -> bool:
 	var result_index := attacker_queue.find(attacker_id)

@@ -3,7 +3,7 @@
 [ext_resource type="TileSet" uid="uid://kuxc3e03qaen" path="res://scences/Infrastructure/ground_tileset.tres" id="1_kmpi3"]
 [ext_resource type="Script" path="res://scences/room_templates/room_cell_script.gd" id="1_nl4om"]
 [ext_resource type="TileSet" uid="uid://c0qa6axynr4sx" path="res://scences/Infrastructure/wall_nav_tileset.tres" id="2_apfqg"]
-[ext_resource type="PackedScene" uid="uid://c4d08xscglppy" path="res://scences/room_templates/room_spawner.tscn" id="4_ogf7x"]
+[ext_resource type="PackedScene" uid="uid://dt2itgbqxpc2u" path="res://scences/room_templates/room_spawner.tscn" id="4_ogf7x"]
 [ext_resource type="PackedScene" uid="uid://dwa66xyash51n" path="res://scences/room_templates/vision_barrier_scene.tscn" id="5_01hjs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o45py"]

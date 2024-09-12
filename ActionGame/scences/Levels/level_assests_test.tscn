@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ffqyqmktvcwb"]
+[gd_scene load_steps=23 format=3 uid="uid://ffqyqmktvcwb"]
 
 [ext_resource type="Script" path="res://scences/Levels/level_assests_test.gd" id="1_adyq1"]
 [ext_resource type="Texture2D" uid="uid://dkvf1h0xmq18g" path="res://PNG/Assets/floor_tiles.png" id="2_s3f1d"]
@@ -12,6 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://bq25ar4da3n6l" path="res://scences/wooden_chest.tscn" id="10_ua4q2"]
 [ext_resource type="PackedScene" uid="uid://bo3tdr745vksn" path="res://scences/throwable_object.tscn" id="11_vvxme"]
 [ext_resource type="PackedScene" uid="uid://bh3v0q07ukyu4" path="res://ui.tscn" id="12_8olfw"]
+[ext_resource type="PackedScene" uid="uid://df54yh5nvd0lg" path="res://scences/room_templates/exit_area.tscn" id="13_1ki6p"]
+[ext_resource type="PackedScene" uid="uid://i2j5jf846jyi" path="res://scences/upgrade_scene.tscn" id="14_jnlsg"]
+[ext_resource type="Resource" uid="uid://5vai05qnvfdr" path="res://Resources/heal.tres" id="15_gb8dq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yps1h"]
 texture = ExtResource("2_s3f1d")
@@ -901,13 +904,6 @@ layer_1/name = "Navigation"
 layer_1/tile_data = PackedInt32Array(-917502, 393216, 4, -983038, 393216, 4, -720897, 393216, 4)
 metadata/_edit_lock_ = true
 
-[node name="ControlledChar" parent="." instance=ExtResource("4_r1unp")]
-position = Vector2(2392, 2376)
-
-[node name="Shakeable_Camera" parent="ControlledChar" node_paths=PackedStringArray("parent") instance=ExtResource("5_q50jt")]
-parent = NodePath("..")
-zoom = 0.5
-
 [node name="Effect" type="Node" parent="."]
 unique_name_in_owner = true
 
@@ -980,5 +976,21 @@ shape = SubResource("RectangleShape2D_l5hg3")
 
 [node name="next_level_enter" type="Node2D" parent="Areas/next_level"]
 position = Vector2(-256, -200)
+
+[node name="ExitArea" parent="." instance=ExtResource("13_1ki6p")]
+position = Vector2(2040, 552)
+scale = Vector2(9.375, 9.375)
+
+[node name="ControlledChar" parent="." instance=ExtResource("4_r1unp")]
+position = Vector2(232, 504)
+health = 1000
+
+[node name="Shakeable_Camera" parent="ControlledChar" node_paths=PackedStringArray("parent") instance=ExtResource("5_q50jt")]
+parent = NodePath("..")
+zoom = 0.5
+
+[node name="Upgrade" parent="." instance=ExtResource("14_jnlsg")]
+position = Vector2(616, 488)
+upgrade_resource = ExtResource("15_gb8dq")
 
 [connection signal="body_entered" from="Areas/next_level" to="." method="_on_next_level_body_entered"]

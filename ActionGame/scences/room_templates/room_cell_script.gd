@@ -3,12 +3,12 @@ class_name RoomCell
 
 var spawners: Array[RoomSpawner]
 var spawn_caller: RoomCell
+signal level_finished
 
-var enemy_scene : = preload("res://enemy.tscn")
+var enemy_scene : = preload("res://enemy.tscn") as PackedScene
+var exit_point := preload("res://scences/room_templates/exit_area.tscn") as PackedScene
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#await get_tree().create_timer(1).timeout
-	#call_deferred("spawn_in_entities")
 	return
 
 func get_spawn_points() -> Array[RoomSpawner]:
@@ -20,27 +20,52 @@ func get_spawn_points() -> Array[RoomSpawner]:
 		result.clear()
 		return result
 	return result
-	
-var remaining_entity: int = 0
-func spawn_in_entities() -> void:
+
+func setup_room() -> void:
 	clear_room_spawner()
+	if spawn_type == 0:
+		spawn_in_entities()
+	elif spawn_type == 1:
+		# Spawn in upgrade items
+		var enemy: EnemyObj = enemy_scene.instantiate() as EnemyObj
+		enemy.global_position = global_position
+		add_child(enemy)
+		pass
+	elif spawn_type == 2:
+		# Spawn in Exit
+		var exit := exit_point.instantiate() as ExitArea
+		add_child(exit)
+		exit.exited.connect(emit_level_finished)
+
+var remaining_entity: int = 0
+var spawn_type: int = 0
+# 0 -> Spawn Enemies
+# 1 -> Spawn Items
+# 2 -> Spawn Exit
+func spawn_in_entities() -> void:
 	var positions: Array[Vector2] = [Vector2(-176, 176),
 									Vector2(176, 176),
 									Vector2(-176, -176),
 									Vector2(176, -176)]
-	#if $SpawnPoints == null:
-		#return
 	for pos: Vector2 in positions:
 		#var rand := randf_range(0, 1.0)
 		#if rand <= 0.5:
 			#continue
 		var enemy: EnemyObj = enemy_scene.instantiate() as EnemyObj
 		add_child(enemy)
+		pos = pos * 4
 		remaining_entity += 1
+		
 		enemy.died.connect(_on_entity_death)
-		enemy.global_position = global_position + pos * 2.5
-		enemy.set_deferred("origin_pos", global_position + pos * 2.5)
-		enemy.set_deferred("target_pos", global_position + pos * 2.5)
+		enemy.global_position = global_position + pos
+		enemy.set_deferred("origin_pos", global_position + pos)
+		enemy.set_deferred("target_pos", global_position + pos)
+		
+		var wanted_look_pos := global_position + Vector2(pos.x, -pos.y) 
+		var wanted_look_dir := wanted_look_pos - (global_position + pos)
+		var angle_to := (-enemy.transform.y).angle_to(wanted_look_dir)
+		enemy.origin_rotation_vector = wanted_look_dir
+		enemy.rotate(angle_to)
 
 func clear_room_spawner() -> void:
 	for spawner in get_children():
@@ -51,3 +76,6 @@ func _on_entity_death() -> void:
 	remaining_entity -= 1
 	if remaining_entity == 0:
 		print("Room cleared")
+		
+func emit_level_finished() -> void:
+	level_finished.emit()

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="HealthHealUpgrade" load_steps=2 format=3 uid="uid://5vai05qnvfdr"]
+
+[ext_resource type="Script" path="res://scences/UpgradesComponent/HealthHealUpgrade.gd" id="1_fomhs"]
+
+[resource]
+script = ExtResource("1_fomhs")
+heal_amount = 2.0
+upgrade_name = "heal"

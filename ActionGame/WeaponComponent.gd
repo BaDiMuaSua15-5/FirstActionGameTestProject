@@ -5,6 +5,7 @@ var WeaponResource: Weapon_Resource
 var weaponAnimPlayer: AnimationPlayer
 var CurrentWeapon: Weapon
 @export var ControlledChar: EnemyObj
+@export var Upgrades: UpgradesComponent
 signal attack_finished
 signal attack_started
 

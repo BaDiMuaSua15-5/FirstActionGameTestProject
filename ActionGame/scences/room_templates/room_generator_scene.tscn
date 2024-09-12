@@ -1,27 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://bqdu25p4rpqrg"]
+[gd_scene load_steps=4 format=3 uid="uid://bqdu25p4rpqrg"]
 
-[ext_resource type="Script" path="res://scences/room_templates/room_generator.gd" id="1_gser7"]
-[ext_resource type="PackedScene" uid="uid://b1fehpcp3mbuf" path="res://scences/room_templates/room_templates.tscn" id="1_m2m3p"]
-[ext_resource type="PackedScene" uid="uid://bao061uq5658n" path="res://scences/controlled_char.tscn" id="2_qlqgr"]
-[ext_resource type="PackedScene" uid="uid://dek0upkbx1eab" path="res://scences/UI/shakeable_camera.tscn" id="3_ck1fi"]
-[ext_resource type="PackedScene" uid="uid://dwen2ljdf25jp" path="res://scences/room_templates/room_starter.tscn" id="4_4eysb"]
+[ext_resource type="Script" path="res://scences/room_templates/room_generator.gd" id="1_4ck2q"]
+[ext_resource type="PackedScene" uid="uid://b1fehpcp3mbuf" path="res://scences/room_templates/room_templates.tscn" id="2_ykuja"]
+[ext_resource type="PackedScene" uid="uid://dwen2ljdf25jp" path="res://scences/room_templates/room_str.tscn" id="5_46i7c"]
 
 [node name="RoomGenerator" type="Node2D"]
-scale = Vector2(2.7, 2.7)
-script = ExtResource("1_gser7")
+scale = Vector2(4, 4)
+script = ExtResource("1_4ck2q")
+
+[node name="room_starter" parent="." instance=ExtResource("5_46i7c")]
 
 [node name="Keep" type="Node" parent="."]
 
 [node name="Timer" type="Timer" parent="Keep"]
 one_shot = true
 
-[node name="RoomTemplates" parent="Keep" instance=ExtResource("1_m2m3p")]
-
-[node name="ControlledChar" parent="Keep" instance=ExtResource("2_qlqgr")]
-
-[node name="Shakeable_Camera" parent="Keep/ControlledChar" instance=ExtResource("3_ck1fi")]
-zoom = 0.45
-
-[node name="room_starter" parent="." instance=ExtResource("4_4eysb")]
+[node name="RoomTemplates" parent="Keep" instance=ExtResource("2_ykuja")]
 
 [connection signal="timeout" from="Keep/Timer" to="." method="_on_timer_timeout"]

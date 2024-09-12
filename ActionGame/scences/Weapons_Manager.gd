@@ -16,6 +16,7 @@ var Weapon_List: Dictionary = {} #hashMap<String weapon_name, Weapon_Resource we
 @export var _weapon_resources: Array[Weapon_Resource]
 
 @export var Start_Weapons: Array[String]
+@export var Upgrades: UpgradesComponent
 
 @onready var ControlledChar: PlayerObj = self.get_parent()
 

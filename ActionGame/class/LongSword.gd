@@ -14,6 +14,18 @@ func _physics_process(delta: float) -> void:
 	WallRay.global_rotation = 0
 	WallRay.position = global_position
 
+
+func get_attack() -> AttackObj:
+	var attack := AttackObj.new()
+	attack.damage = weapon_resource.Damage
+	attack.ap_accumulation = weapon_resource.ap_accumalation
+	attack.direction = Vector2.ZERO
+	attack.knockback = weapon_resource.knockback
+	attack.stun_time = weapon_resource.stun_time
+	attack.Attacker = ManagingComponent.owner
+	return attack
+
+
 func _on_ls_hitbox_area_entered(area: HitBoxComponent) -> void:
 	if area == null:
 		return
@@ -44,13 +56,10 @@ func _on_ls_hitbox_area_entered(area: HitBoxComponent) -> void:
 				return
 			else:
 				print("Hit deal damage")
-				var attack := AttackObj.new()
-				attack.damage = weapon_resource.Damage
-				attack.ap_accumulation = weapon_resource.ap_accumalation
-				attack.direction = Vector2(hitbox.owner.global_position - owner.global_position).normalized()
-				attack.knockback = weapon_resource.knockback
-				attack.stun_time = weapon_resource.stun_time
-				attack.Attacker = ManagingComponent.owner
+				var attack := get_attack()
+				attack.direction = (hitbox.owner.global_position - ManagingComponent.global_position).normalized()
+				var upgrades_comp := ManagingComponent.Upgrades as UpgradesComponent
+				attack = upgrades_comp.apply_attack_upgrades(attack)
 				
 				hitbox.hit(attack)
 	return

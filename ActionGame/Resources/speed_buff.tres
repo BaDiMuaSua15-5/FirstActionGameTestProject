@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="MoveSpeedUpgrade" load_steps=2 format=3 uid="uid://2jdu4lc500fp"]
+
+[ext_resource type="Script" path="res://scences/UpgradesComponent/MoveSpeedUpgrade.gd" id="1_uwaj7"]
+
+[resource]
+script = ExtResource("1_uwaj7")
+speed_mult = 2.0
+upgrade_name = "move_speed"

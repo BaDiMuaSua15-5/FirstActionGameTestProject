@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bao061uq5658n"]
+[gd_scene load_steps=27 format=3 uid="uid://bao061uq5658n"]
 
 [ext_resource type="Script" path="res://scences/controlled_char.gd" id="1_cao7d"]
 [ext_resource type="PackedScene" uid="uid://dqhfkg5ldoc2p" path="res://scences/weapons_manager.tscn" id="2_etlth"]
@@ -8,6 +8,10 @@
 [ext_resource type="Script" path="res://scences/StaminaComponent.gd" id="4_5oki5"]
 [ext_resource type="Script" path="res://scences/Componetn_ActionPoint.gd" id="7_i2vee"]
 [ext_resource type="Texture2D" uid="uid://dsdhapuyqwrf3" path="res://PNG/Assets/slime_monster_spritesheet.png" id="8_wse6m"]
+[ext_resource type="Script" path="res://scences/UpgradesComponent/UpgradesComponent.gd" id="9_dcycr"]
+[ext_resource type="Resource" uid="uid://2jdu4lc500fp" path="res://Resources/speed_buff.tres" id="11_evlkl"]
+[ext_resource type="Resource" uid="uid://y8f7p02mnwk5" path="res://Resources/melee_accumulation.tres" id="12_yl3qj"]
+[ext_resource type="Resource" uid="uid://dc6qilouqbt8t" path="res://Resources/health_max.tres" id="12_yn5qu"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_tb1as"]
 lightmap_size_hint = Vector2i(14, 21)
@@ -138,15 +142,16 @@ height = 20.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_8jufq"]
 radius = 72.4431
 
-[node name="ControlledChar" type="CharacterBody2D" node_paths=PackedStringArray("HealthComponent")]
+[node name="ControlledChar" type="CharacterBody2D" node_paths=PackedStringArray("HealthComp", "Upgrades")]
 collision_mask = 6
 motion_mode = 1
 platform_floor_layers = 1
 script = ExtResource("1_cao7d")
 ghost_node = ExtResource("2_s572l")
-HealthComponent = NodePath("Components/HealthComponent")
+HealthComp = NodePath("Components/HealthComponent")
+Upgrades = NodePath("Components/Upgrades")
 max_health = 1000
-health = 1000
+health = 1200
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 visible = false
@@ -170,16 +175,18 @@ mesh = SubResource("SphereMesh_71txj")
 [node name="CollisionPolygon2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_8jufq")
 
-[node name="Weapons_Manager" parent="." instance=ExtResource("2_etlth")]
+[node name="Weapons_Manager" parent="." node_paths=PackedStringArray("Upgrades") instance=ExtResource("2_etlth")]
 unique_name_in_owner = true
 z_index = 1
+Upgrades = NodePath("../Components/Upgrades")
 
 [node name="Components" type="Node2D" parent="."]
 position = Vector2(3, 0)
 
-[node name="HealthComponent" type="Node" parent="Components"]
+[node name="HealthComponent" type="Node" parent="Components" node_paths=PackedStringArray("Upgrades")]
 unique_name_in_owner = true
 script = ExtResource("3_hvvsn")
+Upgrades = NodePath("../Upgrades")
 max_health = 30
 
 [node name="HitTimer" type="Timer" parent="Components/HealthComponent"]
@@ -210,6 +217,10 @@ polygon = PackedVector2Array(64, 84, -64, 84, -96, 20, -64, -44, 0, -68, 64, -44
 unique_name_in_owner = true
 script = ExtResource("7_i2vee")
 ap_count = 2
+
+[node name="Upgrades" type="Node" parent="Components"]
+script = ExtResource("9_dcycr")
+upgrades_container = Array[Resource("res://scences/UpgradesComponent/BaseUpgrade.gd")]([ExtResource("11_evlkl"), ExtResource("12_yl3qj"), ExtResource("12_yn5qu")])
 
 [node name="StunTimer" type="Timer" parent="."]
 unique_name_in_owner = true

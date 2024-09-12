@@ -20,9 +20,6 @@ func change_state(new_state_name: String) -> void:
 	if current_state.name != previous_state.name: # If new state is different from previous
 		# exit previous state
 		previous_state.exit()
-	#else:
-		#print("Invalid change_state to: ", current_state.name, "\nCurrently in: ", previous_state)
-		#return
 		
 	# Enter new state
 	current_state.enter()

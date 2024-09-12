@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://df54yh5nvd0lg"]
+
+[ext_resource type="Script" path="res://scences/room_templates/exit_area.gd" id="1_e4a6y"]
+[ext_resource type="Texture2D" uid="uid://cuxdpjjiwnhrx" path="res://PNG/Assets/door.png" id="1_xp33l"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qtpbc"]
+line_spacing = -6.965
+font_size = 331
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3uqbd"]
+radius = 30.0
+
+[node name="ExitArea" type="Area2D"]
+collision_layer = 16
+script = ExtResource("1_e4a6y")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_xp33l")
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(0, -28)
+scale = Vector2(0.03, 0.03)
+
+[node name="Label" type="Label" parent="Node2D"]
+unique_name_in_owner = true
+offset_left = -553.846
+offset_top = -246.154
+offset_right = 577.154
+offset_bottom = 649.846
+text = "Exit (E)"
+label_settings = SubResource("LabelSettings_qtpbc")
+horizontal_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
+shape = SubResource("CircleShape2D_3uqbd")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
