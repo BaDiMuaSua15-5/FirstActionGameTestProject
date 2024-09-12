@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="first creation"
-run/main_scene="res://scences/Levels/level_assests_test.tscn"
+run/main_scene="res://scences/Levels/generator_test.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
