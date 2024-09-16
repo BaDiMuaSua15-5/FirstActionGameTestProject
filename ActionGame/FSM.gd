@@ -1,6 +1,7 @@
 extends Node2D
 class_name FiniteStateMachine
 
+@onready var debug := owner.find_child("debug") as Label
 var current_state: State
 var previous_state: State
 
@@ -25,5 +26,14 @@ func change_state(new_state_name: String) -> void:
 	current_state.enter()
 	# Set new previous state for future references
 	previous_state = current_state
-	
+	debug.text = current_state.name
+
+func _process(delta: float) -> void:
+	if current_state:
+		current_state.transition_process(delta)
+
+func _physics_process(delta: float) -> void:
+	if current_state:
+		current_state.transition_physics_process(delta)
+
 	

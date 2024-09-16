@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bao061uq5658n"]
+[gd_scene load_steps=26 format=3 uid="uid://bao061uq5658n"]
 
 [ext_resource type="Script" path="res://scences/controlled_char.gd" id="1_cao7d"]
 [ext_resource type="PackedScene" uid="uid://dqhfkg5ldoc2p" path="res://scences/weapons_manager.tscn" id="2_etlth"]
@@ -9,7 +9,6 @@
 [ext_resource type="Script" path="res://scences/Componetn_ActionPoint.gd" id="7_i2vee"]
 [ext_resource type="Texture2D" uid="uid://dsdhapuyqwrf3" path="res://PNG/Assets/slime_monster_spritesheet.png" id="8_wse6m"]
 [ext_resource type="Script" path="res://scences/UpgradesComponent/UpgradesComponent.gd" id="9_dcycr"]
-[ext_resource type="Resource" uid="uid://2jdu4lc500fp" path="res://Resources/speed_buff.tres" id="11_evlkl"]
 [ext_resource type="Resource" uid="uid://y8f7p02mnwk5" path="res://Resources/melee_accumulation.tres" id="12_yl3qj"]
 [ext_resource type="Resource" uid="uid://dc6qilouqbt8t" path="res://Resources/health_max.tres" id="12_yn5qu"]
 
@@ -220,7 +219,7 @@ ap_count = 2
 
 [node name="Upgrades" type="Node" parent="Components"]
 script = ExtResource("9_dcycr")
-upgrades_container = Array[Resource("res://scences/UpgradesComponent/BaseUpgrade.gd")]([ExtResource("11_evlkl"), ExtResource("12_yl3qj"), ExtResource("12_yn5qu")])
+upgrades_container = Array[Resource("res://scences/UpgradesComponent/BaseUpgrade.gd")]([ExtResource("12_yl3qj"), ExtResource("12_yn5qu")])
 
 [node name="StunTimer" type="Timer" parent="."]
 unique_name_in_owner = true

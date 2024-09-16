@@ -121,6 +121,7 @@ func spawn_closed_room(at: Vector2, type: int) -> void:
 		_:
 			return
 	add_child(temp)
+	added_rooms.append(temp)
 	temp.global_position = at
 	last_room = temp
 

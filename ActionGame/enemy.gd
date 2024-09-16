@@ -171,14 +171,12 @@ var knockback_dir: Vector2
 var atk_push_dir: Vector2
 func _physics_process(delta: float) -> void:
 	if (in_knockback):
-		#print("Is knockback")
 		velocity = knockback_dir * 7.0
 		knockback_dir = knockback_dir.lerp(Vector2.ZERO, delta * 5)
 		move_and_slide()
 		return
 	
 	if (in_atk_push):
-		#print("Is attack push")
 		velocity = atk_push_dir * 750.0
 		atk_push_dir = atk_push_dir.lerp(Vector2.ZERO, delta * 5)
 		move_and_slide()
@@ -269,13 +267,8 @@ func damage_flash() -> void:
 	modulate = "00d6be"
 	await get_tree().create_timer(0.05).timeout
 	modulate = Color(1, 1, 1)
-	await get_tree().create_timer(0.05).timeout
-	modulate = "00d6be"
-	await get_tree().create_timer(0.05).timeout
-	modulate = Color(1, 1, 1)
 
 func _on_death() -> void:
-	print(self, 'out of health')
 	self.modulate = "ff0000"
 	Global.play_kill_sound()
 	Global.shake_camera(0.65)

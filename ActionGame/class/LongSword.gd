@@ -80,7 +80,6 @@ func emit_finish_attack() -> void:
 	
 func emit_push_attack() -> void:
 	push_atk.emit()
-	#print('pushedd')
 #==================================================
 
 func _on_animation_player_animation_finished(anim_name: String) -> void:

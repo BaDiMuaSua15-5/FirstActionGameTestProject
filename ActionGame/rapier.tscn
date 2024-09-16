@@ -373,7 +373,7 @@ tracks/10/path = NodePath("Effect:visible")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.425, 0.45, 0.65, 0.7),
+"times": PackedFloat32Array(0, 0.2, 0.425, 0.45, 0.65, 0.675),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [false, true, false, true, false, true]
@@ -421,8 +421,8 @@ tracks/14/path = NodePath("Effect:modulate")
 tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
-"times": PackedFloat32Array(0, 0.325, 0.425, 0.45, 0.525, 0.65, 0.675, 0.75, 0.85),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 7.72749, 1),
+"times": PackedFloat32Array(0, 0.325, 0.425, 0.45, 0.525, 0.625, 0.675, 0.75, 0.85),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
@@ -679,7 +679,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"poke",
-"speed": 30.0
+"speed": 40.0
 }]
 
 [node name="Rapier" type="Node2D" node_paths=PackedStringArray("animation_player")]
@@ -732,6 +732,7 @@ collision_mask = 4
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_eear6")
 volume_db = 9.39
+pitch_scale = 1.77
 
 [node name="Effect" type="Node2D" parent="."]
 position = Vector2(44.23, 0)

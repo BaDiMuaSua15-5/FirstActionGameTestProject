@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcc6cx5svkf1b"]
+
+[ext_resource type="Script" path="res://room_exit_script.gd" id="1_u0jl6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3grqo"]
+radius = 104.0
+
+[node name="Area2D" type="Area2D"]
+collision_layer = 16
+script = ExtResource("1_u0jl6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3grqo")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -39,7 +39,7 @@ signal health_depleted
 func damage(attack: AttackObj) -> void:
 	var health_before := health
 	health -= attack.damage
-	hit_timer(0.2)
+	hit_timer(0.22)
 	vulnerable = false
 	if (health == 0):
 		health_depleted.emit()

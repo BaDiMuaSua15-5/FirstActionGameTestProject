@@ -77,7 +77,7 @@ func _on_animation_player_animation_finished(anim_name: String) -> void:
 	
 func play_weappon_sound() -> void:
 	var audio_player := $AudioStreamPlayer2D as AudioStreamPlayer2D
-	audio_player.pitch_scale = randf_range(0.9, 1.1)
+	audio_player.pitch_scale = randf_range(1.5, 1.7)
 	audio_player.play()
 
 func play_effect_poke() -> void:

@@ -1,0 +1,327 @@
+[gd_scene load_steps=24 format=3 uid="uid://dqbiedfa55e1a"]
+
+[ext_resource type="Texture2D" uid="uid://cgwtakbl03k6a" path="res://PNG/Assets/ship-03.png" id="1_2iplo"]
+[ext_resource type="Script" path="res://scences/entities/enemy_melee_script.gd" id="1_q3clv"]
+[ext_resource type="Script" path="res://PlayerHealthComponent.gd" id="2_ds72i"]
+[ext_resource type="Script" path="res://HitBoxComponent.gd" id="3_7n4d8"]
+[ext_resource type="Texture2D" uid="uid://oghnpn6ojwsk" path="res://PNG/Assets/exclaimation.png" id="3_j6e8i"]
+[ext_resource type="Script" path="res://WeaponComponent.gd" id="4_ovapr"]
+[ext_resource type="PackedScene" uid="uid://br5mbsfsh1wpa" path="res://scences/long_sword.tscn" id="5_xmeqy"]
+[ext_resource type="Script" path="res://scences/UpgradesComponent/UpgradesComponent.gd" id="6_c0mxf"]
+[ext_resource type="PackedScene" uid="uid://cms4qukafcm8u" path="res://rapier.tscn" id="8_rhclf"]
+[ext_resource type="Script" path="res://FSM.gd" id="8_xgbpd"]
+[ext_resource type="Script" path="res://scences/entities/EnemyMelee-Pursuit.gd" id="9_igu5a"]
+[ext_resource type="Script" path="res://scences/entities/EnemyMelee - Stunned.gd" id="9_klvqo"]
+[ext_resource type="Script" path="res://scences/entities/EnemyMelee-Combat.gd" id="9_pc6f5"]
+[ext_resource type="Script" path="res://scences/entities/EnemyMelee-Idle.gd" id="9_ylcel"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7jlm5"]
+radius = 80.399
+
+[sub_resource type="Animation" id="Animation_yq30p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../Exclaimation:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_1tpd1"]
+resource_name = "attack_warn"
+length = 0.4
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../../Exclaimation:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.075, 0.1, 0.15, 0.175, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.498039), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0.498039), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rlwd6"]
+_data = {
+"RESET": SubResource("Animation_yq30p"),
+"attack_warn": SubResource("Animation_1tpd1")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_d7jxy"]
+font_size = 51
+
+[sub_resource type="Animation" id="Animation_pne6i"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShadowSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.14159]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemySprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.14159]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Exclaimation:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_fsuer"]
+resource_name = "attack_warn"
+length = 0.4
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Exclaimation:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.075, 0.1, 0.15, 0.175, 0.2, 0.25, 0.275, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1e+06, 1),
+"update": 1,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.498039), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0.498039), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0.498039), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ShadowSprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.14159]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("EnemySprite:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.14159]
+}
+
+[sub_resource type="Animation" id="Animation_c1hcr"]
+resource_name = "hitted"
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ShadowSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(0.05, 0.183, 0.148, 1, 1),
+"update": 0,
+"values": [3.14159, 2.61799, 3.49066, 2.79253, 3.14159]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("EnemySprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(0.05, 0.183, 0.148, 1, 1),
+"update": 0,
+"values": [3.14159, 2.61799, 3.49066, 2.79253, 3.14159]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Exclaimation:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i8bla"]
+_data = {
+"RESET": SubResource("Animation_pne6i"),
+"attack_warn": SubResource("Animation_fsuer"),
+"hitted": SubResource("Animation_c1hcr")
+}
+
+[node name="EnemyMelee" type="CharacterBody2D" node_paths=PackedStringArray("StateMachine", "Health", "HitBox", "WeaponComp", "Upgrades") groups=["enemy"]]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_q3clv")
+MAX_HEALTH = 100
+StateMachine = NodePath("StateMachine")
+Health = NodePath("Components/HealthComponent")
+HitBox = NodePath("Components/HitBoxComponent")
+WeaponComp = NodePath("Components/WeaponComponent")
+Upgrades = NodePath("Components/Upgrades")
+
+[node name="ShadowSprite" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 0.223529)
+position = Vector2(7.27596e-12, 8)
+rotation = 3.14159
+scale = Vector2(3.8, 3.22)
+texture = ExtResource("1_2iplo")
+region_enabled = true
+region_rect = Rect2(36, 0, 51, 76)
+
+[node name="EnemySprite" type="Sprite2D" parent="."]
+position = Vector2(7.27596e-12, 8)
+rotation = 3.14159
+scale = Vector2(3.515, 2.675)
+texture = ExtResource("1_2iplo")
+region_enabled = true
+region_rect = Rect2(36, 0, 51, 76)
+
+[node name="Exclaimation" type="Sprite2D" parent="."]
+position = Vector2(0, -184)
+scale = Vector2(0.115, 0.115)
+texture = ExtResource("3_j6e8i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_7jlm5")
+
+[node name="Components" type="Node2D" parent="."]
+
+[node name="HealthComponent" type="Node" parent="Components" node_paths=PackedStringArray("Upgrades")]
+unique_name_in_owner = true
+script = ExtResource("2_ds72i")
+Upgrades = NodePath("../Upgrades")
+
+[node name="HitTimer" type="Timer" parent="Components/HealthComponent"]
+wait_time = 0.2
+one_shot = true
+
+[node name="HitBoxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("HealthComp")]
+unique_name_in_owner = true
+visible = false
+position = Vector2(0, -17)
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("3_7n4d8")
+HealthComp = NodePath("../HealthComponent")
+metadata/_edit_group_ = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Components/HitBoxComponent"]
+polygon = PackedVector2Array(80, 49, 40, 89, 0, 97, -40, 89, -80, 49, -80, 25, -48, -71, 48, -71, 80, 25)
+
+[node name="WeaponComponent" type="Node2D" parent="Components" node_paths=PackedStringArray("Upgrades")]
+unique_name_in_owner = true
+script = ExtResource("4_ovapr")
+Upgrades = NodePath("../Upgrades")
+metadata/_edit_group_ = true
+
+[node name="LongSword" parent="Components/WeaponComponent" node_paths=PackedStringArray("ManagingComponent") instance=ExtResource("5_xmeqy")]
+modulate = Color(1, 1, 1, 0)
+ManagingComponent = NodePath("..")
+
+[node name="Rapier" parent="Components/WeaponComponent" node_paths=PackedStringArray("ManagingComponent") instance=ExtResource("8_rhclf")]
+ManagingComponent = NodePath("..")
+
+[node name="Upgrades" type="Node" parent="Components"]
+script = ExtResource("6_c0mxf")
+
+[node name="StateMachine" type="Node2D" parent="."]
+script = ExtResource("8_xgbpd")
+
+[node name="Idle" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("Entity", "ObstructionRay")]
+script = ExtResource("9_ylcel")
+Entity = NodePath("../..")
+ObstructionRay = NodePath("RayCast2D")
+
+[node name="RayCast2D" type="RayCast2D" parent="StateMachine/Idle"]
+collision_mask = 5
+
+[node name="Pursuit" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("Entity")]
+script = ExtResource("9_igu5a")
+Entity = NodePath("../..")
+
+[node name="Combat" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("Entity", "WeaponComp")]
+script = ExtResource("9_pc6f5")
+Entity = NodePath("../..")
+WeaponComp = NodePath("../../Components/WeaponComponent")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="StateMachine/Combat"]
+libraries = {
+"": SubResource("AnimationLibrary_rlwd6")
+}
+
+[node name="Stunned" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("Entity", "WeaponComponent")]
+script = ExtResource("9_klvqo")
+Entity = NodePath("../..")
+WeaponComponent = NodePath("../../Components/WeaponComponent")
+
+[node name="debug" type="Label" parent="StateMachine"]
+unique_name_in_owner = true
+offset_left = -80.0
+offset_top = 80.0
+offset_right = 73.0
+offset_bottom = 150.0
+pivot_offset = Vector2(80, -80.14)
+text = "debug
+"
+label_settings = SubResource("LabelSettings_d7jxy")
+horizontal_alignment = 1
+
+[node name="ContextRays" type="Node2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_i8bla")
+}
+
+[node name="Debug" type="Node2D" parent="."]
+
+[node name="HealthBar" type="ProgressBar" parent="Debug"]
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = -101.0
+scale = Vector2(1, 0.635)
+allow_greater = true
+allow_lesser = true
+
+[connection signal="timeout" from="Components/HealthComponent/HitTimer" to="Components/HealthComponent" method="_on_hit_timer_timeout"]
+[connection signal="animation_finished" from="StateMachine/Combat/AnimationPlayer" to="StateMachine/Combat" method="_on_animation_player_animation_finished"]

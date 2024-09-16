@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://djn7y7jynw3wd"]
+[gd_scene load_steps=10 format=3 uid="uid://djn7y7jynw3wd"]
 
 [ext_resource type="Script" path="res://scences/Levels/level_assests_test.gd" id="1_x5grk"]
 [ext_resource type="AudioStream" uid="uid://c7oqhv2l0aosh" path="res://Audio/solid_impact.ogg" id="2_yjr7o"]
@@ -7,12 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://bh3v0q07ukyu4" path="res://ui.tscn" id="5_kaxbb"]
 [ext_resource type="PackedScene" uid="uid://bao061uq5658n" path="res://scences/controlled_char.tscn" id="6_dres2"]
 [ext_resource type="PackedScene" uid="uid://dek0upkbx1eab" path="res://scences/UI/shakeable_camera.tscn" id="7_xlqp2"]
-[ext_resource type="PackedScene" uid="uid://bqdu25p4rpqrg" path="res://scences/room_templates/room_generator_scene.tscn" id="8_l8n5l"]
+[ext_resource type="PackedScene" uid="uid://dfv3n834as8dk" path="res://scences/room_templates/room_manager_scene.tscn" id="8_43ame"]
+[ext_resource type="PackedScene" uid="uid://dqbiedfa55e1a" path="res://scences/entities/enemy_melee.tscn" id="9_2dttn"]
 
 [node name="generator_test" type="Node2D"]
 script = ExtResource("1_x5grk")
 
-[node name="RoomGenerator" parent="." instance=ExtResource("8_l8n5l")]
+[node name="RoomManager" parent="." instance=ExtResource("8_43ame")]
 
 [node name="Sound" type="Node" parent="."]
 
@@ -38,3 +39,8 @@ position = Vector2(24, 88)
 
 [node name="Shakeable_Camera" parent="ControlledChar" instance=ExtResource("7_xlqp2")]
 zoom = 0.5
+
+[node name="EnemyMelee" parent="." instance=ExtResource("9_2dttn")]
+position = Vector2(-792, -72)
+
+[node name="Effect" type="Node" parent="."]
