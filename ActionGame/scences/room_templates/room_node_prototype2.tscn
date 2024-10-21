@@ -136,3 +136,5 @@ position = Vector2(-1090, -553)
 
 [node name="SpawnPoint9" type="Node2D" parent="SpawnPoints"]
 position = Vector2(1264, 568)
+
+[node name="Entities" type="Node" parent="."]

@@ -11,7 +11,7 @@
 size = Vector3(100, 20, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bt8cn"]
-size = Vector2(74.557, 31.6072)
+size = Vector2(77.5537, 58.07)
 
 [sub_resource type="Animation" id="Animation_fngqm"]
 resource_name = "LS ready"
@@ -113,78 +113,54 @@ tracks/0/path = NodePath("LongSword:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.3, 0.4, 0.475, 0.6, 0.65, 0.7, 0.8, 0.875, 1.025, 1.1, 1.2, 1.35, 1.55),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.25, 0.3, 0.45, 0.6, 0.65, 0.7, 0.875, 1.025, 1.1, 1.2, 1.35, 1.55),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [10.2312, 10.3667, 10.2312, 8.23875, 6.1976, 5.9011, 6.04935, 6.1976, 8.23875, 10.2312, 10.4308, 10.2312, 10.2312, 10.2312, 10.2312]
+"values": [10.2312, 10.3667, 10.2312, 6.1976, 5.9011, 6.04935, 6.1976, 10.2312, 10.4308, 10.2312, 10.2312, 10.2312, 10.2312]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("LongSword:visible")
+tracks/1/path = NodePath("LongSword/LS_Mesh:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
+"times": PackedFloat32Array(0, 0.05, 0.875, 1.025, 1.1, 1.2, 1.35, 1.55),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 0.07, 1, 1),
+"update": 0,
+"values": [Vector2(-135.001, 115.999), Vector2(-306.332, 124.023), Vector2(-306.332, 124.023), Vector2(-306.332, 124.023), Vector2(-135.001, 115.999), Vector2(-95.8075, 83.9153), Vector2(197.647, 248.189), Vector2(-135.001, 115.999)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("LongSword:modulate")
+tracks/2/path = NodePath("LongSword/LS_Mesh:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.05, 0.25, 0.3, 0.45, 0.6, 0.65, 0.7, 0.875, 1.025, 1.1, 1.2, 1.35, 1.55),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.07, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [-1.94538, -0.384835, -0.252037, -0.384835, -0.384835, -0.617864, -0.50135, -0.384835, -0.384835, -0.225593, -1.94538, -2.67904, -2.56677, -1.94538]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("LongSword/LS_Mesh:position")
+tracks/3/path = NodePath("LongSword/LS_Mesh/LS_hitbox/LS_hitbox:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.875, 1.025, 1.1, 1.2, 1.35, 1.55),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 0.217638, 1, 1),
-"update": 0,
-"values": [Vector2(-135.001, 115.999), Vector2(-306.332, 124.023), Vector2(-306.332, 124.023), Vector2(-306.332, 124.023), Vector2(-135.001, 115.999), Vector2(-95.8075, 83.9153), Vector2(197.647, 248.189), Vector2(-135.001, 115.999)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("LongSword/LS_Mesh:rotation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.25, 0.3, 0.475, 0.6, 0.65, 0.7, 0.875, 1.025, 1.1, 1.2, 1.35, 1.55),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.217638, 1, 1),
-"update": 0,
-"values": [-1.94538, -0.384835, -0.252037, -0.384835, -0.384835, -0.617864, -0.50135, -0.384835, -0.384835, -0.225593, -1.94538, -2.67904, -2.56677, -1.94538]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("LongSword/LS_Mesh/LS_hitbox/LS_hitbox:disabled")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.475, 0.725, 0.875, 1.2, 1.35),
+"times": PackedFloat32Array(0, 0.225, 0.475, 0.675, 0.9, 1.2, 1.35),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [true, false, true, false, true, false, true]
 }
-tracks/6/type = "method"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("LongSword")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("LongSword")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
 "times": PackedFloat32Array(0.575, 1.05),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
@@ -195,13 +171,13 @@ tracks/6/keys = {
 "method": &"emit_chain_attack"
 }]
 }
-tracks/7/type = "method"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("LongSword")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
+tracks/5/type = "method"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("LongSword")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
 "times": PackedFloat32Array(0.325, 0.775, 1.225),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
@@ -215,13 +191,13 @@ tracks/7/keys = {
 "method": &"emit_push_attack"
 }]
 }
-tracks/8/type = "method"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("LongSword")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
+tracks/6/type = "method"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("LongSword")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
 "times": PackedFloat32Array(0.4, 0.8, 1.25),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
@@ -235,25 +211,13 @@ tracks/8/keys = {
 "method": &"play_weappon_sound"
 }]
 }
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("LongSword:isAttacking")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"times": PackedFloat32Array(0, 0.3, 0.575, 0.75, 1.05, 1.225),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [true, false, true, false, true, false]
-}
-tracks/10/type = "method"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("LongSword")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("LongSword")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
 "times": PackedFloat32Array(0.325, 0.725, 1.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
@@ -267,6 +231,42 @@ tracks/10/keys = {
 "method": &"play_effect_poke"
 }]
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("LongSword:isAttacking")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.55, 0.75, 1.05, 1.225),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("LongSword:modulate")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("LongSword:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 tracks/11/type = "value"
 tracks/11/imported = false
 tracks/11/enabled = true
@@ -274,10 +274,10 @@ tracks/11/path = NodePath("LongSword/Effect:rotation")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/keys = {
-"times": PackedFloat32Array(0.35, 0.375, 0.4, 0.45, 0.475, 0.775, 0.8, 0.825, 0.85, 1.2, 1.375),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1e+06, 1, 1),
+"times": PackedFloat32Array(0.3, 0.45, 0.475, 0.575, 0.7, 0.875, 0.9, 1.025, 1.2, 1.375),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [-4.53626, -4.00139, -3.5308, -2.15777, -1.48457, -3.01438, -3.51899, -4.19158, -4.85208, -5.52414, -5.53042]
+"values": [-5.51525, -1.48928, -1.43667, -1.24396, -1.48217, -5.52194, -5.54714, -5.72329, -5.52414, -5.53042]
 }
 tracks/12/type = "value"
 tracks/12/imported = false
@@ -286,7 +286,7 @@ tracks/12/path = NodePath("LongSword/Effect:visible")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/keys = {
-"times": PackedFloat32Array(0, 0.35, 0.475, 0.775, 0.875, 1.2, 1.475),
+"times": PackedFloat32Array(0, 0.35, 0.575, 0.699, 1.025, 1.2, 1.475),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [false, true, false, true, false, true, false]
@@ -298,9 +298,9 @@ tracks/13/path = NodePath("LongSword/Effect:scale")
 tracks/13/interp = 1
 tracks/13/loop_wrap = true
 tracks/13/keys = {
-"times": PackedFloat32Array(0.35, 0.775, 1.2),
+"times": PackedFloat32Array(0.325, 0.675, 1.175),
 "transitions": PackedFloat32Array(1e+06, 1, 1),
-"update": 0,
+"update": 1,
 "values": [Vector2(1, -1), Vector2(1, 1), Vector2(0.355, 0.355)]
 }
 tracks/14/type = "value"
@@ -311,7 +311,7 @@ tracks/14/interp = 1
 tracks/14/loop_wrap = true
 tracks/14/keys = {
 "times": PackedFloat32Array(0.35, 0.775, 1.2, 1.25, 1.325, 1.375),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"transitions": PackedFloat32Array(1, 1e+06, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, 0), Vector2(61.3543, 58.8273), Vector2(266.32, 253.966), Vector2(292.306, 278.881), Vector2(288.697, 275.42)]
 }
@@ -322,10 +322,10 @@ tracks/15/path = NodePath("LongSword/Effect:modulate")
 tracks/15/interp = 1
 tracks/15/loop_wrap = true
 tracks/15/keys = {
-"times": PackedFloat32Array(0, 1.175, 1.475),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0, 0.3, 0.575, 0.7, 1.025, 1.175, 1.475),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_iagqv"]
@@ -707,28 +707,25 @@ animations = [{
 }]
 
 [node name="LongSword" type="Node2D" node_paths=PackedStringArray("animation_player")]
-rotation = 10.2312
+rotation = 6.86987
 script = ExtResource("1_p0ah2")
-isAttacking = true
 weapon_resource = ExtResource("2_mqpft")
 animation_player = NodePath("AnimationPlayer")
 
 [node name="LS_Mesh" type="MeshInstance2D" parent="."]
 self_modulate = Color(0, 1, 1, 0)
-position = Vector2(-135.001, 115.999)
-rotation = -1.94538
+position = Vector2(-306.332, 124.023)
+rotation = -0.384835
 scale = Vector2(3.88847, 1)
 mesh = SubResource("BoxMesh_j1oua")
 
 [node name="LS_hitbox" type="Area2D" parent="LS_Mesh"]
-visible = false
 collision_layer = 0
 collision_mask = 8
 
 [node name="LS_hitbox" type="CollisionShape2D" parent="LS_Mesh/LS_hitbox"]
-position = Vector2(-18.3668, 1.52588e-05)
+position = Vector2(-19.8651, -3.05176e-05)
 shape = SubResource("RectangleShape2D_bt8cn")
-disabled = true
 debug_color = Color(0.952941, 0.2, 0.231373, 1)
 
 [node name="Node2D" type="Node2D" parent="LS_Mesh"]
@@ -769,8 +766,8 @@ collision_mask = 4
 stream = ExtResource("4_nugiv")
 
 [node name="Effect" type="Node2D" parent="."]
-visible = false
-rotation = -4.53626
+modulate = Color(1, 1, 1, 0.545455)
+rotation = -2.16027
 scale = Vector2(1, -1)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Effect"]
@@ -780,5 +777,4 @@ sprite_frames = SubResource("SpriteFrames_l30p7")
 animation = &"poke"
 
 [connection signal="area_entered" from="LS_Mesh/LS_hitbox" to="." method="_on_ls_hitbox_area_entered"]
-[connection signal="body_entered" from="LS_Mesh/LS_hitbox" to="." method="_on_ls_hitbox_body_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

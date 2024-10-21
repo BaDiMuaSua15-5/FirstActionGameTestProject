@@ -7,3 +7,4 @@ script = ExtResource("1_jhj80")
 damge = 0.1
 knock_back_mult = 0.0
 upgrade_name = "melee_damge"
+tier = 3

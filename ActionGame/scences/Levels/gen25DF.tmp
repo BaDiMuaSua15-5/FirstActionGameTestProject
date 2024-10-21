@@ -13,6 +13,8 @@
 [node name="generator_test" type="Node2D"]
 script = ExtResource("1_x5grk")
 
+[node name="RoomManager" parent="." instance=ExtResource("8_43ame")]
+
 [node name="Sound" type="Node" parent="."]
 
 [node name="HitSound" type="AudioStreamPlayer2D" parent="Sound"]
@@ -31,12 +33,6 @@ stream = ExtResource("4_2dlik")
 
 [node name="UI" parent="." node_paths=PackedStringArray("Player") instance=ExtResource("5_kaxbb")]
 Player = NodePath("../ControlledChar")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-enabled = false
-zoom = Vector2(0.1, 0.1)
-
-[node name="RoomManager" parent="." instance=ExtResource("8_43ame")]
 
 [node name="ControlledChar" parent="." instance=ExtResource("6_dres2")]
 position = Vector2(24, 88)

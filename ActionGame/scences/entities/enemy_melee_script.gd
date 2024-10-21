@@ -54,7 +54,7 @@ func _ready() -> void:
 	origin_rotation_vector = Vector2.UP.rotated(global_rotation)
 	target_position = origin_pos
 	set_context_rays()
-
+	$Exclaimation.visible = false
 
 func _process(delta: float) -> void:
 	if in_atk_push:
@@ -159,7 +159,7 @@ func set_interests() -> void:
 		stafe_direction = stafe_direction if randi_range(0, 1) == 1 else -stafe_direction
 		path_direction = stafe_direction
 		# If player is too close move away
-		if distance_to_player < 200:
+		if distance_to_player < 500:
 			path_direction = transform.y
 	for i in num_rays:
 		var d := ray_directions[i].rotated(rotation).dot(path_direction.normalized())
@@ -210,7 +210,7 @@ func hitted(attack: AttackObj) -> void:
 		if attack.Attacker is Throwable:
 			Global.shake_camera(0.65)
 		else:
-			Global.shake_camera(0.30)
+			Global.shake_camera(0.35)
 	Global.play_hit_sound()
 	
 	if Health.health == 0:

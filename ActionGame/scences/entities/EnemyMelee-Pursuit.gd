@@ -1,7 +1,7 @@
 extends State
 
 @export var Entity: EnemyMelee
-var combat_range: float = 500
+var combat_range: float = 650
 
 func enter() -> void:
 	super.enter()
@@ -10,9 +10,13 @@ func exit() -> void:
 	super.exit()
 
 func transition_process(delta: float) -> void:
+	if Entity.is_dead:
+		return
 	pass
 
 func transition_physics_process(delta: float) -> void:
+	if Entity.is_dead:
+		return
 	if Entity.player == null:
 		StateMachine.change_state("Idle")
 		return

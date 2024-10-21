@@ -26,42 +26,35 @@ func get_attack() -> AttackObj:
 	return attack
 
 
-func _on_ls_hitbox_area_entered(area: HitBoxComponent) -> void:
+func _on_ls_hitbox_area_entered(area: Area2D) -> void:
 	if area == null:
 		return
-	print("Managing component: " + str(ManagingComponent))
-	print("Area owner: " + str(area))
+	var hitbox := area as HitBoxComponent
+	if !hitbox:
+		return
 	if area.owner != ManagingComponent.owner:
-		var hitbox := area as HitBoxComponent
-		if !hitbox:
+		# Ignore if the hitted entity is in the group same as owner
+		if hitbox.owner.get_groups()[0].matchn(ManagingComponent.owner.get_groups()[0]):
 			return
-		print("Hitted", hitbox.owner)
 		
 		var space_rid := get_world_2d().space
 		var space_state := PhysicsServer2D.space_get_direct_state(space_rid)
 		var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.new()
 		query.collision_mask = 0b0100
-		query.exclude = [self, area.owner]
+		query.exclude = [self, hitbox.owner]
 		query.from = global_position
 		query.to = hitbox.global_position
 		var wall_check_result := space_state.intersect_ray(query)
 		
 		if wall_check_result:
-			print("Blocked by wall ", wall_check_result["collider"])
 			return
 		else:
-			# Ignore if the hitted entity is in the group same as owner
-			if hitbox.owner.get_groups()[0] == ManagingComponent.owner.get_groups()[0]:
-				print("Hitted Entity in same group")
-				return
-			else:
-				print("Hit deal damage")
-				var attack := get_attack()
-				attack.direction = (hitbox.owner.global_position - ManagingComponent.global_position).normalized()
-				var upgrades_comp := ManagingComponent.Upgrades as UpgradesComponent
-				attack = upgrades_comp.apply_attack_upgrades(attack)
-				
-				hitbox.hit(attack)
+			var attack := get_attack()
+			attack.direction = (hitbox.owner.global_position - ManagingComponent.global_position).normalized()
+			var upgrades_comp := ManagingComponent.Upgrades as UpgradesComponent
+			attack = upgrades_comp.apply_attack_upgrades(attack)
+			
+			hitbox.hit(attack)
 	return
 
 
@@ -85,9 +78,6 @@ func emit_push_attack() -> void:
 func _on_animation_player_animation_finished(anim_name: String) -> void:
 	animation_finished.emit(anim_name)
 
-
-func _on_ls_hitbox_body_entered(_body: PhysicsBody2D) -> void:
-	pass
 	
 func play_weappon_sound() -> void:
 	var audio_player := $AudioStreamPlayer2D as AudioStreamPlayer2D

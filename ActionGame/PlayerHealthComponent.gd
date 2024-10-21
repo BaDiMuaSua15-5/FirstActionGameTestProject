@@ -22,6 +22,7 @@ class_name PlayerHealthComponent
 		return value
 
 var vulnerable: bool = true
+var vulnerable_time: float = 0
 
 signal health_change
 signal health_depleted
@@ -35,12 +36,18 @@ signal health_depleted
 		health_change.emit(health, max_health)
 		#print(OwnerEntity, " Health after change: ", health)
 
+#func _process(delta: float) -> void:
+	#if vulnerable == false:
+		#if vulnerable_time > 0:
+			#vulnerable_time -= delta
+		#else:
+			#vulnerable = true
 
 func damage(attack: AttackObj) -> void:
 	var health_before := health
 	health -= attack.damage
-	hit_timer(0.22)
-	vulnerable = false
+	vulnerable_time = 0.22
+	#vulnerable = false
 	if (health == 0):
 		health_depleted.emit()
 	return

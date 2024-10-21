@@ -32,6 +32,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../Exclaimation:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_1tpd1"]
 resource_name = "attack_warn"
@@ -48,6 +60,18 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0.498039), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0.498039), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../../Exclaimation:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rlwd6"]
@@ -187,6 +211,7 @@ _data = {
 }
 
 [node name="EnemyMelee" type="CharacterBody2D" node_paths=PackedStringArray("StateMachine", "Health", "HitBox", "WeaponComp", "Upgrades") groups=["enemy"]]
+scale = Vector2(1.2, 1.2)
 collision_layer = 2
 collision_mask = 4
 script = ExtResource("1_q3clv")
@@ -205,6 +230,7 @@ scale = Vector2(3.8, 3.22)
 texture = ExtResource("1_2iplo")
 region_enabled = true
 region_rect = Rect2(36, 0, 51, 76)
+metadata/_edit_lock_ = true
 
 [node name="EnemySprite" type="Sprite2D" parent="."]
 position = Vector2(7.27596e-12, 8)
@@ -213,15 +239,18 @@ scale = Vector2(3.515, 2.675)
 texture = ExtResource("1_2iplo")
 region_enabled = true
 region_rect = Rect2(36, 0, 51, 76)
+metadata/_edit_lock_ = true
 
 [node name="Exclaimation" type="Sprite2D" parent="."]
 position = Vector2(0, -184)
 scale = Vector2(0.115, 0.115)
 texture = ExtResource("3_j6e8i")
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 shape = SubResource("CircleShape2D_7jlm5")
+metadata/_edit_lock_ = true
 
 [node name="Components" type="Node2D" parent="."]
 
@@ -236,16 +265,15 @@ one_shot = true
 
 [node name="HitBoxComponent" type="Area2D" parent="Components" node_paths=PackedStringArray("HealthComp")]
 unique_name_in_owner = true
-visible = false
 position = Vector2(0, -17)
 collision_layer = 8
-collision_mask = 0
+collision_mask = 8
 script = ExtResource("3_7n4d8")
 HealthComp = NodePath("../HealthComponent")
 metadata/_edit_group_ = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Components/HitBoxComponent"]
-polygon = PackedVector2Array(80, 49, 40, 89, 0, 97, -40, 89, -80, 49, -80, 25, -48, -71, 48, -71, 80, 25)
+polygon = PackedVector2Array(88, 57, 48, 97, 0, 105, -48, 97, -88, 57, -88, 17, -56, -79, 56, -79, 88, 17)
 
 [node name="WeaponComponent" type="Node2D" parent="Components" node_paths=PackedStringArray("Upgrades")]
 unique_name_in_owner = true
@@ -255,6 +283,7 @@ metadata/_edit_group_ = true
 
 [node name="LongSword" parent="Components/WeaponComponent" node_paths=PackedStringArray("ManagingComponent") instance=ExtResource("5_xmeqy")]
 modulate = Color(1, 1, 1, 0)
+rotation = 10.2312
 ManagingComponent = NodePath("..")
 
 [node name="Rapier" parent="Components/WeaponComponent" node_paths=PackedStringArray("ManagingComponent") instance=ExtResource("8_rhclf")]

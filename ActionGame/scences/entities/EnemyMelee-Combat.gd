@@ -16,6 +16,8 @@ func exit() -> void:
 	Entity.in_combat = false
 
 func transition_process(delta: float) -> void:
+	if Entity.is_dead:
+		return
 	if can_atk == false:
 		if atk_between_time > 0:
 			atk_between_time -= delta
@@ -28,6 +30,8 @@ func transition_process(delta: float) -> void:
 	can_atk = false
 
 func transition_physics_process(delta: float) -> void:
+	if Entity.is_dead:
+		return
 	if Entity.player == null:
 		StateMachine.change_state("Idle")
 		return

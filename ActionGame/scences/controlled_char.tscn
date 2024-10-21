@@ -9,8 +9,8 @@
 [ext_resource type="Script" path="res://scences/Componetn_ActionPoint.gd" id="7_i2vee"]
 [ext_resource type="Texture2D" uid="uid://dsdhapuyqwrf3" path="res://PNG/Assets/slime_monster_spritesheet.png" id="8_wse6m"]
 [ext_resource type="Script" path="res://scences/UpgradesComponent/UpgradesComponent.gd" id="9_dcycr"]
+[ext_resource type="Resource" uid="uid://c7lcoj4c3tlmy" path="res://Resources/melee_damage.tres" id="12_6sw3c"]
 [ext_resource type="Resource" uid="uid://y8f7p02mnwk5" path="res://Resources/melee_accumulation.tres" id="12_yl3qj"]
-[ext_resource type="Resource" uid="uid://dc6qilouqbt8t" path="res://Resources/health_max.tres" id="12_yn5qu"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_tb1as"]
 lightmap_size_hint = Vector2i(14, 21)
@@ -219,7 +219,7 @@ ap_count = 2
 
 [node name="Upgrades" type="Node" parent="Components"]
 script = ExtResource("9_dcycr")
-upgrades_container = Array[Resource("res://scences/UpgradesComponent/BaseUpgrade.gd")]([ExtResource("12_yl3qj"), ExtResource("12_yn5qu")])
+upgrades_container = Array[Resource("res://scences/UpgradesComponent/BaseUpgrade.gd")]([ExtResource("12_yl3qj"), ExtResource("12_6sw3c")])
 
 [node name="StunTimer" type="Timer" parent="."]
 unique_name_in_owner = true

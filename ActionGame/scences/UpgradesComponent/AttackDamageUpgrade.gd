@@ -6,6 +6,6 @@ class_name AttackDamageUpgrade
 
 
 func apply_upgrade(attack: AttackObj) -> void:
-	attack.damage += damge * tier
+	attack.damage += attack.damage * damge * tier
 	attack.knockback += knock_back_mult * attack.knockback * tier
  

@@ -11,6 +11,8 @@ signal room_exited(from_side: int, to_room: int)
 
 enum type {Enemy = 0b000, Special = 0b001, Shop = 0b010, Exit = 0b011, Start = 0b100}
 var room_type: type = type.Enemy
+var enem_count: int = 0
+var allow_exit: bool = true
 
 
 func _ready() -> void:
@@ -63,7 +65,30 @@ func _on_room_exit() -> void:
 	pass
 	
 	
+var is_setuped: bool = false
 func _on_room_enter() -> void:
+	if is_setuped:
+		return
+	is_setuped = true
+	#allow_exit = false
+	match room_type:
+		type.Enemy:
+			spawn_enemies()
+			pass
+		type.Special:
+			
+			pass
+		type.Shop:
+			
+			pass
+		type.Exit:
+			
+			pass
+		type.Start:
+			
+			pass
+		_:
+			return
 	pass
 
 
@@ -86,12 +111,10 @@ func get_connected_room(exit_index: int) -> RoomNode:
 
 func set_up_room() -> void:
 	$CheckArea.queue_free()
-	#for door_index in available_doors:
-		#$Exits.get_child(door_index - 1).queue_free()
 	
 	match room_type:
 		type.Enemy:
-			spawn_enemies()
+			#spawn_enemies()
 			pass
 		type.Special:
 			
@@ -102,6 +125,7 @@ func set_up_room() -> void:
 		type.Exit:
 			var exit := exit_scene.instantiate() as ExitArea
 			add_child(exit)
+			exit.exited.connect(_on_level_exited)
 		type.Start:
 			
 			pass
@@ -109,11 +133,24 @@ func set_up_room() -> void:
 
 func spawn_enemies() -> void:
 	var amount := randi_range(4, 10)
+	enem_count = amount
 	
 	var spawn_points := $SpawnPoints.get_children()
 	for index in range(0, amount, 1):
 		var enemy: EnemyMelee = enemy_scene.instantiate() as EnemyMelee
 		#enemy.is_dead = true
-		add_child(enemy)
+		enemy.died.connect(_on_enemy_died)
+		$Entities.add_child(enemy)
 		enemy.global_position = spawn_points[index].global_position
 		enemy.target_position = enemy.global_position
+
+
+func _on_enemy_died() -> void:
+	enem_count -= 1
+	if enem_count == 0:
+		allow_exit = true
+		pass
+
+signal level_finished
+func _on_level_exited() -> void:
+	level_finished.emit()

@@ -45,9 +45,9 @@ func update_stamina_bar(stamina_value: float, max_value: float) -> void:
 
 func update_ap_display(progress: int, ap_count: int) -> void:
 	AP_counter.text = str(ap_count)
-	print("Fill progres: ", APComp.fill_progress)
-	print("Fill max: ", APComp.max_progress)
-	print("Fill percent: ", APComp.fill_progress + 0.0 / APComp.max_progress)
+	#print("Fill progres: ", APComp.fill_progress)
+	#print("Fill max: ", APComp.max_progress)
+	#print("Fill percent: ", APComp.fill_progress + 0.0 / APComp.max_progress)
 	AP_bar.value = APComp.fill_progress + 0.0 / APComp.max_progress
 
 func update_stat() -> void:

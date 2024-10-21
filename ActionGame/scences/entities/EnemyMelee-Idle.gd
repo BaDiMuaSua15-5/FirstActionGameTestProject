@@ -17,10 +17,14 @@ func exit() -> void:
 
 
 func transition_process(delta: float) -> void:
+	if Entity.is_dead:
+		return
 	return
 
 
 func transition_physics_process(delta: float) -> void:
+	if Entity.is_dead:
+		return
 	if Entity.player:
 		StateMachine.change_state("Pursuit")
 		return

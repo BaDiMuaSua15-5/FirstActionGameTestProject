@@ -111,7 +111,7 @@ func _physics_process(delta: float) -> void:
 		if in_push:
 			velocity = roll_dir * 750
 		else:
-			velocity = roll_dir * 1150
+			velocity = roll_dir * 1300
 		move_and_slide()
 		roll_dir = roll_dir.lerp(Vector2.ZERO, delta * 0.5)
 		

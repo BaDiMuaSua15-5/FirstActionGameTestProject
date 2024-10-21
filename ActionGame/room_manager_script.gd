@@ -26,6 +26,8 @@ func setup_level() -> void:
 		await get_tree().create_timer(0.1).timeout
 	main_rooms[0].room_type = RoomNode.type.Start
 	main_rooms[main_rooms.size() - 1].room_type = RoomNode.type.Exit
+	main_rooms[-1].level_finished.connect(reset_level)
+	$Camera2D2.global_position = (main_rooms[0].global_position - main_rooms[-1].global_position) / 2
 	
 	main_rooms.size()
 	# select random room to branch out additional rooms
@@ -40,19 +42,11 @@ func setup_level() -> void:
 		await spawn_room()
 		await get_tree().create_timer(0.1).timeout
 		
-	$Camera2D2.global_position = (main_rooms[0].global_position - main_rooms[5].global_position)/2
-	for room in main_rooms:
-		room.set_up_room()
+	for index in range(1, main_rooms.size(), 1):
+		main_rooms[index].set_up_room()
 	
 	
 func spawn_room() -> void:
-	# current room don't have any available exit
-	if current_room.available_doors.size() == 0:
-		print("Room dont have opening")
-		var connected_room := current_room.get_connected_room(current_room.connected_doors.pick_random())
-		current_room = connected_room
-		return
-		
 	# create new room
 	var new_room := room_template.instantiate() as RoomNode
 	$Rooms.add_child(new_room)
@@ -60,6 +54,9 @@ func spawn_room() -> void:
 	room_count += 1
 	#======While - Start======
 	while true:
+		if current_room.available_doors.size() == 0:
+			var connected_room := current_room.get_connected_room(current_room.connected_doors.pick_random())
+			current_room = connected_room
 		# pick random side to place room
 		var rand := current_room.available_doors.pick_random() as int
 		# Place new room based on current room exit side
@@ -87,9 +84,6 @@ func spawn_room() -> void:
 			if randi_range(0, 2) >= 1:
 				current_room.connect_door_to_room(rand, existing_room)
 				current_room = existing_room
-			else:	
-				var connected_room := current_room.get_connected_room(current_room.connected_doors.pick_random())
-				current_room = connected_room
 	#======While - End======
 	current_room = new_room
 
@@ -119,32 +113,24 @@ func reset() -> void:
 	var room_count: int = 0
 	
 	
-#func add_addition_room(main_index: int, amount: int) -> void:
-	#var room := main_rooms[main_index] as RoomNode
-	#
-	## add additional room until amount is meet
-	#while amount > 0:
-		#var new_room: RoomNode
-		## Check if there is still available side
-		#for i in range(1, 4 + 1, 1):
-			#if room.connected_sides[i] == false:
-				#new_room = room_template.instantiate() as RoomNode
-				#$Rooms.add_child(new_room)
-				#amount -= 1
-				#new_room.global_position = placement_offset
-				#placement_offset += Vector2(1824 * 2, 0)
-				#room.add_neighbor_room(i, new_room)
-				#
-				## Switch to new room or not
-				#if randi_range(0, 1) == 1:
-					#room = new_room
-					#break
-				#
-				#if amount <= 0:
-					#break
-		#
-		## No available side switch to new room
-		#room = new_room
-				
-			
-		
+func reset_level() -> void:
+	
+	for i in range(1, main_rooms.size(), 1):
+		main_rooms[i].queue_free()
+	
+	
+	current_room = main_rooms[0]
+	main_rooms.clear()
+	main_rooms.append(current_room)
+	current_room.connected_doors.clear()
+	current_room.available_doors = [current_room.TOP, current_room.BOT, current_room.LEFT, current_room.RIGHT]
+	room_count = 1
+	await get_tree().create_timer(2).timeout
+	Global.player.global_position = current_room.global_position
+	call_deferred("setup_level")
+	
+
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("function"):
+		reset_level()

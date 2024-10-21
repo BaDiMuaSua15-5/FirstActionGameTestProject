@@ -24,7 +24,7 @@ func _on_body_exited(body: Node2D) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("player_accept"):
-		if allow_exit:
+		if allow_exit && (owner as RoomNode).allow_exit:
 			var connected_entrance: RoomExit
 			match side_type:
 				side.TOP:
